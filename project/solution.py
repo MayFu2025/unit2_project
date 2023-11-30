@@ -1,32 +1,12 @@
-import csv
 import serial
-import pyfirmata
-import datetime
-from pyfirmata import Arduino
 import time
-
-user = {"username": "MMproject", "password": "MMproject2"}
-ip = "192.168.6.153"
+import datetime
+import requests
+from API import user, ip, cookie, header
 
 id = "cu.usbserial-110"
 arduino = serial.Serial(port=f'/dev/{id}', baudrate=9600, timeout=0.1)
 print("Connection Successful")
-
-
-s0 = arduino.digital[2]
-s0 = pyfirmata.INPUT
-
-s1 = arduino.digital[2]
-s1 = pyfirmata.INPUT
-
-s2 = arduino.digital[2]
-s2 = pyfirmata.INPUT
-
-for s in [0,1,2]:
-    with open(f"sens_{s}.csv", mode='a') as s_data:
-        # Creates the csv file for each sensor at first repeat
-        writer = csv.writer()
-        writer.writerow([datetime.date.today(), 0, "other"])
 
 
 def read():
@@ -34,3 +14,34 @@ def read():
     while len(data) < 1:
         data = arduino.readline()
     return data.decode('utf-8')  #utf-8 is the same as ascii
+
+
+humidity = []
+temperature = []
+t = 0
+for i in range(172801):
+    msg = read()
+    print(t, msg)
+    time.sleep(1)
+    t += 1
+
+    # Storing Data in CSV File every 5 minutes
+    if t%300 == 0:
+        date = datetime.datetime.now()
+        line = f'{t},{date},{msg}\n'
+        with open('final_readings.csv', mode='a') as f:
+            data = f.writelines(line)
+
+        # Storing Data in Sensors on Server
+        a = []
+        sensor_id = 29
+        r = 0
+        for category in msg:
+            for reading in category:
+                a.append(reading)
+        while sensor_id <= 34:
+            record = {f'sensor_id':{sensor_id}, 'value':a[r]}
+            answer = requests.post(f'http://{ip}/reading/new', json=record, headers=header)
+            sensor_id += 1
+            r += 1
+
