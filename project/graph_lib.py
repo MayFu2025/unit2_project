@@ -5,7 +5,7 @@ import numpy as np
 plt.style.use('ggplot')
 
 # draw graph
-def draw_graph (t:list[int], v:list[int], color:str, title):
+def draw_graph (t:list[int], v:list[int], color:str, title:str):
     plt.plot(t, v, color=f"{color}")
     plt.title(title)
 
@@ -18,22 +18,26 @@ def smoothing(x:list[int], size_window:int=5):
     return smooth_x
 
 # average
-def basic_info (x:list[int], y:list[int], z:list[int]):
+def basic_info (x:list, y:list, z:list):
     total=[]
     mean = []
     std = []
-    min = []
-    max = []
+    min_val = []
+    max_val = []
     avg = []
-    for t in rnage(len(x)):
-        total.append([int(x[i]),int(y[i]),int(z[i])])
-    for x in total:
-        mean.append(np.mean(i))
-        std.append(np.std(i))
-        min.append(np.min(i))
-        max.append(np.max(i))
-        avg.append(np.sum(i)/3)
 
-    return mean, std, min, max, avg
+    for i in range(len(x)):
+        total.append([x[i],y[i],z[i]])
+        # print(total)
+        # print(total[i])
+
+    for item in total:
+        mean.append(np.mean(item)) #0
+        std.append(np.std(item)) #1
+        min_val.append(np.min(item)) #2
+        max_val.append(np.max(item)) #3
+        avg.append(np.sum(item)//3) #4
+
+    return mean, std, min_val, max_val, avg
 
 
