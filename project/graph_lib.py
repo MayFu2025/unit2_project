@@ -4,18 +4,46 @@ import numpy as np
 
 plt.style.use('ggplot')
 
+# take out data from csv file
+def take_data():
+    with open('final_readings.csv', mode='r') as f:
+        data = f.readlines()
+        temp1 = []
+        humid1 = []
+        temp2 = []
+        humid2 = []
+        temp3 = []
+        humid3 = []
+        t=0
+        time=[]
+        for line in data:
+            rec = line.split(',')
+            temp1.append(float(rec[2]))
+            temp2.append(float(rec[3]))
+            temp3.append(float(rec[4]))
+            humid1.append(float(rec[5]))
+            humid2.append(float(rec[6]))
+            humid3.append(float(rec[7]))
+            time.append(t)
+            t+=5
+
+
 # draw graph
-def draw_graph (t:list[int], v:list[int], color:str, title:str):
+def draw_graph (t:list, v:list, color:str, title:str):
     plt.plot(t, v, color=f"{color}")
     plt.title(title)
 
 # smoothing
-def smoothing(x:list[float], size_window:int=5):
+def smoothing(x:list, size_window:int=5):
+    time = 0
     smooth_x = []
+    smooth_time = []
     for i in range(0, len(x), size_window):
         points=sum(x[i : i + size_window]) / size_window
         smooth_x.append(points)
-    return smooth_x
+        smooth_time.append(time)
+        time += 1
+    return smooth_time, smooth_x
 
 # average
 def basic_info (x:list, y:list, z:list):
@@ -39,5 +67,6 @@ def basic_info (x:list, y:list, z:list):
         avg.append(np.sum(item)//3) #4
 
     return mean, std, min_val, max_val, avg
+
 
 
