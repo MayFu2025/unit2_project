@@ -28,18 +28,25 @@ with open('final_readings.csv', mode='r') as f:
         time.append(t)
         t+=5
 
-    print(data)
+print(len(time))
+print(len(smoothing(x=temp1, size_window=5)))
 
 
 # print(time)
 # print(temp1)
 
-# graph of temp1
+# plt.subplot(2,3,1)
 # temp1_graph=draw_graph(t=time, v=temp1, color='black', title="temp1")
-# plt.show()
+# plt.plot()
+
+# graph of temp1
+
+
+humid2_graph=draw_graph(t=time, v=humid2, color='black', title="humid2")
+plt.show()
 
 #smoothing graph of temp1
-# temp1_smoothing = draw_graph(t=time, v=smoothing(x=temp1, size_window=5))
+# temp1_smoothing = draw_graph(t=time, v=smoothing(x=temp1, size_window=5), color="red", title="temperature1 smoothing graph")
 # plt.show()
 #
 # print(f"temp1:{temp1}")
@@ -48,20 +55,20 @@ with open('final_readings.csv', mode='r') as f:
 
 
 # basic info graph of temp
-temp_info=basic_info(x=temp1, y=temp2, z=temp3)
-
-print(f"mean: {temp_info[0]}")
-print(f"std: {temp_info[1]}")
-print(f"min_val: {temp_info[2]}")
-print(f"max_val: {temp_info[3]}")
-print(f"avg: {temp_info[4]}")
-
-temp_info_graph = draw_graph(t=time, v=temp_info[4],color='black', title="temperature average")
-plt.show()
+# temp_info=basic_info(x=temp1, y=temp2, z=temp3)
+#
+# print(f"mean: {temp_info[0]}")
+# print(f"std: {temp_info[1]}")
+# print(f"min_val: {temp_info[2]}")
+# print(f"max_val: {temp_info[3]}")
+# print(f"avg: {temp_info[4]}")
+#
+# temp_info_graph = draw_graph(t=time, v=temp_info[4],color='black', title="temperature average")
+# plt.show()
 
 # basic info graph of humid
-humid_info=basic_info(x=humid1, y=humid2, z=humid3)
-humid_info_graph = draw_graph(t=time, v=humid_info[4],color='black', title="humidity average")
-plt.show()
+# humid_info=basic_info(x=humid1, y=humid2, z=humid3)
+# humid_info_graph = draw_graph(t=time, v=humid_info[4],color='black', title="humidity average")
+# plt.show()
 
 

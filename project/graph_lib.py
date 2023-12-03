@@ -10,7 +10,7 @@ def draw_graph (t:list[int], v:list[int], color:str, title:str):
     plt.title(title)
 
 # smoothing
-def smoothing(x:list[int], size_window:int=5):
+def smoothing(x:list[float], size_window:int=5):
     smooth_x = []
     for i in range(0, len(x), size_window):
         points=sum(x[i : i + size_window]) / size_window
