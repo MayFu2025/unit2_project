@@ -2,7 +2,7 @@ import serial
 import time
 import datetime
 import requests
-from API import user, ip, cookie, header
+from API import user, ip
 
 id = "cu.usbserial-110"
 arduino = serial.Serial(port=f'/dev/{id}', baudrate=9600, timeout=0.1)
@@ -32,15 +32,18 @@ for i in range(172801):
         with open('final_readings.csv', mode='a') as f:
             data = f.writelines(line)
 
+
         # Storing Data in Sensors on Server
-        a = []
+        a = list(msg.split(','))
         sensor_id = 29
         r = 0
-        for category in msg:
-            for reading in category:
-                a.append(reading)
         while sensor_id <= 34:
-            record = {f'sensor_id':{sensor_id}, 'value':a[r]}
+            login = requests.post(f'http://{ip}/login', json=user)
+            cookie = login.json()["access_token"]
+            header = {'Authorization': f'Bearer {cookie}'}
+
+            record = {f'sensor_id':sensor_id, 'value':a[r]}
+            print(record)
             answer = requests.post(f'http://{ip}/reading/new', json=record, headers=header)
             sensor_id += 1
             r += 1

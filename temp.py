@@ -1,15 +1,12 @@
-import serial
-import time
-arduino = serial.Serial(port='/dev/cu.usbserial-10', baudrate=9600, timeout=.1)
+import requests
+def get_sensor(id:int=1, ip:str="192.168.6.153"):
+    request = requests.get(f"http://{ip}/readings")
+    data = request.json()
+    sensors = data['readings'][0]
+    sensor = []
+    for s in sensors:
+        if s['sensor_id'] == id:
+            sensor.append(s['value'])
+    return sensor
 
-def read():
-    data = ""
-    while len(data)<1:
-        data = arduino.readline()
-    return data
-
-while True:
-    time.sleep(0.1)
-    value = read() #wait until data is in the port
-    msg = value.decode('utf-8')
-    print(msg)
+print(get_sensor(id=34))
