@@ -65,8 +65,8 @@ s3_h = {
 # print(answer.json())
 
 # See your sensors + id
-answer = requests.get(f"http://{ip}/sensors", headers=header)
-print(answer.json())
+# answer = requests.get(f"http://{ip}/sensors", headers=header)
+# print(answer.json())
 
 # Send a recording to server
 # record = {'sensor_id':27,'value':6}
