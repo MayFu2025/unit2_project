@@ -26,7 +26,7 @@ with open('final_readings.csv', mode='r') as f:
         humid2.append(float(h2))
         humid3.append(float(h3))
         time.append(t)
-        t+=1
+        t+=5
 
     print(data)
 
@@ -47,16 +47,21 @@ with open('final_readings.csv', mode='r') as f:
 # print(f"temp3:{temp3}")
 
 
-# avg graph of temp
-temp1_avg=basic_info(x=temp1, y=temp2, z=temp3)
-print(f"mean:{temp1_avg[0]}")
-print(f"std: {temp1_avg[1]}")
-print(f"min: {temp1_avg[2]}")
-print(f"{temp1_avg[3]}")
-print(temp1_avg[4])
+# basic info graph of temp
+temp_info=basic_info(x=temp1, y=temp2, z=temp3)
 
+print(f"mean: {temp_info[0]}")
+print(f"std: {temp_info[1]}")
+print(f"min_val: {temp_info[2]}")
+print(f"max_val: {temp_info[3]}")
+print(f"avg: {temp_info[4]}")
 
-temp_avg = draw_graph(t=time, v=temp1_avg[4],color='black', title="temperature average")
+temp_info_graph = draw_graph(t=time, v=temp_info[4],color='black', title="temperature average")
+plt.show()
+
+# basic info graph of humid
+humid_info=basic_info(x=humid1, y=humid2, z=humid3)
+humid_info_graph = draw_graph(t=time, v=humid_info[4],color='black', title="humidity average")
 plt.show()
 
 
