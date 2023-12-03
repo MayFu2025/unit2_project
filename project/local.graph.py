@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
 from graph_lib import draw_graph, smoothing, basic_info
 
 with open('final_readings.csv', mode='r') as f:
@@ -27,45 +28,58 @@ print(len(smoothing(x=temp1, size_window=5)[1]))
 
 
 # temp, humid graph
+fig = plt.figure(figsize=(30,20))
+plt.subplot(2,3,1)
+plt.ylim(0,60)
+temp1_graph=draw_graph(t=time, v=temp1, color='red', title="temp1")
+
+plt.subplot(2,3,2)
+plt.ylim(0,60)
+temp2_graph=draw_graph(t=time, v=temp2, color='blue', title="temp2")
+
+plt.subplot(2,3,3)
+plt.ylim(0,60)
+temp3_graph=draw_graph(t=time, v=temp3, color='green', title="temp3")
+
+plt.subplot(2,3,4)
+plt.ylim(0,100)
+humid1_graph=draw_graph(t=time, v=humid1, color='red', title="humid1")
+
+plt.subplot(2,3,5)
+plt.ylim(0,100)
+humid2_graph=draw_graph(t=time, v=humid2, color='blue', title="humid2")
+
+plt.subplot(2,3,6)
+plt.ylim(0,100)
+humid3_graph=draw_graph(t=time, v=humid3, color='green', title="humid3")
+plt.show()
+
+
+scaler = StandardScaler()
+sc_temp1 = scaler.fit_transform(temp1.reshape(-1, 1))
+
+plt.plot(time, sc_temp1)
+plt.show()
+
+# smoothing graph
 # plt.subplot(2,3,1)
-# temp1_graph=draw_graph(t=time, v=temp1, color='black', title="temp1")
+# temp1_graph=draw_graph(smoothing(x=temp1, size_window=5)[0], smoothing(x=temp1, size_window=5)[1], color='red', title="smooth temp1")
 #
 # plt.subplot(2,3,2)
-# temp2_graph=draw_graph(t=time, v=temp2, color='black', title="temp2")
+# temp1_graph=draw_graph(smoothing(x=temp2, size_window=5)[0], smoothing(x=temp2, size_window=5)[1], color='red', title="smooth temp2")
 #
 # plt.subplot(2,3,3)
-# temp3_graph=draw_graph(t=time, v=temp3, color='black', title="temp3")
+# temp1_graph=draw_graph(smoothing(x=temp3, size_window=5)[0], smoothing(x=temp3, size_window=5)[1], color='blue', title="smooth temp3")
 #
 # plt.subplot(2,3,4)
-# humid1_graph=draw_graph(t=time, v=humid1, color='black', title="humid1")
+# temp1_graph=draw_graph(smoothing(x=humid1, size_window=5)[0], smoothing(x=humid1, size_window=5)[1], color='blue', title="smooth humid1")
 #
 # plt.subplot(2,3,5)
-# humid2_graph=draw_graph(t=time, v=humid2, color='black', title="humid2")
+# temp1_graph=draw_graph(smoothing(x=humid2, size_window=5)[0], smoothing(x=humid2, size_window=5)[1], color='green', title="smooth humid2")
 #
 # plt.subplot(2,3,6)
 # humid3_graph=draw_graph(t=time, v=humid3, color='black', title="humid3")
 # plt.show()
-
-
-# smoothing graph
-plt.subplot(2,3,1)
-temp1_graph=draw_graph(smoothing(x=temp1, size_window=5)[0], smoothing(x=temp1, size_window=5)[1], color='black', title="smooth temp1")
-
-plt.subplot(2,3,2)
-temp1_graph=draw_graph(smoothing(x=temp2, size_window=5)[0], smoothing(x=temp2, size_window=5)[1], color='black', title="smooth temp2")
-
-plt.subplot(2,3,3)
-temp1_graph=draw_graph(smoothing(x=temp3, size_window=5)[0], smoothing(x=temp3, size_window=5)[1], color='black', title="smooth temp3")
-
-plt.subplot(2,3,4)
-temp1_graph=draw_graph(smoothing(x=humid1, size_window=5)[0], smoothing(x=humid1, size_window=5)[1], color='black', title="smooth humid1")
-
-plt.subplot(2,3,5)
-temp1_graph=draw_graph(smoothing(x=humid2, size_window=5)[0], smoothing(x=humid2, size_window=5)[1], color='black', title="smooth humid2")
-
-plt.subplot(2,3,6)
-humid3_graph=draw_graph(t=time, v=humid3, color='black', title="humid3")
-plt.show()
 
 
 
