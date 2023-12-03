@@ -35,15 +35,33 @@ print(len(smoothing(x=temp1, size_window=5)))
 # print(time)
 # print(temp1)
 
-# plt.subplot(2,3,1)
-# temp1_graph=draw_graph(t=time, v=temp1, color='black', title="temp1")
-# plt.plot()
+
+plt.subplot(2,3,1)
+temp1_graph=draw_graph(t=time, v=temp1, color='black', title="temp1")
+
+plt.subplot(2,3,2)
+temp2_graph=draw_graph(t=time, v=temp2, color='black', title="temp2")
+
+plt.subplot(2,3,3)
+temp3_graph=draw_graph(t=time, v=temp3, color='black', title="temp3")
+
+plt.subplot(2,3,4)
+humid1_graph=draw_graph(t=time, v=humid1, color='black', title="humid1")
+
+plt.subplot(2,3,5)
+humid2_graph=draw_graph(t=time, v=humid2, color='black', title="humid2")
+
+plt.subplot(2,3,6)
+humid3_graph=draw_graph(t=time, v=humid3, color='black', title="humid3")
+plt.show()
+
+
 
 # graph of temp1
 
 
-humid2_graph=draw_graph(t=time, v=humid2, color='black', title="humid2")
-plt.show()
+# humid2_graph=draw_graph(t=time, v=humid2, color='black', title="humid2")
+# plt.show()
 
 #smoothing graph of temp1
 # temp1_smoothing = draw_graph(t=time, v=smoothing(x=temp1, size_window=5), color="red", title="temperature1 smoothing graph")
