@@ -12,6 +12,8 @@ ip = "192.168.6.153"
 answer = requests.post(f'http://{ip}/login', json=user)
 # print(answer.json()) [CHECKED THAT IT WORKS]
 cookie = answer.json()["access_token"]
+print(cookie)
+
 
 # Put the cookie in the header of the request
 header = {'Authorization':f'Bearer {cookie}'}
