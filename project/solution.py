@@ -4,16 +4,16 @@ import datetime
 import requests
 from API import user, ip
 
-id = "cu.usbserial-110"
-arduino = serial.Serial(port=f'/dev/{id}', baudrate=9600, timeout=0.1)
-print("Connection Successful")
+id = "cu.usbserial-110"  # id of Arduino on computer
+arduino = serial.Serial(port=f'/dev/{id}', baudrate=9600, timeout=0.1) # id of Arduino on computer
+print("Connection Successful") # Let user know Arduino is connected
 
 
 def read():
     data = ""
-    while len(data) < 1:
+    while len(data) < 1:  # When data is empty
         data = arduino.readline()
-    return data.decode('utf-8')  #utf-8 is the same as ascii
+    return data.decode('utf-8')  # utf-8 is the same as ascii
 
 
 humidity = []
