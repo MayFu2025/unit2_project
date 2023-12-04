@@ -31,7 +31,8 @@ def take_data():
 # draw graph
 def draw_graph (t:list, v:list, color:str, title:str):
     plt.plot(t, v, color=f"{color}")
-    plt.title(title)
+    plt.title(title, fontsize=30)
+    plt.tick_params(labelsize=25)
 
 # smoothing
 def smoothing(x:list, size_window:int=5):
