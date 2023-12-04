@@ -55,10 +55,16 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 
 
 ## Record of Tasks
-| Task No | Planned Action                                                | Planned Outcome                                                                                                 | Time estimate | Target completion date | Criterion |
-|---------|---------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|---------------|------------------------|-----------|
-| 1       | Write the Problem context                        | 10min         | Nov 22                 | A         |
-
+| Task No | Planned Action                                     | Planned Outcome                                                                                                        | Time estimate | Target completion date | Criterion |
+|---------|----------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|---------------|------------------------|-----------|
+| 1       | Write the Problem context                          |                                                                                                                        | 10min         | Nov 22                 | A         |
+| 2       |                                                    |                                                                                                                        |               |                        | A         |
+| 3       | Code and Upload Program for Arduino on Arduino IDE | Create and upload program for data collection onto the arduino                                                         | 30min         | Nov 29                 |           |
+| 4       | Construct Arduino Circuit for Data Collection      | Have sensors connected to the Arduino, ready to connect to the computer and start collecting data                      | 1hr           | Nov 29                 |           |
+| 5       | Code Data Collection Method on PyCharm             | Create a program that retrieves data from the Arduino, stores it in a csv file, and uploads it onto server on PyCharm. | 1hr           | Nov 29                 |           |
+| 6       | Test and Finalize Hardware and Software            | Fix any bugs or add additional functions as neccesary before starting final data collection                            | 3hr           | Nov 30                 |           |
+| 7       | Collect Temperature and Humidity Data for 48 Hours | Collect data per 5 minutes over the course of 48 hours from 3 different sensors                                        | 48hr          | Nov 30 ~ Dec 3         |           |
+| 8       | Construct Graphs Using Pyplot                      | Have graphs for raw data and average using pyplot                                                                      | 1hr           | Dec 4                  |           |
 ## Test Plan
 
 # Criteria C: Development
