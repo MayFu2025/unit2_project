@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
 import numpy as np
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
 
 plt.style.use('ggplot')
 
@@ -26,6 +29,8 @@ def take_data():
             humid3.append(float(rec[7]))
             time.append(t)
             t+=5
+
+    return temp1, temp2, temp3, humid1, humid2, humid3, time
 
 
 # draw graph
@@ -68,6 +73,15 @@ def basic_info (x:list, y:list, z:list):
         avg.append(np.sum(item)//3) #4
 
     return mean, std, min_val, max_val, avg
+
+
+def standardalization (data:list):
+    data_array = np.array(data)
+    data_reshaped = data_array.reshape(-1, 1)
+    scaler = StandardScaler()
+    sc_data = scaler.fit_transform(data_reshaped)
+
+    return sc_data
 
 
 
