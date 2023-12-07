@@ -12,7 +12,7 @@ ip = "192.168.6.153"
 answer = requests.post(f'http://{ip}/login', json=user)
 # print(answer.json()) [CHECKED THAT IT WORKS]
 cookie = answer.json()["access_token"]
-print(cookie)
+# print(cookie)
 
 
 # Put the cookie in the header of the request
@@ -80,16 +80,17 @@ s3_h = {
 # print(answer.json())
 # print(readings)
 
-
 def get_sensor(id:int=1, ip:str="192.168.6.153"):
     request = requests.get(f"http://{ip}/readings")
     data = request.json()
     sensors = data['readings'][0]
     sensor = []
+    date = []
     for s in sensors:
         if s['sensor_id'] == id:
             sensor.append(s['value'])
-    return sensor
+            date.append(s['datetime'])
+    return sensor, date
 
 def smoothing(x:list[int], size_window:int=5, overlap:float=1):
     smooth_x = []
