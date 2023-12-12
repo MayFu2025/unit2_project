@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime
 
 user = {"username": "MMproject", "password": "MMproject2"}
 ip = "192.168.6.153"
@@ -12,7 +13,7 @@ ip = "192.168.6.153"
 answer = requests.post(f'http://{ip}/login', json=user)
 # print(answer.json()) [CHECKED THAT IT WORKS]
 cookie = answer.json()["access_token"]
-# print(cookie)
+print(cookie)
 
 
 # Put the cookie in the header of the request
@@ -80,17 +81,34 @@ s3_h = {
 # print(answer.json())
 # print(readings)
 
+request = requests.get(f"http://192.168.6.153/readings")
+data = request.json()
+sensors = data['readings'][0]
+# sensor = []
+list_search = [ item for item in sensors if item['sensor_id'] == 2]
+print(list_search)
+
+
+# def get_sensor_w(id:int=1, ip:str="192.168.6.153"):
+#     request = requests.get(f"http://{ip}/readings")
+#     data = request.json()
+#     sensors = data['readings'][0]
+#     # sensor = []
+#     for item in sensors:
+#         if item['id'] == '2':
+#         print(sensors)
+#
+#     return sensor
+
 def get_sensor(id:int=1, ip:str="192.168.6.153"):
     request = requests.get(f"http://{ip}/readings")
     data = request.json()
     sensors = data['readings'][0]
     sensor = []
-    date = []
     for s in sensors:
         if s['sensor_id'] == id:
             sensor.append(s['value'])
-            date.append(s['datetime'])
-    return sensor, date
+    return sensor
 
 def smoothing(x:list[int], size_window:int=5, overlap:float=1):
     smooth_x = []
@@ -101,3 +119,32 @@ def smoothing(x:list[int], size_window:int=5, overlap:float=1):
         t.append(i)
 
     return t, smooth_x
+
+
+from_dt= datetime(2023, 12, 6, 10, 45)
+to_dt=datetime(2023, 12, 8, 16, 25)
+
+def get_sensor_w_date(id:int=1, ip:str="192.168.6.153"):
+    request = requests.get(f"http://{ip}/readings")
+    data = request.json()
+    sensors = data['readings'][0]
+    sensor = []
+    for s in sensors:
+        if s['sensor_id'] == id:
+            sensor_datetime = datetime.strptime(s['datetime'], "%Y-%m-%dT%H:%M:%S.%f")
+            if from_dt <= sensor_datetime<= to_dt:
+                sensor.append(s['value'])
+    return sensor
+
+# print(get_sensor(2))
+# print(len(get_sensor(2)))
+# print(get_sensor_w_date(1))
+# print(len(get_sensor_w_date(1)))
+
+
+# print(get_sensor_w_date(0))
+# print(get_sensor_w_date(1))
+# print(get_sensor_w_date(2))
+# print(get_sensor_w_date(3))
+# print(get_sensor_w_date(4))
+# print(get_sensor_w_date(5))

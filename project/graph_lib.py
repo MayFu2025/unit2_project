@@ -21,17 +21,16 @@ def take_data():
         time=[]
         for line in data:
             rec = line.split(',')
-            temp1.append(float(rec[2]))
-            temp2.append(float(rec[3]))
-            temp3.append(float(rec[4]))
-            humid1.append(float(rec[5]))
-            humid2.append(float(rec[6]))
-            humid3.append(float(rec[7]))
-            time.append(t)
+            temp1.append(float(rec[2])) #0
+            temp2.append(float(rec[3])) #1
+            temp3.append(float(rec[4])) #2
+            humid1.append(float(rec[5])) #3
+            humid2.append(float(rec[6])) #4
+            humid3.append(float(rec[7])) #5
+            time.append(t) #6
             t+=5
 
     return temp1, temp2, temp3, humid1, humid2, humid3, time
-
 
 # draw graph
 def draw_graph (t:list, v:list, color:str, title:str):
@@ -41,14 +40,16 @@ def draw_graph (t:list, v:list, color:str, title:str):
 
 # smoothing
 def smoothing(x:list, size_window:int=5):
-    time = 0
     smooth_x = []
     smooth_time = []
-    for i in range(0, len(x), size_window):
-        points=sum(x[i : i + size_window]) / size_window
+    for i in range(0, len(x) + size_window, size_window):
+        points = sum(x[i: i + size_window]) / size_window
         smooth_x.append(points)
-        smooth_time.append(time)
-        time += 1
+        smooth_time.append(i)
+        points = sum(x[i + (size_window // 2): i + size_window + (size_window // 2)]) / size_window
+        smooth_x.append(points)
+        smooth_time.append(i)
+
     return smooth_time, smooth_x
 
 # average
@@ -59,20 +60,20 @@ def basic_info (x:list, y:list, z:list):
     min_val = []
     max_val = []
     avg = []
+    median = []
 
     for i in range(len(x)):
         total.append([x[i],y[i],z[i]])
-        # print(total)
-        # print(total[i])
+
 
     for item in total:
         mean.append(np.mean(item)) #0
         std.append(np.std(item)) #1
         min_val.append(np.min(item)) #2
         max_val.append(np.max(item)) #3
-        avg.append(np.sum(item)//3) #4
+        median.append(np.median(item)) #4
 
-    return mean, std, min_val, max_val, avg
+    return mean, std, min_val, max_val, median
 
 
 def standardalization (data:list):
@@ -80,8 +81,9 @@ def standardalization (data:list):
     data_reshaped = data_array.reshape(-1, 1)
     scaler = StandardScaler()
     sc_data = scaler.fit_transform(data_reshaped)
+    time = np.arange(sc_data.shape[0])
 
-    return sc_data
+    return time, sc_data
 
 
 
