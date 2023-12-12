@@ -25,6 +25,7 @@ Using an arduino and DHT 11 sensors, we will construct a system that can measure
 [^6]:Python Geeks. “Advantages of Python: Disadvantages of Python.” Python Geeks, 26 June 2021, https://pythongeeks.org/advantages-disadvantages-of-python/. 
 [^7]: Real Python. “Python vs C++: Selecting the Right Tool for the Job.” Real Python, Real Python, 19 June 2021, https://realpython.com/python-vs-cpp/#memory-management. 
 [^8]: Emeritus. "What are the Key Pros and Cons of the Arduino Programming Language?" Emeritus, Emeritus, 25 January 2023, https://emeritus.org/blog/coding-arduino-programming-language.
+[^9]: Arduino. "Digital Pins." Arduino, Arduino, 5 December 2023, https://www.arduino.cc/reference/en/language/functions/digital-io/digitalwrite/.
 
 ## Success Criteria
 1. The solution provides a visual representation of the Humidity and Temperature values inside a dormitory (Local) and outside the house (Remote) for a period of minimum 48 hours. 
@@ -79,24 +80,25 @@ PyCharm: CSV, Time, Datetime, Requests, Matplotlib, Numpy, Pyfirmata
 Arduino IDE: Adafruit DHT Sensor Library
 
 ## Development
-From Arduino IDE
+### Code from Arduino IDE
+In order to be able to read data from the sensors, there is a need to compile and upload a program to the arduino. This is done using the Arduino IDE. The code we wrote as follows:
 ```.C++
 #include "DHT.h"
 #define DHTTYPE DHT11   // DHT 11 Sensor
 
 #define DHTPIN1 13     // what pin of the arduino each sensor's data pin is connected to
-#define DHTPIN2 5 
-#define DHTPIN3 2 
-
 DHT dht1(DHTPIN1, DHTTYPE);
-DHT dht2(DHTPIN2, DHTTYPE);
-DHT dht3(DHTPIN3, DHTTYPE);
 ```
+In the first line, we include the DHT.h class from the Adafruit Unified Sensor Library. This library allows the arduino to identify and communicate with the DHT sensors connected to it. In the second line, we define the type of sensor we are using. For our solution, we are using the DHT11 sensor.
+
+The third and fourth line defines the pin of the arduino that the sensor is connected to, and creates the sensor's identity so that it can be used in later programs. This is done for all 3 sensors, changing the number of the pin in the arduino (defining DHTPIN2, DHTPIN3), and then the corresponding id of the sensor (dht2, dht3).
 
 ```.C++
 void setup() {
  pinMode(12, OUTPUT);//PIN 12 used as a 5V port
  digitalWrite(12,HIGH);
+ pinMode(3, OUTPUT);//PIN 3 used as a 5V port
+ digitalWrite(3,HIGH);
  Serial.begin(9600);
  Serial.println(F("Hello! Arduino has started"));
  dht1.begin();
@@ -104,6 +106,7 @@ void setup() {
  dht3.begin();
 }
 ```
+Next, in this section we define the setup of the arduino. For digital pins of the Arduino, there is a need to configure them if they are used [9]. To do this, we use pinMode which takes two parameters, the pin number, and the mode in which it should behave. First, we specify that we wish to set up pin 12 as an output port. In the second line, we use digitalWrite, which takes the pin number and either "LOW" or "HIGH" as parameters to set the pin's output voltage. As DHT sensors require a 5V voltage to function, we set pin 12 to HIGH. The same is done for pin 3. Next, we start the serial communication between the arduino and the computer, and print a message to check if the arduino is working. In the last three lines, we start each of the sensors.
 
 ```.C++
 void loop() {
@@ -112,7 +115,7 @@ void loop() {
   float h1 = dht1.readHumidity();
   float t1 = dht1.readTemperature();
 ```
-A loop is started  to read data from the sensors every second. As shown in above, the program tells the arduino to read the humidity from the sensor dht1 as defined previously, and stores the value in the variable h1. The same is done for the temperature. This code is repeated for all the sensors, changing the number of the sensor (dht1, dht2, dht3) and the variable names (h1, t1, h2, t2, h3, t3) for each sensor. This results in 6 variables total, a temperature and humidity variable per sensor.
+A loop is started to read data from the sensors every second. As shown above, first, the program tells the arduino to wait 1000 ms (1 second) at the start of each iteration. The program tells the arduino to read the humidity from the sensor dht1 as defined previously, and stores the value in the variable h1. The same is done for the temperature. This code is repeated for all the sensors, changing the number of the sensor (dht1, dht2, dht3) and the variable names (h1, t1, h2, t2, h3, t3) for each sensor. This results in 6 variables created by the arduino in total, a temperature and humidity variable per sensor.
 
 ```.C++
   //Check for errors
@@ -120,7 +123,8 @@ A loop is started  to read data from the sensors every second. As shown in above
    Serial.println(F("Failed to read from DHT sensor!"));
   return;
   }
-  ```
+```
+Within the loop, next, the program checks to make sure that all the sensors read a value. In this if statement, if any of the variables is not a number (isnan), the program prints a message on the serial device and returns to the start of the loop.
 
 ```.C++
   // Print and check the readings for DHT1
@@ -137,6 +141,7 @@ A loop is started  to read data from the sensors every second. As shown in above
   Serial.print(h3);
 }
 ```
+After checking for potential errors, the program can then proceed to printing the values of the collected temperatures and humidities on the serial device.
 
 From file ```API.py```
 ```.py
