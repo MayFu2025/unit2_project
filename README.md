@@ -70,23 +70,30 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 - Functions
 - Libraries
 - Serial Communication
-- API
+- Application Programming Interface (API)
 - Data Visualization
+
+## List of libraries used ```NEED TO DO THIS```
+PyCharm: CSV, Time, Datetime, Requests, Matplotlib, Numpy, Pyfirmata
+
+Arduino IDE: Adafruit DHT Sensor Library
 
 ## Development
 From Arduino IDE
 ```.C++
 #include "DHT.h"
-#define DHTTYPE DHT11   // DHT 22  (AM2302), AM2321
+#define DHTTYPE DHT11   // DHT 11 Sensor
 
-#define DHTPIN1 13     // what pin we're connected to
+#define DHTPIN1 13     // what pin of the arduino each sensor's data pin is connected to
 #define DHTPIN2 5 
 #define DHTPIN3 2 
 
 DHT dht1(DHTPIN1, DHTTYPE);
 DHT dht2(DHTPIN2, DHTTYPE);
 DHT dht3(DHTPIN3, DHTTYPE);
+```
 
+```.C++
 void setup() {
  pinMode(12, OUTPUT);//PIN 12 used as a 5V port
  digitalWrite(12,HIGH);
@@ -96,32 +103,26 @@ void setup() {
  dht2.begin();
  dht3.begin();
 }
+```
 
+```.C++
 void loop() {
   delay(1000);
   // Readings for DHT1
   float h1 = dht1.readHumidity();
   float t1 = dht1.readTemperature();
-  float h2 = dht2.readHumidity();
-  float t2 = dht2.readTemperature();
-  float h3 = dht3.readHumidity();
-  float t3 = dht3.readTemperature();
+```
+A loop is started  to read data from the sensors every second. As shown in above, the program tells the arduino to read the humidity from the sensor dht1 as defined previously, and stores the value in the variable h1. The same is done for the temperature. This code is repeated for all the sensors, changing the number of the sensor (dht1, dht2, dht3) and the variable names (h1, t1, h2, t2, h3, t3) for each sensor. This results in 6 variables total, a temperature and humidity variable per sensor.
 
+```.C++
   //Check for errors
   if (isnan(h1) || isnan(t1) || isnan(h2) || isnan(t2) || isnan(h3) || isnan(t3)) {
    Serial.println(F("Failed to read from DHT sensor!"));
-   if (isnan(h1) || isnan(t1)) {
-    Serial.println(F("Failed to read from sensor 1"));
-   }
-   if (isnan(h2) || isnan(t2)) {
-    Serial.println(F("Failed to read from sensor 2"));
-   }
-  if (isnan(h3) || isnan(t3)) {
-    Serial.println(F("Failed to read from sensor 3"));
-   }
   return;
   }
+  ```
 
+```.C++
   // Print and check the readings for DHT1
   Serial.print(t1);
   Serial.print(",");
@@ -138,7 +139,7 @@ void loop() {
 ```
 
 From file ```API.py```
-```.python
+```.py
 import requests
 from datetime import datetime
 
@@ -160,6 +161,9 @@ print(cookie)  # Print cookie to check if it worked
 # Put the cookie in the header of the request
 header = {'Authorization':f'Bearer {cookie}'}  # Create header for authorization for future requests
 
+```
+
+```.py
 # Create Sensors [ONLY RUN ONCE]
 s1_t = {
     'type': 'temperature',
@@ -168,41 +172,11 @@ s1_t = {
     'unit': 'C'
 } #id=29 (id of the sensor created at the first run of this program)
 
-s2_t = {
-    'type': 'temperature',
-    'location': 'door',
-    'name': 'dht2_temp',
-    'unit': 'C'
-} #id=30
-
-s3_t = {
-    'type': 'temperature',
-    'location': 'window',
-    'name': 'dht3_temp',
-    'unit': 'C'
-} #id=31
-
-s1_h = {
-    'type': 'humidity',
-    'location': 'table',
-    'name': 'dht1_hum',
-    'unit': '%'
-} #id=32
-
-s2_h = {
-    'type': 'humidity',
-    'location': 'door',
-    'name': 'dht2_hum',
-    'unit': '%'
-} #id=33
-
-s3_h = {
-    'type': 'humidity',
-    'location': 'window',
-    'name': 'dht3_hum',
-    'unit': '%'
-} #id=34
+answer = requests.post(f'http://{ip}/sensor/new', json=s1_t, headers=header)  # Create new sensor on server, changing the json parameter for each sensor
 ```
+This program is repeated for all the sensors, changing the type, location, name and unit of each sensor. As a result, we have 6 sensors on the server, each with a unique id from 29~34.
+
+```.py
 
 From file ```solution.py```
 ```.python
