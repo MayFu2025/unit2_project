@@ -10,7 +10,7 @@ As winter arrives, the residents of Room 20C of the house R4-Up have reported wa
 Room 20C is asking for a way to record the temperature and humidity of the room, to be able to look back and review if they can conclude that one or both are contributing to their sufferings in the morning.
 
 ## Proposed Solution
-Considering the client requirements an adequate solution includes a low cost sensing device for humidity and temperature and a custom data script that process and anaysis the samples acquired. For a low cost sensing device an adequate alternative is the DHT11 sensor[^1] which is offered online for less than 5 USD and provides adequare precision and range for the client requirements (Temperature Range: 0°C to 50°C, Humidity Range: 20% to 90%). Similar devices such as the DHT22, AHT20 or the AM2301B [^2] have higher specifications, however the DHT11 uses a simple serial communication (SPI) rather than more eleborated protocols such as the I2C used by the alternatives. For the range, precision and accuracy required in this applicaiton the DHT11 provides the best compromise. Connecting the DHT11 sensor to a computer requires a device that provides a Serial Port communication. A cheap and often used alternative for prototyping is the Arduino UNO microcontroller [^3]. "Arduino is an open-source electronics platform based on easy-to-use hardware and software"[^4]. In additon to the low cost of the Arduino (< 6USD), this devide is programable and expandable[^1]. Other alternatives include diffeerent versions of the original Arduino but their size and price make them a less adequate solution.
+Considering the client requirements an adequate solution includes a low cost sensing device for humidity and temperature and a custom data script that process and analyzes the samples acquired. For a low cost sensing device an adequate alternative is the DHT11 sensor[^1] which is offered online for less than 5 USD and provides adequare precision and range for the client requirements (Temperature Range: 0°C to 50°C, Humidity Range: 20% to 90%). Similar devices such as the DHT22, AHT20 or the AM2301B [^2] have higher specifications, however the DHT11 uses a simple serial communication (SPI) rather than more eleborated protocols such as the I2C used by the alternatives. For the range, precision and accuracy required in this applicaiton the DHT11 provides the best compromise. Connecting the DHT11 sensor to a computer requires a device that provides a Serial Port communication. A cheap and often used alternative for prototyping is the Arduino UNO microcontroller [^3]. "Arduino is an open-source electronics platform based on easy-to-use hardware and software"[^4]. In additon to the low cost of the Arduino (< 6USD), this devide is programable and expandable[^1]. Other alternatives include diffeerent versions of the original Arduino but their size and price make them a less adequate solution.
 
 Considering the budgetary constrains of the client and the hardware requirements, the software tool that I proposed for this solution is Python. Python's open-source nature and platform independence contribute to the long-term viability of the system. The use of Python simplifies potential future enhancements or modifications, allowing for seamless scalability without the need for extensive redevelopment [^5][^6]. In comparison to the alternative C or C++, which share similar features, Python is a High level programming language (HLL) with high abstraction [^7]. For example, memory management is automatic in Python whereas it is responsability of the C/C++ developer to allocate and free up memory [^7], this could result in faster applications but also memory problems. In addition a HLL language will allow me and future developers extend the solution or solve issues proptly.  
 
@@ -63,7 +63,19 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 ## Test Plan
 
 # Criteria C: Development
-```.jupyter
+## List of techniques used
+- For Loop
+- While Loop
+- If/Else Statements
+- Functions
+- Libraries
+- Serial Communication
+- API
+- Data Visualization
+
+## Development
+From Arduino IDE
+```.C++
 #include "DHT.h"
 #define DHTTYPE DHT11   // DHT 22  (AM2302), AM2321
 
@@ -125,16 +137,125 @@ void loop() {
 }
 ```
 
+From file ```API.py```
 ```.python
+import requests
+from datetime import datetime
+
+user = {"username": "MMproject", "password": "MMproject2"}  # User on server
+ip = "192.168.6.153"  # IP address of server
 
 
+# Register User [ONLY RUN ONCE]
+answer = requests.post(f'http://{ip}/register', json=user)  # Register user, save result in answer
+print(answer.json())  # Print answer to check if it worked
+
+# Log-in to get Cookie
+answer = requests.post(f'http://{ip}/login', json=user)  #Login to server, save result in answer
+print(answer.json())  # Print answer to check if it worked
+cookie = answer.json()["access_token"]  # Get access token from server, save in cookie
+print(cookie)  # Print cookie to check if it worked
+
+
+# Put the cookie in the header of the request
+header = {'Authorization':f'Bearer {cookie}'}  # Create header for authorization for future requests
+
+# Create Sensors [ONLY RUN ONCE]
+s1_t = {
+    'type': 'temperature',
+    'location': 'table',
+    'name': 'dht1_temp',
+    'unit': 'C'
+} #id=29 (id of the sensor created at the first run of this program)
+
+s2_t = {
+    'type': 'temperature',
+    'location': 'door',
+    'name': 'dht2_temp',
+    'unit': 'C'
+} #id=30
+
+s3_t = {
+    'type': 'temperature',
+    'location': 'window',
+    'name': 'dht3_temp',
+    'unit': 'C'
+} #id=31
+
+s1_h = {
+    'type': 'humidity',
+    'location': 'table',
+    'name': 'dht1_hum',
+    'unit': '%'
+} #id=32
+
+s2_h = {
+    'type': 'humidity',
+    'location': 'door',
+    'name': 'dht2_hum',
+    'unit': '%'
+} #id=33
+
+s3_h = {
+    'type': 'humidity',
+    'location': 'window',
+    'name': 'dht3_hum',
+    'unit': '%'
+} #id=34
 ```
 
+From file ```solution.py```
+```.python
+def read() -> str:
+    """Read data from Arduino. Return data as a string."""
+    data = ""  # Create empty string
+    while len(data) < 1:  # When data is empty
+        data = arduino.readline()  # Read data collected on Arduino (sensors)
+    return data.decode('utf-8')  # utf-8 is the same as ascii
+```
 
-## List of techniques used
+From file ```solution.py```
+```.python
+import requests
+from API import user, ip
 
-## Development
+id = "cu.usbserial-110"  # id of Arduino on computer
+arduino = serial.Serial(port=f'/dev/{id}', baudrate=9600, timeout=0.1)  # id of Arduino on computer
+print("Connection Successful")  # Let user know Arduino is connected
 
+humidity = []  # List to store humidity data
+temperature = []  # List to store temperature data
+t = 0  # Variable to store time elapsed in seconds
+for i in range(172801):  # Loop for 17800 seconds (=48 hours)
+    msg = read()  # Read data from Arduino
+    print(t, msg)  # To check what data the program reads
+    time.sleep(1)  # Wait 1 second
+    t += 1  # Add 1 to the variable t corresponding to the seconds passed
+
+    # Record the data once in 5 minutes
+    if t%300 == 0:  # Per 5 minute interval (=300 seconds)
+        # Storing Data in CSV File
+        date = datetime.datetime.now()  # Find time data of the moment
+        line = f'{t},{date},{msg}\n'  # Time in seconds, datetime, msg containing sensor readings
+        with open('final_readings.csv', mode='a') as f:  # Open file in mode append
+            data = f.writelines(line)  # Add line to CSV file
+
+        # Storing Data in Sensors on Server
+        a = list(msg.split(',')) # Split the msg (data from Arduino) into a list
+        sensor_id = 29  # First of our sensors on the server
+        r = 0  # Index of the list of readings
+        # Login and Gain Access Token
+        login = requests.post(f'http://{ip}/login', json=user)  # Login to server
+        cookie = login.json()["access_token"]  # Get access token from server
+        header = {'Authorization': f'Bearer {cookie}'}  # Create header for authorization
+        # Create new posts for each sensor on the server
+        while sensor_id <= 34:  # Loop through all of our sensors
+            record = {f'sensor_id':sensor_id, 'value':a[r]}  # Create a record for each sensor
+            print(record)  # To check what data the program sends to the server
+            answer = requests.post(f'http://{ip}/reading/new', json=record, headers=header)  # Send data to server
+            sensor_id += 1  # Next sensor
+            r += 1  # Next reading
+```
 
 # Criteria D: Functionality
 
