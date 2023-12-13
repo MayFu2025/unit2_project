@@ -1,4 +1,5 @@
-![11e470e9022f4fc5b367429bcbb285bc](https://github.com/comsci-uwc-isak/unit2_2023/assets/53995212/1d14b1d3-ae39-4ef3-8ec9-3329630eacae)
+![](project/images/temperature.gif)
+<sub>"Temperature Slider" by Chris Gannon, *https://dribbble.com/shots/4592784-Temperature-Slider*</sub>
 
 # Unit 2: A Distributed Weather Station for ISAK
 
@@ -7,7 +8,7 @@
 ## Problem definition
 As winter arrives, the residents of Room 20C of the house R4-Up have reported waking up to sore throats and cold-like symptoms in the mornings. They suspect that the main reason for this is either the temperature or humidity of the room, but they still believe that there is a possibility for other factors to be at play as well. If they can be sure the reason for their suffering is the temperature, the residents can collectively decide to turn up the heater in their room. Similarly, if they can be sure that the humidity is to blame, together they will invest in a humidifier (or dehumidifier) for their room.
 
-Room 20C is asking for a way to record the temperature and humidity of the room, to be able to look back and review if they can conclude that one or both are contributing to their sufferings in the morning.
+Room 20C is asking for a way to record the temperature and humidity of the room, to be able to look back and review if they can conclude that one or both factors are contributing to their sufferings in the morning.
 
 ## Proposed Solution
 Considering the client requirements an adequate solution includes a low cost sensing device for humidity and temperature and a custom data script that process and analyzes the samples acquired. For a low cost sensing device an adequate alternative is the DHT11 sensor[^1] which is offered online for less than 5 USD and provides adequate precision and range for the client requirements (Temperature Range: 0°C to 50°C, Humidity Range: 20% to 90%). Similar devices such as the DHT22, AHT20 or the AM2301B [^2] have higher specifications, however the DHT11 uses a simple serial communication (SPI) rather than more elaborated protocols such as the I2C used by the alternatives. For the range, precision and accuracy required in this application the DHT11 provides the best compromise. Connecting the DHT11 sensor to a computer requires a device that provides a Serial Port communication. A cheap and often used alternative for prototyping is the Arduino UNO microcontroller [^3]. "Arduino is an open-source electronics platform based on easy-to-use hardware and software"[^4]. In addition to the low cost of the Arduino (< 6USD), this device is programmable and expandable[^1]. Other alternatives include different versions of the original Arduino but their size and price make them a less adequate solution.
@@ -30,27 +31,27 @@ Using an arduino and DHT 11 sensors, we will construct a system that can measure
 
 ## Success Criteria
 1. The solution provides a visual representation of the Humidity and Temperature values inside a dormitory (Local) and outside the house (Remote) for a period of minimum 48 hours. 
-1. ```[HL]``` The local variables will be measure using a set of 3 sensors around the dormitory.
-2. The solution provides a mathematical modelling for the Humidity and Temperature levels for each Local and Remote locations. ```(SL: linear model)```, ```(HL: non-lineal model)```
-3. The solution provides a comparative analysis for the Humidity and Temperature levels for each Local and Remote locations including mean, standad deviation, minimum, maximum, and median.
-4. ```(SL)```The Local samples are stored in a csv file and ```(HL)``` posted to the remote server as a backup.
-5. The solution provides a prediction for the subsequent 12 hours for both temperature and humidity.
-6. The solution includes a poster summarizing the visual representations, model and analysis created. The poster includes a recommendation about healthy levels for Temperature and Humidity.
+2. ```[HL]``` The local variables will be measure using a set of 3 sensors around the dormitory.
+3. The solution provides a mathematical modelling for the Humidity and Temperature levels for each Local and Remote locations. ```(SL: linear model)```, ```(HL: non-lineal model)``` 
+4. The solution provides a comparative analysis for the Humidity and Temperature levels for each Local and Remote locations including mean, standad deviation, minimum, maximum, and median.
+5. ```(SL)```The Local samples are stored in a csv file and ```(HL)``` posted to the remote server as a backup.
+6. The solution provides a prediction for the subsequent 12 hours for both temperature and humidity.
+7. The solution includes a poster summarizing the visual representations, model and analysis created. The poster includes a recommendation about healthy levels for Temperature and Humidity.
 
 ## TOK Connection
-_To what extent does ```the use of data science``` in climate research influence our understanding of environmental issues, and what knowledge questions arise regarding the ```reliability, interpretation, and ethical implications``` of data-driven approaches in addressing climate change_
+**To what extent does ```the use of data science``` in climate research influence our understanding of environmental issues, and what knowledge questions arise regarding the ```reliability, interpretation, and ethical implications``` of data-driven approaches in addressing climate change**
 
 1. How does our use of technology shape our understanding of the environment?
 
-_Technologies show ._
+_Being able to use technology to gain quantitative and qualitative data helps us develop a more accurate understanding of the environment we live in. Where on our own, we may not be able to accurately measure the temperature and humidity of our room, using technology, we can gain precise measurements that can then help us understand trends, potential outcomes, identify issues, etc. Compared to human judgement alone, technology can sometimes be more reliable: tools can measure more significant figures, less bias in the process of obtaining these measurements, etc. Using technology, our understanding of the environment extends from just being what we can observe with our own five senses, into something that can be developed into helping us make accurate predictions or better choices._
 
 2. What responsibilities do we have as technologists when it comes to handling personal data related to our living spaces?
 
-_Technologies show ._
+_Technologists have the responsibility to collect and gather personal data only when there is the consent of the one living in the space being investigated. Technologists have the responsibility to be clear what the collected data will be used for, the duration in which the personal data will be used/kept for, and who the data will be available to. This investigation reveals the information about one of the project members' living quarters to the people that read this documentation. Consent to use of the room and data collected from the room was given by all the students from the room, as they trust that the data will not be used for malicious purposes. Technologists therefore have the obligation to uphold that trust that was generously given to them, protect the data so that it is only used for the purpose that it was granted for, and be clear with all parties about where this data is being used._
 
 3. What cultural and contextual factors might impact our interpretation of the results, especially when comparing our local readings with those from the campus? 
 
-_Technologies show ._
+_Cultural factors that impact our interpretation can be what temperatures and humidities we view as acceptable or unacceptable. Many people from this school especially come from places where Japan's climate is hugely different to what they are used to. Therefore, even the same temperature or humidity recorded could be described in a different qualitative way between two people analyzing the results. (e.g. 20C may be hot for a winter for some, while others who may come from places without winters may consider it cold) On the other hand, contextual factors that may impact our interpretation is bias according to the knowledge we have about the environment we are recording. For example, especially when investigating your own room that you live in, if you wake up every day thinking that it is cold (like many of us do), even when the collected data tells you otherwise, you might refuse to believe it as in your mind, it is knowledge that your room is cold. These factors that make up biases when analyzing data can be considered valid, if you consider your observations from a daily basis to be in a way, an experiment itself too. However, it is also important to acknowledge that bias may exist when trying to analyze data, and evaluating the reliability of your results as well as your day to day observations._
 
 # Criteria B: Design
 
@@ -70,7 +71,7 @@ _Technologies show ._
 ## Flow Diagrams
 ![](project/images/flowdiagram1.png)
 
-**Fig.4** shows the flow diagram for the function `read` to retrieve data gathered in the arduino on Pycharm.
+**Fig.4** shows the flow diagram for the function `read` to retrieve data gathered in the arduino on PyCharm.
 
 ![](project/images/flowdiagram2.png)
 
@@ -78,7 +79,7 @@ _Technologies show ._
 
 ![](project/images/flowdiagram3.png)
                                                                                                   
-**Fig.4**
+**Fig.6**
 
 ## Test Plan
 
@@ -93,13 +94,15 @@ _Technologies show ._
 | 5  | Test serial connection between arduino and computer    | Have confirmed that the arduino and computer can form a serial connection                              | 15min         | Nov 29                 | C         |
 | 6  | Test Each DHT11 Sensor and their connection to Arduino | Confirm that all sensors can return a valid temperature and humidity reading                           | 15min         | Nov 29                 | C         |
 | 7  | Code Data Collection Method on PyCharm                 | Create a program that retrieves data from the Arduino every 5 minutes                                  | 30min         | Nov 29                 | C         |
-| 8  | Test if readings can be sent to remote server          | Have confirmed that we can create new sensors on the server, and save data within this sensor          | 30min         | Nov 30                 | C         |
-| 9  | Code Data Storage Method on PyCharm                    | Create a program that stores retrieved data locally on a csv file, and remotely on sensors in a server | 1hr           | Nov 30                 | C         |
-| 10 | Test and Finalize Hardware and Software                | Fix any bugs or add additional functions as neccesary before starting final data collection            | 2hr           | Nov 30                 | C         |
-| 11 | Collect Temperature and Humidity Data for 48 Hours     | Collect data per 5 minutes over the course of 48 hours from 3 different sensors                        | 48hr          | Nov 30 ~ Dec 3         | C         |
-| 12 | Create Flow Diagrams and Reference Figures             | Create 3 flow diagrams and supplementary diagrams that help explain our method                         | 1hr           | Nov 31 ~ Dec 12        | B         |
-| 13 | Construct Graphs Using Pyplot                          | Have graphs for raw data and average using pyplot                                                      | 3hr           | Dec 4 ~ Dec 12         | C/D       |
-| 14 | Film Video Introducing Product                         | Have a video that demonstrates proposed solution to clients                                            | 1hr           | Dec 14                 | D         |
+| 8  | Test if readings can be saved to a new csv file        | Have confirmed that we can directly take readings and save it in a new csv file                        |               |                        |           |
+| 9  | Test if readings can be sent to remote server          | Have confirmed that we can create new sensors on the server, and save data within this sensor          | 30min         | Nov 30                 | C         |
+| 10 | Code Data Storage Method on PyCharm                    | Create a program that stores retrieved data locally on a csv file, and remotely on sensors in a server | 1hr           | Nov 30                 | C         |
+| 11 | Test and Finalize Hardware and Software                | Fix any bugs or add additional functions as neccesary before starting final data collection            | 2hr           | Nov 30                 | C         |
+| 12 | Collect Temperature and Humidity Data for 48 Hours     | Collect data per 5 minutes over the course of 48 hours from 3 different sensors                        | 48hr          | Nov 30 ~ Dec 3         | C         |
+| 13 | Create Flow Diagrams and Reference Figures             | Create 3 flow diagrams and supplementary diagrams that help explain our method                         | 1hr           | Nov 31 ~ Dec 12        | B         |
+| 14 | Construct Graphs Using Pyplot                          | Have graphs for raw data and average using pyplot                                                      | 3hr           | Dec 4 ~ Dec 12         | C/D       |
+| 15 | Design Scientific Poster                               | Finish a poster containing created graphs and an adaquete conclusion summarizing the investigation     | 2hr           | Dec 14                 | D         |
+| 16 | Film Video Introducing Proposed Solution               | Finish a video that demonstrates proposed solution to clients                                          | 1hr           | Dec 14                 | D         |
 
 # Criteria C: Development
 ## List of techniques used
@@ -114,14 +117,16 @@ _Technologies show ._
   - Application Programming Interface (API)
   - Data Visualization
 
-## List of libraries used ```NEED TO DO THIS ALSO PUT VARIABLES AND FUNCTIONS IN BRACKETS ALSO MAKE SURE TO INCLUDE WHICH SUCCESS CRITERIA THIS RELATES TO```
-PyCharm: CSV, Time, Datetime, Requests, Matplotlib, Numpy, Pyfirmata
+## List of libraries used ```MAKE SURE TO INCLUDE WHICH SUCCESS CRITERIA THIS RELATES TO, screenshot of sensor data in server```
+PyCharm: CSV, Time, Datetime, Requests, Matplotlib (pyplot module), Numpy
 
 Arduino IDE: Adafruit DHT Sensor Library
 
 ## Development
 ### Code from Arduino IDE
-In order to be able to read data from the sensors, there is a need to compile and upload a program to the arduino. This is done using the Arduino IDE. The code we wrote as follows:
+In order to be able to read data from the sensors, there is a need to compile and upload a program to the arduino. This is done using the Arduino IDE. The code we wrote as follows.
+
+From file ```arduino.ino```:
 ```.C++
 #include "DHT.h"
 #define DHTTYPE DHT11   // DHT 11 Sensor
@@ -129,7 +134,7 @@ In order to be able to read data from the sensors, there is a need to compile an
 #define DHTPIN1 13     // what pin of the arduino each sensor's data pin is connected to
 DHT dht1(DHTPIN1, DHTTYPE);
 ```
-In the first line, we include the `DHT.h` class from the Adafruit Unified Sensor Library. This library is necessary in our program as it allows the arduino to identify and communicate with the DHT sensors connected to it. In the second line, we define the type of sensor we are using. For our solution, we are using the DHT11 sensor.
+**(Success Criteria 2)** In the first line, we include the `DHT.h` class from the Adafruit Unified Sensor Library. This library is necessary in our program as it allows the arduino to identify and communicate with the DHT sensors connected to it. In the second line, we define the type of sensor we are using. For our solution, we are using the DHT11 sensor.
 
 The third and fourth line defines the pin of the arduino that the sensor is connected to, and creates the sensor's identity so that it can be used in later programs. This is done for all 3 sensors, changing the number of the pin in the arduino (defining `DHTPIN2`, `DHTPIN3`), and then the corresponding id of the sensor (`dht2`, `dht3`). The pins that the sensors are connected to can be seen in fig. 2.
 
@@ -172,10 +177,10 @@ Within the loop, next, the program checks to make sure that all the sensors read
   Serial.print(",");
 }
 ```
-After checking for potential errors, the program can then proceed to printing the values of the collected temperatures and humidities on the serial device. This is the data that we can use on Pycharm after it gets transferred to the serial device, therefore we decided to send the collected data in the form of `t1,t2,t3,h1,h2,h3` as using Python, we can split this string by comma and reach each variable using the respective index of the list. According to the Arduino Forum, the best practice for printing multiple variables in one line for C++ is to repeat the `serial.print()` function[10]. The above code shows how we use two lines of code to print one variable, and a comma. These two lines are repeated for every other variable (`t2`, `t3`, `h1`, `h2`, `h3`).
+After checking for potential errors, the program can then proceed to printing the values of the collected temperatures and humidities on the serial device. This is the data that we can use on Pycharm after it gets transferred to the serial device, therefore we decided to send the collected data in the form of `t1,t2,t3,h1,h2,h3` as using Python, we can split this string by comma and reach each variable using the respective index of the list. According to the Arduino Forum, the best practice for printing multiple variables in one line for C++ is to repeat the `serial.print()` function [10]. The above code shows how we use two lines of code to print one variable, and a comma. These two lines are repeated for every other variable (`t2`, `t3`, `h1`, `h2`, `h3`).
 
 ### Code from PyCharm
-First, we identified the need to be able to communicate with our remote server to back up our data. We decided to have a remote storage of the data we collected so that should the local backup malfunction or become inaccessible, the same data can be retrieved again my obtaining backup data on the server. 
+**(Success Criteria 5)** First, we identified the need to be able to communicate with our remote server to back up our data. We decided to have a remote storage of the data we collected so that should the local backup malfunction or become inaccessible, the same data can be retrieved again my obtaining backup data on the server. 
 
 From file ```API.py```:
 ```.py
@@ -221,7 +226,6 @@ answer = requests.post(f'http://{ip}/sensor/new', json=s1_t, headers=header)  # 
 ```
 Next, there is a need to create new sensors on the server, which is the remote storage of our collected temperature and humidity data. This can be done by sending a `POST` request. In the first line, we create a dictionary for the data required in the sensor. In our server, this includes the type of sensor, the location of the sensor, the name of the sensor, and the unit of the measurements used. Each of these are keys in the dictionary, and the values are changed as we create new sensors. In the second line, we send the `POST` request to the server to create a new sensor. The JSON parameter is the dictionary we created previously, and the header parameter is `header` we created previously. This is repeated for all the sensors, changing the values of the keys in the dictionary sent. This resulted in 6 sensors on the server, each with a unique id from 29~34.
 
-
 Next, there is a need to collect data from the arduino in a form that can be manipulated in the serial device (computer connected to the arduino) for storage. First, we identified the need to create a function on PyCharm that reads the data sent by the arduino.
 
 From file ```solution.py```
@@ -244,7 +248,6 @@ def read() -> str:
 ```
 In the first line we create an empty string and store it as the variable data. In the next line, using a while loop, we check if the length of the string is less than 1 (if the string is empty.) This is to ensure that the program does not store empty data or read the next collected data before it stores the previous one. If the string is empty, the program proceeds to read the data collected on the arduino using the `readline()` function. The line read refers to the string containing the 6 measurements that was created in the Arduino IDE. In the last line, the data is returned from the function as a string, and decoded into ascii.
 
-
 As per the success criteria, there is a need to collect data from the arduino for 48 hours. The flow diagram for how this is done can be found as fig. 5.
 ```.py
 humidity = []  # List to store humidity data
@@ -257,13 +260,13 @@ for i in range(172801):  # Loop for 17800 seconds (=48 hours)
     t += 1  # Add 1 to the variable t corresponding to the seconds passed
 ```
 In order to be able to see the data that the arduino transfers to there is a need for the program to read the data from the arduino. This can be done by using the read function defined previously. In the first line, we create two empty lists to store the humidity and temperature data. In the second line, we create a variable `t` to store the time elapsed in seconds.
-Next, we start a for loop that loops 172801 times (number of seconds in 48 hours). Within the loop, the `read()` function is called to obtain the temperature and humidity data from the arduino. The returned string is saved as the variable `msg`. Next, the time elapsed in seconds and the data read from the arduino is printed onto the console so that the user can check the progress of the loop. In the next line, the program waits 1 second using the `sleep()` function from the `time` library, and 1 is added to the variable `t`, before looping back to the start of the for loop.
+**(Success Criteria 1)** Next, we start a for loop that loops 172801 times (number of seconds in 48 hours). Within the loop, the `read()` function is called to obtain the temperature and humidity data from the arduino. The returned string is saved as the variable `msg`. Next, the time elapsed in seconds and the data read from the arduino is printed onto the console so that the user can check the progress of the loop. In the next line, the program waits 1 second using the `sleep()` function from the `time` library, and 1 is added to the variable `t`, before looping back to the start of the for loop.
 
 ```.py
 import csv
 import datetime
 ```
-A requirement is that there is a local copy of the data collected. Therefore, we chose to store our data in a csv file. To do this, we import the `csv` library, and also the `datetime` library to be able to record the time the data was collected. The import statements are done at the beginning of the file.
+**(Success Criteria 5)** A requirement is that there is a local copy of the data collected. Therefore, we chose to store our data in a csv file. To do this, we import the `csv` library, and also the `datetime` library to be able to record the time the data was collected. The import statements are done at the beginning of the file.
 
 ```.py
     # Record the data once in 5 minutes
@@ -274,13 +277,17 @@ A requirement is that there is a local copy of the data collected. Therefore, we
         with open('final_readings.csv', mode='a') as f:  # Open file in mode append
             data = f.writelines(line)  # Add line to CSV file
 ```
-In the above program, an if statement checks if `t` is a multiple of 300, representing that 5 minutes have elapsed. Within the if statement, the program first saves the date and time at the moment in the variable `date` using the `datetime.now()` function. In the next line, we create a string in the variable `line`, which formats `t`, `date` and `msg`, each separated by a comma. This is the string that will be stored in the csv file. In the next line, the csv file `final_readings.csv` is opened using the with the `open()` function from the `csv` library. The mode is set to append, so that the program does not overwrite the previous data collected. In the next line, `line` is added to the csv file using the `writelines()` function.
+In the above program, an if statement checks if `t` is a multiple of 300, representing that 5 minutes have elapsed. Within the if statement, the program first saves the date and time at the moment in the variable `date` using the `datetime.now()` function. In the next line, we create a string in the variable `line`, which formats `t`, `date` and `msg`, each separated by a comma. This is the string that will be stored in the csv file. In the next line, the csv file `final_readings.csv` is opened using the with the `open()` function from the `csv` library. The mode is set to append, so that the program does not overwrite the previous data collected. In the next line, `line` is added to the csv file using the `writelines()` function. Fig. 7 below shows a screenshot of the first 15 lines of the csv file.
+
+![](project/images/csvexample.png)
+**Fig. 7** Screenshot of the first 15 lines of the csv file. The first value is the time in seconds elapsed. The second value is the date and time of the recording. The third value onwards represents the readings in the order of `t1`, `t2`, `t3`, `h1`, `h2`, `h3`. **(Success Criteria 5)**
+
 
 ```
 import requests
 from API import ip, header
 ```
-As per requirements of the proposed solution, there is also a need to store the data collected on the server. This can be done by sending a `POST` request to the server. To do this, there is a need to import the `requests` library, as well as the `ip` and `header` variables to be reused from the file `API.py`. The import statements are done at the beginning of the file.
+**(Success Criteria 5)** As per requirements of the proposed solution, there is also a need to store the data collected on the server. This can be done by sending a `POST` request to the server. To do this, there is a need to import the `requests` library, as well as the `ip` and `header` variables to be reused from the file `API.py`. The import statements are done at the beginning of the file.
 
 ```.py
         # Storing Data in Sensors on Server
@@ -296,11 +303,14 @@ As per requirements of the proposed solution, there is also a need to store the 
             sensor_id += 1  # Next sensor
             r += 1  # Next reading
 ```
-The above code is nested within the same if statement that runs when `t` is a multiple of 300 (5 minute intervals). first, the program splits the string `msg` into a list using the `split()` function. The list is saved as `a`. As we will be using a for loop to send each of the data to each of the sensors in the server, in the next line, we create a variable `sensor_id` to store the id of the first sensor on the server. We also create a variable `r` to store the index of the list of readings. In the next line, we start a while loop that loops until `sensor_id` is greater than 34, which is the id of the last sensor on the server. Within the loop, a temporary dictionary `record` stores the id of the sensor the data is to be sent to, and the value of the reading by taking it from the list `a` using the index `r`. In the next line, the dictionary is printed to check that the data is in the correct format. Next, we send a `POST` request to the server to create a new reading. The JSON parameter is the dictionary `record` we created previously, and the header parameter is `header` imported from `API.py`. In the final line we add 1 to `sensor_id` and `r` to loop through the next sensor and reading. When this is done, the program loops back to the start of the while loop, and when the while loop finishes, it returns back to the start of the for loop.
+The above code is nested within the same if statement that runs when `t` is a multiple of 300 (5 minute intervals). first, the program splits the string `msg` into a list using the `split()` function. The list is saved as `a`. As we will be using a for loop to send each of the data to each of the sensors in the server, in the next line, we create a variable `sensor_id` to store the id of the first sensor on the server. We also create a variable `r` to store the index of the list of readings. In the next line, we start a while loop that loops until `sensor_id` is greater than 34, which is the id of the last sensor on the server. Within the loop, a temporary dictionary `record` stores the id of the sensor the data is to be sent to, and the value of the reading by taking it from the list `a` using the index `r`. In the next line, the dictionary is printed to check that the data is in the correct format. Next, we send a `POST` request to the server to create a new reading. The JSON parameter is the dictionary `record` we created previously, and the header parameter is `header` imported from `API.py`. In the final line we add 1 to `sensor_id` and `r` to loop through the next sensor and reading. When this is done, the program loops back to the start of the while loop, and when the while loop finishes, it returns back to the start of the for loop. Fig. 8 below shows a screenshot of the readings on the server, obtained through a `GET` request to the server.
 
-When this code exists, the csv file should contain data from 5 minute intervals collected from the arduino over 48 hours. The data stored in the csv or on the server can then be used to create graphs and models.
+![](project/images/serverexample.png)
+**Fig. 8** Screenshot of the readings on the server. The first value is the id of the reading. The second value is the id of the sensor the reading is sent to. The third value is the value of the reading.
 
-## GRAPH NO DOCUMENTATION KOKO ONEGAISHIMASU
+When the for loop finishes (48 hours has passed), the csv file should contain data from 5 minute intervals collected from the arduino over the 48-hour period. The data stored in the csv or on the server can then be used to create graphs and models.
+
+## GRAPH NO DOCUMENTATION KOKO ONEGAISHIMASU **(Success Criteria 1, 3, 4, 6)**
 from file ```graph.py```
 ```.py
 import 
@@ -308,4 +318,9 @@ import
 
 # Criteria D: Functionality
 
-A 7 min video demonstrating the proposed solution with narration
+## Video of proposed solution
+The video can be found under the name "Project 2- Weather Station.mov" in this Google Drive Folder: 
+https://drive.google.com/drive/folders/1tMNTtgjcs2QFEaba9YF4Wc9Ikm9p6jiU?usp=drive_link
+## Scientific Poster of Investigation:
+![](project/images/poster.png)
+**Fig. 9** a scientific poster of investigation, created using Canva. Created by Manaha Ueda and May Fujita. **(Success Criteria 7)**

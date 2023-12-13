@@ -85,7 +85,7 @@ request = requests.get(f"http://192.168.6.153/readings")
 data = request.json()
 sensors = data['readings'][0]
 # sensor = []
-list_search = [ item for item in sensors if item['sensor_id'] == 2]
+list_search = [ item for item in sensors if item['sensor_id'] == 31]
 print(list_search)
 
 
