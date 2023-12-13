@@ -306,10 +306,7 @@ from API import ip, header
 The above code is nested within the same if statement that runs when `t` is a multiple of 300 (5 minute intervals). first, the program splits the string `msg` into a list using the `split()` function. The list is saved as `a`. As we will be using a for loop to send each of the data to each of the sensors in the server, in the next line, we create a variable `sensor_id` to store the id of the first sensor on the server. We also create a variable `r` to store the index of the list of readings. In the next line, we start a while loop that loops until `sensor_id` is greater than 34, which is the id of the last sensor on the server. Within the loop, a temporary dictionary `record` stores the id of the sensor the data is to be sent to, and the value of the reading by taking it from the list `a` using the index `r`. In the next line, the dictionary is printed to check that the data is in the correct format. Next, we send a `POST` request to the server to create a new reading. The JSON parameter is the dictionary `record` we created previously, and the header parameter is `header` imported from `API.py`. In the final line we add 1 to `sensor_id` and `r` to loop through the next sensor and reading. When this is done, the program loops back to the start of the while loop, and when the while loop finishes, it returns back to the start of the for loop. Fig. 8 below shows a screenshot of the readings on the server, obtained through a `GET` request to the server.
 
 ![](project/images/serverexample.png)
-**Fig. 8** Screenshot of the readings on the server. The first value is the id of the reading. The second value is the id of the sensor the reading is sent to. The third value is the value of the reading.
-
-When the for loop finishes (48 hours has passed), the csv file should contain data from 5 minute intervals collected from the arduino over the 48-hour period. The data stored in the csv or on the server can then be used to create graphs and models.
-
+**Fig. 8** Screenshot of the readings on the server for server_id 31: our t3 sensor. The value for the key 'value' in each of the individual dictionaries represent the readings sent to the server. **(Success Criteria 5)**
 ## GRAPH NO DOCUMENTATION KOKO ONEGAISHIMASU **(Success Criteria 1, 3, 4, 6)**
 from file ```graph.py```
 ```.py
