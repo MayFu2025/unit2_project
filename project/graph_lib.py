@@ -4,6 +4,7 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 
 plt.style.use('ggplot')
 
@@ -36,7 +37,10 @@ def take_data():
 def draw_graph (t:list, v:list, color:str, title:str):
     plt.plot(t, v, color=f"{color}")
     plt.title(title, fontsize=30)
+    plt.xticks(rotation=30)
     plt.tick_params(labelsize=25)
+    plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=10))
+
 
 # smoothing
 def smoothing(x:list, size_window:int=5):
@@ -64,7 +68,6 @@ def basic_info (x:list, y:list, z:list):
 
     for i in range(len(x)):
         total.append([x[i],y[i],z[i]])
-
 
     for item in total:
         mean.append(np.mean(item)) #0
