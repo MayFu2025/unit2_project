@@ -47,7 +47,19 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 ## System Diagram **HL**
 ![HL](https://github.com/comsci-uwc-isak/unit2_2023/assets/53995212/4891d5e9-b8ab-46ed-bd75-b606e25e3383)
 
-**Fig.2** shows the system diagram for the proposed solution (**HL**). The indoor variables will be measured using an Arduino and three DHT11 sensors located inside a room. Three sensors are used to determine more precisely the physical values and include measurement uncertainty. The outdoor variables will be requested to the remote server using a GET request to the API of the server at ```192.168.6.153/readings```. The local values are stored in a CSV database locally and a backup copy will be store in the remote server using the **Weather API**. 
+**Fig.1** shows the system diagram for the proposed solution (**HL**). The indoor variables will be measured using an Arduino and three DHT11 sensors located inside a room. Three sensors are used to determine more precisely the physical values and include measurement uncertainty. The outdoor variables will be requested to the remote server using a GET request to the API of the server at ```192.168.6.153/readings```. The local values are stored in a CSV database locally and a backup copy will be store in the remote server using the **Weather API**. 
+
+## Flow Diagrams
+![](project/images/flowdiagram1.png)
+**Fig.2** shows the flow diagram for the function to read data gathered in the arduino. 
+
+![](project/images/flowdiagram2.png)
+**Fig.3** 
+
+![](project/images/flowdiagram3.png)
+**Fig.4**
+
+## Test Plan
 
 
 ## Record of Tasks
@@ -61,7 +73,6 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 | 6       | Test and Finalize Hardware and Software            | Fix any bugs or add additional functions as neccesary before starting final data collection                            | 3hr           | Nov 30                 |           |
 | 7       | Collect Temperature and Humidity Data for 48 Hours | Collect data per 5 minutes over the course of 48 hours from 3 different sensors                                        | 48hr          | Nov 30 ~ Dec 3         |           |
 | 8       | Construct Graphs Using Pyplot                      | Have graphs for raw data and average using pyplot                                                                      | 1hr           | Dec 4                  |           |
-## Test Plan
 
 # Criteria C: Development
 ## List of techniques used
@@ -194,7 +205,7 @@ def read() -> str:
 ```
 
 From file ```solution.py```
-```.python
+```.py
 import requests
 from API import user, ip
 
