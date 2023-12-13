@@ -129,8 +129,6 @@ def smoothing(x:list[int], size_window:int=5, overlap:float=1):
     return t, smooth_x
 
 
-
-
 def get_sensor_w_date(id:int=1, ip:str="192.168.6.153"):
     from_dt = datetime(2023, 12, 7, 10, 45)
     to_dt = datetime(2023, 12, 9, 16, 25)
@@ -158,5 +156,17 @@ def fake_humid (x:list, y:list):
     return mean
 
 
-
+# r_temp1=get_sensor_w_date(id=0)
+# r_temp2=get_sensor_w_date(id=1)
+# r_temp3=get_sensor_w_date(id=2)
 #
+# r_humid1=get_sensor_w_date(id=3)
+# r_humid2=get_sensor_w_date(id=4)
+# r_humid3=get_sensor_w_date(id=5)
+# r_humid1_fake=fake_humid(r_temp2[1],r_humid3[1])
+# r_time=r_temp1[0]
+#
+# for t in range(len(r_temp1[0])):
+#     line = f'{r_time[t]},{r_temp1[1][t]},{r_temp2[1][t]},{r_temp3[1][t]},{r_humid1[1][t]},{r_humid2[1][t]},{r_humid3[1][t]},{r_humid1_fake[t]}\n'
+#     with open('remote_readings.csv', mode='a') as f:
+#         f.writelines(line)
