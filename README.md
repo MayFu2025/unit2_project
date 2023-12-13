@@ -88,7 +88,7 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
   - Application Programming Interface (API)
   - Data Visualization
 
-## List of libraries used ```NEED TO DO THIS```
+## List of libraries used ```NEED TO DO THIS ALSO PUT VARIABLES AND FUNCTIONS IN BRACKETS ALSO MAKE SURE TO INCLUDE WHICH SUCCESS CRITERIA THIS RELATES TO```
 PyCharm: CSV, Time, Datetime, Requests, Matplotlib, Numpy, Pyfirmata
 
 Arduino IDE: Adafruit DHT Sensor Library
@@ -105,7 +105,7 @@ DHT dht1(DHTPIN1, DHTTYPE);
 ```
 In the first line, we include the DHT.h class from the Adafruit Unified Sensor Library. This library is necessary in our program as it allows the arduino to identify and communicate with the DHT sensors connected to it. In the second line, we define the type of sensor we are using. For our solution, we are using the DHT11 sensor.
 
-The third and fourth line defines the pin of the arduino that the sensor is connected to, and creates the sensor's identity so that it can be used in later programs. This is done for all 3 sensors, changing the number of the pin in the arduino (defining DHTPIN2, DHTPIN3), and then the corresponding id of the sensor (dht2, dht3).
+The third and fourth line defines the pin of the arduino that the sensor is connected to, and creates the sensor's identity so that it can be used in later programs. This is done for all 3 sensors, changing the number of the pin in the arduino (defining `DHTPIN2`, `DHTPIN3`), and then the corresponding id of the sensor (`dht2`, `dht3`).
 
 ```.C++
 void setup() {
@@ -120,7 +120,7 @@ void setup() {
  dht3.begin();
 }
 ```
-Next, in this section we define the setup of the arduino. For digital pins of the Arduino, there is a need to configure them if they are used [9]. To do this, we use pinMode which takes two parameters, the pin number, and the mode in which it should behave. First, we specify that we wish to set up pin 12 as an output port. In the second line, we use digitalWrite, which takes the pin number and either "LOW" or "HIGH" as parameters to set the pin's output voltage. As DHT sensors require a 5V voltage to function, we set pin 12 to HIGH. The same is done for pin 3. Next, we start the serial communication between the arduino and the computer, and print a message to check if the arduino is working. In the last three lines, we start each of the sensors.
+Next, in this section we define the setup of the arduino. For digital pins of the Arduino, there is a need to configure them if they are used [9]. To do this, we use `pinMode()` which takes two parameters, the pin number, and the mode in which it should behave. First, we specify that we wish to set up pin 12 as an output port. In the second line, we use digitalWrite, which takes the pin number and either `LOW` or `HIGH` as parameters to set the pin's output voltage. As DHT sensors require a 5V voltage to function, we set pin 12 to `HIGH`. The same is done for pin 3. Next, we start the serial communication between the arduino and the computer, and print a message to check if the arduino is working. In the last three lines, we start each of the sensors.
 
 ```.C++
 void loop() {
@@ -129,7 +129,7 @@ void loop() {
   float h1 = dht1.readHumidity();
   float t1 = dht1.readTemperature();
 ```
-A loop is started to read data from the sensors every second. As shown above, first, the program tells the arduino to wait 1000 ms (1 second) at the start of each iteration. The program tells the arduino to read the humidity from the sensor dht1 as defined previously, and stores the value in the variable h1. The same is done for the temperature. This code is repeated for all the sensors, changing the number of the sensor (dht1, dht2, dht3) and the variable names (h1, t1, h2, t2, h3, t3) for each sensor. This results in 6 variables created by the arduino in total, a temperature and humidity variable per sensor.
+A loop is started to read data from the sensors every second. As shown above, first, the program tells the arduino to wait 1000 ms (1 second) at the start of each iteration. The program tells the arduino to read the humidity from the sensor `dht1` as defined previously, and stores the value in the variable `h1`. The same is done for the temperature. This code is repeated for all the sensors, changing the number of the sensor (`dht1`, `dht2`, `dht3`) and the variable names (`h1`, `t1`, `h2`, `t2`, `h3`, `t3`) for each sensor. This results in 6 variables created by the arduino in total, a temperature and humidity variable per sensor.
 
 ```.C++
   //Check for errors
@@ -138,7 +138,7 @@ A loop is started to read data from the sensors every second. As shown above, fi
   return;
   }
 ```
-Within the loop, next, the program checks to make sure that all the sensors read a value. In this if statement, if any of the variables is not a number (isnan), the program prints a message on the serial device and returns to the start of the loop.
+Within the loop, next, the program checks to make sure that all the sensors read a value. In this if statement, if any of the variables is not a number `isnan()`, the program prints a message on the serial device and returns to the start of the loop.
 
 ```.C++
   // Print and check the readings for DHT1
@@ -146,7 +146,7 @@ Within the loop, next, the program checks to make sure that all the sensors read
   Serial.print(",");
 }
 ```
-After checking for potential errors, the program can then proceed to printing the values of the collected temperatures and humidities on the serial device. This is the data that we can use on Pycharm after it gets transferred to the serial device, therefore we decided to send the collected data in the form of "t1,t2,t3,h1,h2,h3" as using Python, we can split this string by comma and reach each variable using the respective index of the list. According to the Arduino Forum, the best practice for printing multiple variables in one line for C++ is to repeat the serial.print() function[10]. The above code shows how we use two lines of code to print one variable, and a comma. These two lines are repeated for every other variable (t2, t3, h1, h2, h3).
+After checking for potential errors, the program can then proceed to printing the values of the collected temperatures and humidities on the serial device. This is the data that we can use on Pycharm after it gets transferred to the serial device, therefore we decided to send the collected data in the form of `t1,t2,t3,h1,h2,h3` as using Python, we can split this string by comma and reach each variable using the respective index of the list. According to the Arduino Forum, the best practice for printing multiple variables in one line for C++ is to repeat the `serial.print()` function[10]. The above code shows how we use two lines of code to print one variable, and a comma. These two lines are repeated for every other variable (`t2`, `t3`, `h1`, `h2`, `h3`).
 
 ### Code from PyCharm
 First, we identified the need to be able to communicate with our remote server to back up our data. We decided to have a remote storage of the data we collected so that should the local backup malfunction or become inaccessible, the same data can be retrieved again my obtaining backup data on the server. 
@@ -158,7 +158,7 @@ import requests
 user = {"username": "MMproject", "password": "MMproject2"}  # User on server
 ip = "192.168.6.153"  # IP address of server
 ```
-To be able to retrieve and send data to a server, there is first a need to import the requests library. This is done in the first line. The API of the server we will be using to store our data requires users to register first before being able to do certain functions. Hence, we then define the user data that will be used to register an user to upload the gathered data to the server. The details should be in the form of a json dictionary, which is the format used to store and transmit data between a user and server. We also store the ip address of the server as a string in the variable ip. This makes it easier to call the ip address in future requests.
+To be able to retrieve and send data to a server, there is first a need to import the `requests library`. This is done in the first line. The API of the server we will be using to store our data requires users to register first before being able to do certain functions. Hence, we then define the user data that will be used to register an user to upload the gathered data to the server. The details should be in the form of a json dictionary, which is the format used to store and transmit data between a user and server. We also store the ip address of the server as a string in the variable ip. This makes it easier to call the ip address in future requests.
 
 ```.py
 # Register User [ONLY RUN ONCE]
@@ -178,9 +178,9 @@ print(cookie)  # Print cookie to check if it worked
 # Put the cookie in the header of the request
 header = {'Authorization':f'Bearer {cookie}'}  # Create header for authorization for future requests
 ```
-After a user is registered, there is a need to login in order to gain access to more functions using the server. This is done in the first line by sending a POST request to access the login endpoint of the server. In the second line, the result of the request is then printed to check if it worked. Within this answer, there is an access token that is sent from the server to the user. An access token allows the user to access further functions on the server that is limited to only users that are logged in. In the third line, this access token is stored in the variable cookie. In the fourth line, the cookie is printed to check if the access token was saved correctly.
+After a user is registered, there is a need to login in order to gain access to more functions using the server. This is done in the first line by sending a `POST` request to access the login endpoint of the server. In the second line, the result of the request is then printed to check if it worked. Within this answer, there is an access token that is sent from the server to the user. An access token allows the user to access further functions on the server that is limited to only users that are logged in. In the third line, this access token is stored in the variable `cookie`. In the fourth line, `cookie` is printed to check if the access token was saved correctly.
 
-We also save the cookie in the dictionary header, as the value of the key 'Authorization.' This is done as for functions that require a logged-in user, a header is required to be sent with the request. If there is a valid access token within the header, the request can be done. Like the ip address, saving the header in a dictionary makes it easier to call the header in future requests.
+We also save `cookie` in the dictionary `header`, as the value of the key `Authorization`. This is done as for functions that require a logged-in user, a header is required to be sent with the request. If there is a valid access token within the header, the request can be done. Like the ip address, saving the header in a dictionary makes it easier to call the header in future requests.
 
 ```.py 
 # Create Sensors [ONLY RUN ONCE]
@@ -193,7 +193,7 @@ s1_t = {
 
 answer = requests.post(f'http://{ip}/sensor/new', json=s1_t, headers=header)  # Create new sensor on server, changing the json parameter for each sensor
 ```
-Next, there is a need to create new sensors on the server, which is the remote storage of our collected temperature and humidity data. This can be done by sending a POST request. In the first line, we create a dictionary for the data required in the sensor. In our server, this includes the type of sensor, the location of the sensor, the name of the sensor, and the unit of the measurements used. Each of these are keys in the dictionary, and the values are changed as we create new sensors. In the second line, we send the POST request to the server to create a new sensor. The json parameter is the dictionary we created previously, and the header is the header we created previously. This is repeated for all the sensors, changing the values of the keys in the dictionary sent. This resulted in 6 sensors on the server, each with a unique id from 29~34.
+Next, there is a need to create new sensors on the server, which is the remote storage of our collected temperature and humidity data. This can be done by sending a `POST` request. In the first line, we create a dictionary for the data required in the sensor. In our server, this includes the type of sensor, the location of the sensor, the name of the sensor, and the unit of the measurements used. Each of these are keys in the dictionary, and the values are changed as we create new sensors. In the second line, we send the `POST` request to the server to create a new sensor. The JSON parameter is the dictionary we created previously, and the header parameter is `header` we created previously. This is repeated for all the sensors, changing the values of the keys in the dictionary sent. This resulted in 6 sensors on the server, each with a unique id from 29~34.
 
 
 Next, there is a need to collect data from the arduino in a form that can be manipulated in the serial device (computer connected to the arduino) for storage. First, we identified the need to create a function on PyCharm that reads the data sent by the arduino.
@@ -205,7 +205,7 @@ id = "cu.usbserial-110"  #id of Arduino on computer
 arduino = serial.Serial(port=f'/dev/{id}', baudrate=9600, timeout=0.1)  #id of Arduino on computer
 print("Connection Successful")  #Let user know Arduino is connected
 ```
-In order to be able to take the data collected on the arduino, here is a need to create a serial connection between the arduino and the computer. This can be done by importing the serial library. In the first line, we store the id of the arduino as identified by the computer in the variable id. In the second line, we use the serial.Serial() function. The port parameter is the id of the arduino. This connection is stored as the variable arduino, which can be used again later. In the last line, we print a message to the user to check that the connection has been established.
+In order to be able to take the data collected on the arduino, there is a need to create a serial connection between the arduino and the computer. This can be done by importing the `serial` library. In the first line, we store the id of the arduino as identified by the computer in the variable `id`. In the second line, we use the `serial.Serial()` function. The port parameter is the id of the arduino. This connection is stored as the variable arduino, which can be used again later. In the last line, we print a message to the user to check that the connection has been established.
 
 Next, we created a function that reads the data collected on the arduino. This is shown in fig. 2,  as well as in the program that follows:
 ```.py
@@ -216,7 +216,7 @@ def read() -> str:
         data = arduino.readline()  # Read data collected on Arduino (sensors)
     return data.decode('utf-8')  # utf-8 is the same as ascii
 ```
-In the first line we create an empty string and store it as the variable data. In the next line, using a while loop, we check if the length of the string is less than 1 (if the string is empty.) This is to ensure that the program does not store empty data or read the next collected data before it stores the previous one. If the string is empty, the program proceeds to read the data collected on the arduino using the readline() function. The line read refers to the string containing the 6 measurements that was created in the Arduino IDE. In the last line, the data is returned from the function as a string, and decoded into ascii.
+In the first line we create an empty string and store it as the variable data. In the next line, using a while loop, we check if the length of the string is less than 1 (if the string is empty.) This is to ensure that the program does not store empty data or read the next collected data before it stores the previous one. If the string is empty, the program proceeds to read the data collected on the arduino using the `readline()` function. The line read refers to the string containing the 6 measurements that was created in the Arduino IDE. In the last line, the data is returned from the function as a string, and decoded into ascii.
 
 ```.py
 humidity = []  # List to store humidity data
@@ -228,6 +228,14 @@ for i in range(172801):  # Loop for 17800 seconds (=48 hours)
     time.sleep(1)  # Wait 1 second
     t += 1  # Add 1 to the variable t corresponding to the seconds passed
 ```
+In order to be able to see the data that the arduino transfers to there is a need for the program to read the data from the arduino. This can be done by using the read function defined previously. In the first line, we create two empty lists to store the humidity and temperature data. In the second line, we create a variable `t` to store the time elapsed in seconds.
+Next, we start a for loop that loops 172801 times (number of seconds in 48 hours). Within the loop, the `read()` function is called to obtain the temperature and humidity data from the arduino. Next, the time elapsed in seconds and the data read from the arduino is printed onto the console so that the user can check the progress of the loop. In the next line, the program waits 1 second using the `sleep()` function from the `time` library, and 1 is added to the variable `t`, before looping back to the start of the for loop.
+
+```.py
+import csv
+import datetime
+```
+A requirement is that there is a local copy of the data collected. Therefore, we chose to store our data in a csv file. To do this, we import the `csv` library, and also the `datetime` library to be able to record the time the data was collected.
 
 ```.py
     # Record the data once in 5 minutes
@@ -238,12 +246,15 @@ for i in range(172801):  # Loop for 17800 seconds (=48 hours)
         with open('final_readings.csv', mode='a') as f:  # Open file in mode append
             data = f.writelines(line)  # Add line to CSV file
 ```
+In the above program, an if statement checks if `t` is a multiple of 300, representing that 5 minutes have elapsed. Within the if statement, the program first saves the date and time at the moment in the variable `date` using the `datetime.now()` function. 
+
+# START HERE!!!!!!!!!!!!!!!
 
 ```.py
 import requests
 from API import ip, header
 ```
-To do this, the requests library has been imported for this file. We also import ip and header which had been previously defined in the file ```API.py``` to be able to access the POST sensor data endpoint of the server. We post the data collected within the same if statement as previously defined:
+To do this, the requests library has been imported for this file. We also import ip and header which had been previously defined in the file ```API.py``` to be able to access the `POST` sensor data endpoint of the server. We post the data collected within the same if statement as previously defined:
 
 ```.py
         # Storing Data in Sensors on Server
