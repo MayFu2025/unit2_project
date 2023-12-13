@@ -10,9 +10,9 @@ As winter arrives, the residents of Room 20C of the house R4-Up have reported wa
 Room 20C is asking for a way to record the temperature and humidity of the room, to be able to look back and review if they can conclude that one or both are contributing to their sufferings in the morning.
 
 ## Proposed Solution
-Considering the client requirements an adequate solution includes a low cost sensing device for humidity and temperature and a custom data script that process and analyzes the samples acquired. For a low cost sensing device an adequate alternative is the DHT11 sensor[^1] which is offered online for less than 5 USD and provides adequare precision and range for the client requirements (Temperature Range: 0°C to 50°C, Humidity Range: 20% to 90%). Similar devices such as the DHT22, AHT20 or the AM2301B [^2] have higher specifications, however the DHT11 uses a simple serial communication (SPI) rather than more eleborated protocols such as the I2C used by the alternatives. For the range, precision and accuracy required in this applicaiton the DHT11 provides the best compromise. Connecting the DHT11 sensor to a computer requires a device that provides a Serial Port communication. A cheap and often used alternative for prototyping is the Arduino UNO microcontroller [^3]. "Arduino is an open-source electronics platform based on easy-to-use hardware and software"[^4]. In additon to the low cost of the Arduino (< 6USD), this devide is programable and expandable[^1]. Other alternatives include diffeerent versions of the original Arduino but their size and price make them a less adequate solution.
+Considering the client requirements an adequate solution includes a low cost sensing device for humidity and temperature and a custom data script that process and analyzes the samples acquired. For a low cost sensing device an adequate alternative is the DHT11 sensor[^1] which is offered online for less than 5 USD and provides adequate precision and range for the client requirements (Temperature Range: 0°C to 50°C, Humidity Range: 20% to 90%). Similar devices such as the DHT22, AHT20 or the AM2301B [^2] have higher specifications, however the DHT11 uses a simple serial communication (SPI) rather than more elaborated protocols such as the I2C used by the alternatives. For the range, precision and accuracy required in this application the DHT11 provides the best compromise. Connecting the DHT11 sensor to a computer requires a device that provides a Serial Port communication. A cheap and often used alternative for prototyping is the Arduino UNO microcontroller [^3]. "Arduino is an open-source electronics platform based on easy-to-use hardware and software"[^4]. In addition to the low cost of the Arduino (< 6USD), this device is programmable and expandable[^1]. Other alternatives include different versions of the original Arduino but their size and price make them a less adequate solution.
 
-Considering the budgetary constrains of the client and the hardware requirements, the software tool that I proposed for this solution is Python. Python's open-source nature and platform independence contribute to the long-term viability of the system. The use of Python simplifies potential future enhancements or modifications, allowing for seamless scalability without the need for extensive redevelopment [^5][^6]. In comparison to the alternative C or C++, which share similar features, Python is a High level programming language (HLL) with high abstraction [^7]. For example, memory management is automatic in Python whereas it is responsability of the C/C++ developer to allocate and free up memory [^7], this could result in faster applications but also memory problems. In addition a HLL language will allow me and future developers extend the solution or solve issues proptly.  
+Considering the budgetary constrains of the client and the hardware requirements, the software tool that I proposed for this solution is Python. Python's open-source nature and platform independence contribute to the long-term viability of the system. The use of Python simplifies potential future enhancements or modifications, allowing for seamless scalability without the need for extensive redevelopment [^5][^6]. In comparison to the alternative C or C++, which share similar features, Python is a High level programming language (HLL) with high abstraction [^7]. For example, memory management is automatic in Python whereas it is responsibility of the C/C++ developer to allocate and free up memory [^7], this could result in faster applications but also memory problems. In addition a HLL language will allow me and future developers extend the solution or solve issues proptly.  
 
 **Design statement**
 Using an arduino and DHT 11 sensors, we will construct a system that can measure the temperature and humidity of 3 different locations inside room 20C, where our client wishes to check. To do this, we will use Python in the IDE Pycharm, as well as a variation of C++ in the Arduino IDE [^8]. We will also create visualizations of the data that was collected using the pyplot module from the matplotlib library in Python, on Pycharm.
@@ -37,7 +37,8 @@ Using an arduino and DHT 11 sensors, we will construct a system that can measure
 5. The solution provides a prediction for the subsequent 12 hours for both temperature and humidity.
 6. The solution includes a poster summarizing the visual representations, model and analysis created. The poster includes a recommendation about healthy levels for Temperature and Humidity.
 
-_TOK Connection: To what extent does ```the use of data science``` in climate research influence our understanding of environmental issues, and what knowledge questions arise regarding the ```reliability, interpretation, and ethical implications``` of data-driven approaches in addressing climate change_
+## TOK Connection
+_To what extent does ```the use of data science``` in climate research influence our understanding of environmental issues, and what knowledge questions arise regarding the ```reliability, interpretation, and ethical implications``` of data-driven approaches in addressing climate change_
 
 1. How does our use of technology shape our understanding of the environment
 2. What responsibilities do we have as technologists when it comes to handling personal data related to our living spaces?
@@ -52,7 +53,7 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 
 ## Flow Diagrams
 ![](project/images/flowdiagram1.png)
-**Fig.2** shows the flow diagram for the function "read" to retrieve data gathered in the arduino on Pycharm.
+**Fig.2** shows the flow diagram for the function `read` to retrieve data gathered in the arduino on Pycharm.
 
 ![](project/images/flowdiagram2.png)
 **Fig.3** shows the flow diagram for how the program collects humidity and temperature data on Pycharm, and then how this data is stored in a csv file and remote server.
@@ -103,7 +104,7 @@ In order to be able to read data from the sensors, there is a need to compile an
 #define DHTPIN1 13     // what pin of the arduino each sensor's data pin is connected to
 DHT dht1(DHTPIN1, DHTTYPE);
 ```
-In the first line, we include the DHT.h class from the Adafruit Unified Sensor Library. This library is necessary in our program as it allows the arduino to identify and communicate with the DHT sensors connected to it. In the second line, we define the type of sensor we are using. For our solution, we are using the DHT11 sensor.
+In the first line, we include the `DHT.h` class from the Adafruit Unified Sensor Library. This library is necessary in our program as it allows the arduino to identify and communicate with the DHT sensors connected to it. In the second line, we define the type of sensor we are using. For our solution, we are using the DHT11 sensor.
 
 The third and fourth line defines the pin of the arduino that the sensor is connected to, and creates the sensor's identity so that it can be used in later programs. This is done for all 3 sensors, changing the number of the pin in the arduino (defining `DHTPIN2`, `DHTPIN3`), and then the corresponding id of the sensor (`dht2`, `dht3`).
 
@@ -218,6 +219,8 @@ def read() -> str:
 ```
 In the first line we create an empty string and store it as the variable data. In the next line, using a while loop, we check if the length of the string is less than 1 (if the string is empty.) This is to ensure that the program does not store empty data or read the next collected data before it stores the previous one. If the string is empty, the program proceeds to read the data collected on the arduino using the `readline()` function. The line read refers to the string containing the 6 measurements that was created in the Arduino IDE. In the last line, the data is returned from the function as a string, and decoded into ascii.
 
+
+As per the success criteria, there is a need to collect data from the arduino for 48 hours. The flow diagram for how this is done can be found as fig. 3.
 ```.py
 humidity = []  # List to store humidity data
 temperature = []  # List to store temperature data
@@ -229,13 +232,13 @@ for i in range(172801):  # Loop for 17800 seconds (=48 hours)
     t += 1  # Add 1 to the variable t corresponding to the seconds passed
 ```
 In order to be able to see the data that the arduino transfers to there is a need for the program to read the data from the arduino. This can be done by using the read function defined previously. In the first line, we create two empty lists to store the humidity and temperature data. In the second line, we create a variable `t` to store the time elapsed in seconds.
-Next, we start a for loop that loops 172801 times (number of seconds in 48 hours). Within the loop, the `read()` function is called to obtain the temperature and humidity data from the arduino. Next, the time elapsed in seconds and the data read from the arduino is printed onto the console so that the user can check the progress of the loop. In the next line, the program waits 1 second using the `sleep()` function from the `time` library, and 1 is added to the variable `t`, before looping back to the start of the for loop.
+Next, we start a for loop that loops 172801 times (number of seconds in 48 hours). Within the loop, the `read()` function is called to obtain the temperature and humidity data from the arduino. The returned string is saved as the variable `msg`. Next, the time elapsed in seconds and the data read from the arduino is printed onto the console so that the user can check the progress of the loop. In the next line, the program waits 1 second using the `sleep()` function from the `time` library, and 1 is added to the variable `t`, before looping back to the start of the for loop.
 
 ```.py
 import csv
 import datetime
 ```
-A requirement is that there is a local copy of the data collected. Therefore, we chose to store our data in a csv file. To do this, we import the `csv` library, and also the `datetime` library to be able to record the time the data was collected.
+A requirement is that there is a local copy of the data collected. Therefore, we chose to store our data in a csv file. To do this, we import the `csv` library, and also the `datetime` library to be able to record the time the data was collected. The import statements are done at the beginning of the file.
 
 ```.py
     # Record the data once in 5 minutes
@@ -246,15 +249,13 @@ A requirement is that there is a local copy of the data collected. Therefore, we
         with open('final_readings.csv', mode='a') as f:  # Open file in mode append
             data = f.writelines(line)  # Add line to CSV file
 ```
-In the above program, an if statement checks if `t` is a multiple of 300, representing that 5 minutes have elapsed. Within the if statement, the program first saves the date and time at the moment in the variable `date` using the `datetime.now()` function. 
+In the above program, an if statement checks if `t` is a multiple of 300, representing that 5 minutes have elapsed. Within the if statement, the program first saves the date and time at the moment in the variable `date` using the `datetime.now()` function. In the next line, we create a string in the variable `line`, which formats `t`, `date` and `msg`, each separated by a comma. This is the string that will be stored in the csv file. In the next line, the csv file `final_readings.csv` is opened using the with the `open()` function from the `csv` library. The mode is set to append, so that the program does not overwrite the previous data collected. In the next line, `line` is added to the csv file using the `writelines()` function.
 
-# START HERE!!!!!!!!!!!!!!!
-
-```.py
+```
 import requests
 from API import ip, header
 ```
-To do this, the requests library has been imported for this file. We also import ip and header which had been previously defined in the file ```API.py``` to be able to access the `POST` sensor data endpoint of the server. We post the data collected within the same if statement as previously defined:
+As per requirements of the proposed solution, there is also a need to store the data collected on the server. This can be done by sending a `POST` request to the server. To do this, there is a need to import the `requests` library, as well as the `ip` and `header` variables to be reused from the file `API.py`. The import statements are done at the beginning of the file.
 
 ```.py
         # Storing Data in Sensors on Server
@@ -270,6 +271,12 @@ To do this, the requests library has been imported for this file. We also import
             sensor_id += 1  # Next sensor
             r += 1  # Next reading
 ```
+The above code is nested within the same if statement that runs when `t` is a multiple of 300 (5 minute intervals). first, the program splits the string `msg` into a list using the `split()` function. The list is saved as `a`. As we will be using a for loop to send each of the data to each of the sensors in the server, in the next line, we create a variable `sensor_id` to store the id of the first sensor on the server. We also create a variable `r` to store the index of the list of readings. In the next line, we start a while loop that loops until `sensor_id` is greater than 34, which is the id of the last sensor on the server. Within the loop, a temporary dictionary `record` stores the id of the sensor the data is to be sent to, and the value of the reading by taking it from the list `a` using the index `r`. In the next line, the dictionary is printed to check that the data is in the correct format. Next, we send a `POST` request to the server to create a new reading. The JSON parameter is the dictionary `record` we created previously, and the header parameter is `header` imported from `API.py`. In the final line we add 1 to `sensor_id` and `r` to loop through the next sensor and reading. When this is done, the program loops back to the start of the while loop, and when the while loop finishes, it returns back to the start of the for loop.
+
+When this code exists, the csv file should contain data from 5 minute intervals collected from the arduino over 48 hours. The data stored in the csv or on the server can then be used to create graphs and models.
+
+
+
 # Criteria D: Functionality
 
 A 7 min video demonstrating the proposed solution with narration

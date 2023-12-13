@@ -8,7 +8,6 @@ id = "cu.usbserial-110"  #id of Arduino on computer
 arduino = serial.Serial(port=f'/dev/{id}', baudrate=9600, timeout=0.1)  #id of Arduino on computer
 print("Connection Successful")  #Let user know Arduino is connected
 
-
 def read() -> str:
     """Read data from Arduino. Return data as a string."""
     data = ""
