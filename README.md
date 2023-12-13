@@ -204,8 +204,9 @@ id = "cu.usbserial-110"  #id of Arduino on computer
 arduino = serial.Serial(port=f'/dev/{id}', baudrate=9600, timeout=0.1)  #id of Arduino on computer
 print("Connection Successful")  #Let user know Arduino is connected
 ```
-In order to establish a connection between the computer and the arduino, there is a need to create a serial connection. This can be done by importing the serial library. In the first line, we store the id of the arduino as identified by the computer, in the variable id. In the second line, we use the serial.Serial() function. The port parameter is the id of the arduino, the baudrate is the rate of data transfer between the computer and the arduino. The timeout parameter is the time the program waits for the arduino to send data before proceeding to the next line. This is stored as the variable arduino, which can be used later to refer back to the connection. In the last line, we print a message to the user to check that the connection has been established.
+In order to be able to take the data collected on the arduino, here is a need to create a serial connection between the arduino and the computer. This can be done by importing the serial library. In the first line, we store the id of the arduino as identified by the computer in the variable id. In the second line, we use the serial.Serial() function. The port parameter is the id of the arduino. This connection is stored as the variable arduino, which can be used again later. In the last line, we print a message to the user to check that the connection has been established.
 
+Next, we created a function that reads the data collected on the arduino. This is shown in fig. 2,  as well as in the program that follows:
 ```.py
 def read() -> str:
     """Read data from Arduino. Return data as a string."""
@@ -214,16 +215,9 @@ def read() -> str:
         data = arduino.readline()  # Read data collected on Arduino (sensors)
     return data.decode('utf-8')  # utf-8 is the same as ascii
 ```
-In the first line we create an empty string and store it as the variable data. In the enxt line, using a while loop, we check if the length of the string is less than 1 (if the string is empty.) This is to ensure that the program does not store empty data or read the next collected data before it stores the previous one. If the string is empty, the program proceeds to read the data collected on the arduino using the readline() function. The line read refers to the string containing the 6 measurements that was created in the Arduino IDE. In the last line, the data is returned from the function as a string, and decoded into ascii. 
+In the first line we create an empty string and store it as the variable data. In the next line, using a while loop, we check if the length of the string is less than 1 (if the string is empty.) This is to ensure that the program does not store empty data or read the next collected data before it stores the previous one. If the string is empty, the program proceeds to read the data collected on the arduino using the readline() function. The line read refers to the string containing the 6 measurements that was created in the Arduino IDE. In the last line, the data is returned from the function as a string, and decoded into ascii.
 
 ```.py
-import requests
-from API import user, ip
-
-id = "cu.usbserial-110"  # id of Arduino on computer
-arduino = serial.Serial(port=f'/dev/{id}', baudrate=9600, timeout=0.1)  # id of Arduino on computer
-print("Connection Successful")  # Let user know Arduino is connected
-
 humidity = []  # List to store humidity data
 temperature = []  # List to store temperature data
 t = 0  # Variable to store time elapsed in seconds
@@ -232,7 +226,9 @@ for i in range(172801):  # Loop for 17800 seconds (=48 hours)
     print(t, msg)  # To check what data the program reads
     time.sleep(1)  # Wait 1 second
     t += 1  # Add 1 to the variable t corresponding to the seconds passed
+```
 
+```.py
     # Record the data once in 5 minutes
     if t%300 == 0:  # Per 5 minute interval (=300 seconds)
         # Storing Data in CSV File
@@ -240,15 +236,20 @@ for i in range(172801):  # Loop for 17800 seconds (=48 hours)
         line = f'{t},{date},{msg}\n'  # Time in seconds, datetime, msg containing sensor readings
         with open('final_readings.csv', mode='a') as f:  # Open file in mode append
             data = f.writelines(line)  # Add line to CSV file
+```
 
+```.py
+import requests
+from API import header
+```
+To do this, the requests library has been imported for this file. We also import the dictionary header which had been previously defined in the file ```API.py``` to be able to access the POST sensor data endpoint of the server. We post the data collected within the same if statement as previously defined:
+
+```.py
         # Storing Data in Sensors on Server
         a = list(msg.split(',')) # Split the msg (data from Arduino) into a list
         sensor_id = 29  # First of our sensors on the server
         r = 0  # Index of the list of readings
-        # Login and Gain Access Token
-        login = requests.post(f'http://{ip}/login', json=user)  # Login to server
-        cookie = login.json()["access_token"]  # Get access token from server
-        header = {'Authorization': f'Bearer {cookie}'}  # Create header for authorization
+       
         # Create new posts for each sensor on the server
         while sensor_id <= 34:  # Loop through all of our sensors
             record = {f'sensor_id':sensor_id, 'value':a[r]}  # Create a record for each sensor
