@@ -15,7 +15,7 @@ Considering the client requirements an adequate solution includes a low cost sen
 Considering the budgetary constrains of the client and the hardware requirements, the software tool that I proposed for this solution is Python. Python's open-source nature and platform independence contribute to the long-term viability of the system. The use of Python simplifies potential future enhancements or modifications, allowing for seamless scalability without the need for extensive redevelopment [^5][^6]. In comparison to the alternative C or C++, which share similar features, Python is a High level programming language (HLL) with high abstraction [^7]. For example, memory management is automatic in Python whereas it is responsibility of the C/C++ developer to allocate and free up memory [^7], this could result in faster applications but also memory problems. In addition a HLL language will allow me and future developers extend the solution or solve issues proptly.  
 
 **Design statement**
-Using an arduino and DHT 11 sensors, we will construct a system that can measure the temperature and humidity of 3 different locations inside room 20C, where our client wishes to check. To do this, we will use Python in the IDE Pycharm, as well as a variation of C++ in the Arduino IDE [^8]. We will also create visualizations of the data that was collected using the pyplot module from the matplotlib library in Python, on Pycharm.
+Using an arduino and DHT 11 sensors, we will construct a system that can measure the temperature and humidity of 3 different locations inside room 20C, where our client wishes to check (as can be seen in fig.3). To do this, we will use Python in the IDE Pycharm, as well as a variation of C++ in the Arduino IDE [^8]. We will also create visualizations of the data that was collected using the pyplot module from the matplotlib library in Python, on Pycharm.
 
 [^1]: Industries, Adafruit. “DHT11 Basic Temperature-Humidity Sensor + Extras.” Adafruit Industries Blog RSS, https://www.adafruit.com/product/386. 
 [^2]: Nelson, Carter. “Modern Replacements for DHT11 and dht22 Sensors.” Adafruit Learning System, https://learn.adafruit.com/modern-replacements-for-dht11-dht22-sensors/what-are-better-alternatives.   
@@ -40,9 +40,17 @@ Using an arduino and DHT 11 sensors, we will construct a system that can measure
 ## TOK Connection
 _To what extent does ```the use of data science``` in climate research influence our understanding of environmental issues, and what knowledge questions arise regarding the ```reliability, interpretation, and ethical implications``` of data-driven approaches in addressing climate change_
 
-1. How does our use of technology shape our understanding of the environment
+1. How does our use of technology shape our understanding of the environment?
+
+_Technologies show ._
+
 2. What responsibilities do we have as technologists when it comes to handling personal data related to our living spaces?
+
+_Technologies show ._
+
 3. What cultural and contextual factors might impact our interpretation of the results, especially when comparing our local readings with those from the campus? 
+
+_Technologies show ._
 
 # Criteria B: Design
 
@@ -51,30 +59,47 @@ _To what extent does ```the use of data science``` in climate research influence
 
 **Fig.1** shows the system diagram for the proposed solution (**HL**). The indoor variables will be measured using an Arduino and three DHT11 sensors located inside a room. Three sensors are used to determine more precisely the physical values and include measurement uncertainty. The outdoor variables will be requested to the remote server using a GET request to the API of the server at ```192.168.6.153/readings```. The local values are stored in a CSV database locally and a backup copy will be store in the remote server using the **Weather API**. 
 
+![](project/images/arduino_diagram.png)
+
+**Fig.2** shows the hardware architecture of the Arduino. The Arduino is connected to the computer using a USB cable. The DHT11 sensors are connected to the Arduino's pins as shown. The Arduino is powered by the computer using the USB cable.
+
+![](project/images/room_diagram.png)
+
+**Fig.3** shows the location of the DHT 11 sensors in the room. One is placed in the middle of the room, another on a shelf in front of the door, and another in front of the window of the room. The sensors measure the temperature and humidity of the room at these locations.
+
 ## Flow Diagrams
 ![](project/images/flowdiagram1.png)
-**Fig.2** shows the flow diagram for the function `read` to retrieve data gathered in the arduino on Pycharm.
+
+**Fig.4** shows the flow diagram for the function `read` to retrieve data gathered in the arduino on Pycharm.
 
 ![](project/images/flowdiagram2.png)
-**Fig.3** shows the flow diagram for how the program collects humidity and temperature data on Pycharm, and then how this data is stored in a csv file and remote server.
+
+**Fig.5** shows the flow diagram for how the program collects humidity and temperature data on Pycharm, and then how this data is stored in a csv file and remote server.
 
 ![](project/images/flowdiagram3.png)
+                                                                                                  
 **Fig.4**
 
 ## Test Plan
 
 
 ## Record of Tasks
-| Task No | Planned Action                                     | Planned Outcome                                                                                                        | Time estimate | Target completion date | Criterion |
-|---------|----------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|---------------|------------------------|-----------|
-| 1       | Write the Problem context                          |                                                                                                                        | 10min         | Nov 22                 | A         |
-| 2       |                                                    |                                                                                                                        |               |                        | A         |
-| 3       | Code and Upload Program for Arduino on Arduino IDE | Create and upload program for data collection onto the arduino                                                         | 30min         | Nov 29                 |           |
-| 4       | Construct Arduino Circuit for Data Collection      | Have sensors connected to the Arduino, ready to connect to the computer and start collecting data                      | 1hr           | Nov 29                 |           |
-| 5       | Code Data Collection Method on PyCharm             | Create a program that retrieves data from the Arduino, stores it in a csv file, and uploads it onto server on PyCharm. | 1hr           | Nov 29                 |           |
-| 6       | Test and Finalize Hardware and Software            | Fix any bugs or add additional functions as necessary before starting final data collection                            | 3hr           | Nov 30                 |           |
-| 7       | Collect Temperature and Humidity Data for 48 Hours | Collect data per 5 minutes over the course of 48 hours from 3 different sensors                                        | 48hr          | Nov 30 ~ Dec 3         |           |
-| 8       | Construct Graphs Using Pyplot                      | Have graphs for raw data and average using pyplot                                                                      | 1hr           | Dec 4                  |           |
+|    | Planned Action                                         | Planned Outcome                                                                                        | Time estimate | Target completion date | Criterion |
+|----|--------------------------------------------------------|--------------------------------------------------------------------------------------------------------|---------------|------------------------|-----------|
+| 1  | Write the Problem Context and Design Statement         | Have finalized the problem context and design statement                                                | 10min         | Nov 22                 | A         |
+| 2  | Code and Upload Program for Arduino on Arduino IDE     | Create and upload program for data collection onto the arduino                                         | 30min         | Nov 29                 | C         |
+| 3  | Construct Arduino Circuit for Data Collection          | Have sensors connected to the Arduino, ready to connect to the computer and start collecting data      | 1hr           | Nov 29                 | C         |
+| 4  | Form Test Plan                                         | Outline test plans to check functionality of our solution as we develop our proposed solution          | 1hr           | Nov 29                 | B         |
+| 5  | Test serial connection between arduino and computer    | Have confirmed that the arduino and computer can form a serial connection                              | 15min         | Nov 29                 | C         |
+| 6  | Test Each DHT11 Sensor and their connection to Arduino | Confirm that all sensors can return a valid temperature and humidity reading                           | 15min         | Nov 29                 | C         |
+| 7  | Code Data Collection Method on PyCharm                 | Create a program that retrieves data from the Arduino every 5 minutes                                  | 30min         | Nov 29                 | C         |
+| 8  | Test if readings can be sent to remote server          | Have confirmed that we can create new sensors on the server, and save data within this sensor          | 30min         | Nov 30                 | C         |
+| 9  | Code Data Storage Method on PyCharm                    | Create a program that stores retrieved data locally on a csv file, and remotely on sensors in a server | 1hr           | Nov 30                 | C         |
+| 10 | Test and Finalize Hardware and Software                | Fix any bugs or add additional functions as neccesary before starting final data collection            | 2hr           | Nov 30                 | C         |
+| 11 | Collect Temperature and Humidity Data for 48 Hours     | Collect data per 5 minutes over the course of 48 hours from 3 different sensors                        | 48hr          | Nov 30 ~ Dec 3         | C         |
+| 12 | Create Flow Diagrams and Reference Figures             | Create 3 flow diagrams and supplementary diagrams that help explain our method                         | 1hr           | Nov 31 ~ Dec 12        | B         |
+| 13 | Construct Graphs Using Pyplot                          | Have graphs for raw data and average using pyplot                                                      | 3hr           | Dec 4 ~ Dec 12         | C/D       |
+| 14 | Film Video Introducing Product                         | Have a video that demonstrates proposed solution to clients                                            | 1hr           | Dec 14                 | D         |
 
 # Criteria C: Development
 ## List of techniques used
@@ -106,7 +131,7 @@ DHT dht1(DHTPIN1, DHTTYPE);
 ```
 In the first line, we include the `DHT.h` class from the Adafruit Unified Sensor Library. This library is necessary in our program as it allows the arduino to identify and communicate with the DHT sensors connected to it. In the second line, we define the type of sensor we are using. For our solution, we are using the DHT11 sensor.
 
-The third and fourth line defines the pin of the arduino that the sensor is connected to, and creates the sensor's identity so that it can be used in later programs. This is done for all 3 sensors, changing the number of the pin in the arduino (defining `DHTPIN2`, `DHTPIN3`), and then the corresponding id of the sensor (`dht2`, `dht3`).
+The third and fourth line defines the pin of the arduino that the sensor is connected to, and creates the sensor's identity so that it can be used in later programs. This is done for all 3 sensors, changing the number of the pin in the arduino (defining `DHTPIN2`, `DHTPIN3`), and then the corresponding id of the sensor (`dht2`, `dht3`). The pins that the sensors are connected to can be seen in fig. 2.
 
 ```.C++
 void setup() {
@@ -208,7 +233,7 @@ print("Connection Successful")  #Let user know Arduino is connected
 ```
 In order to be able to take the data collected on the arduino, there is a need to create a serial connection between the arduino and the computer. This can be done by importing the `serial` library. In the first line, we store the id of the arduino as identified by the computer in the variable `id`. In the second line, we use the `serial.Serial()` function. The port parameter is the id of the arduino. This connection is stored as the variable arduino, which can be used again later. In the last line, we print a message to the user to check that the connection has been established.
 
-Next, we created a function that reads the data collected on the arduino. This is shown in fig. 2,  as well as in the program that follows:
+Next, we created a function that reads the data collected on the arduino. This is shown in fig. 4,  as well as in the program that follows:
 ```.py
 def read() -> str:
     """Read data from Arduino. Return data as a string."""
@@ -220,7 +245,7 @@ def read() -> str:
 In the first line we create an empty string and store it as the variable data. In the next line, using a while loop, we check if the length of the string is less than 1 (if the string is empty.) This is to ensure that the program does not store empty data or read the next collected data before it stores the previous one. If the string is empty, the program proceeds to read the data collected on the arduino using the `readline()` function. The line read refers to the string containing the 6 measurements that was created in the Arduino IDE. In the last line, the data is returned from the function as a string, and decoded into ascii.
 
 
-As per the success criteria, there is a need to collect data from the arduino for 48 hours. The flow diagram for how this is done can be found as fig. 3.
+As per the success criteria, there is a need to collect data from the arduino for 48 hours. The flow diagram for how this is done can be found as fig. 5.
 ```.py
 humidity = []  # List to store humidity data
 temperature = []  # List to store temperature data
@@ -275,7 +300,11 @@ The above code is nested within the same if statement that runs when `t` is a mu
 
 When this code exists, the csv file should contain data from 5 minute intervals collected from the arduino over 48 hours. The data stored in the csv or on the server can then be used to create graphs and models.
 
-
+## GRAPH NO DOCUMENTATION KOKO ONEGAISHIMASU
+from file ```graph.py```
+```.py
+import 
+```
 
 # Criteria D: Functionality
 
