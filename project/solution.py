@@ -2,7 +2,7 @@ import serial
 import time
 import datetime
 import requests
-from API import user, ip
+from API import ip, header
 
 id = "cu.usbserial-110"  #id of Arduino on computer
 arduino = serial.Serial(port=f'/dev/{id}', baudrate=9600, timeout=0.1)  #id of Arduino on computer
@@ -38,11 +38,6 @@ for i in range(172801):  # Loop for 17800 seconds (=48 hours)
         a = list(msg.split(',')) # Split the msg (data from Arduino) into a list
         sensor_id = 29  # First of our sensors on the server
         r = 0  # Index of the list of readings
-        # Login and Gain Access Token
-        login = requests.post(f'http://{ip}/login', json=user)  # Login to server
-        cookie = login.json()["access_token"]  # Get access token from server
-        header = {'Authorization': f'Bearer {cookie}'}  # Create header for authorization
-        # Create new posts for each sensor on the server
         while sensor_id <= 34:  # Loop through all of our sensors
             record = {f'sensor_id':sensor_id, 'value':a[r]}  # Create a record for each sensor
             print(record)  # To check what data the program sends to the server

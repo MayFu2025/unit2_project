@@ -71,7 +71,7 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 | 3       | Code and Upload Program for Arduino on Arduino IDE | Create and upload program for data collection onto the arduino                                                         | 30min         | Nov 29                 |           |
 | 4       | Construct Arduino Circuit for Data Collection      | Have sensors connected to the Arduino, ready to connect to the computer and start collecting data                      | 1hr           | Nov 29                 |           |
 | 5       | Code Data Collection Method on PyCharm             | Create a program that retrieves data from the Arduino, stores it in a csv file, and uploads it onto server on PyCharm. | 1hr           | Nov 29                 |           |
-| 6       | Test and Finalize Hardware and Software            | Fix any bugs or add additional functions as neccesary before starting final data collection                            | 3hr           | Nov 30                 |           |
+| 6       | Test and Finalize Hardware and Software            | Fix any bugs or add additional functions as necessary before starting final data collection                            | 3hr           | Nov 30                 |           |
 | 7       | Collect Temperature and Humidity Data for 48 Hours | Collect data per 5 minutes over the course of 48 hours from 3 different sensors                                        | 48hr          | Nov 30 ~ Dec 3         |           |
 | 8       | Construct Graphs Using Pyplot                      | Have graphs for raw data and average using pyplot                                                                      | 1hr           | Dec 4                  |           |
 
@@ -83,9 +83,10 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 - Functions
 - Lists and Dictionaries
 - Libraries
-- Serial Communication
-- Application Programming Interface (API)
-- Data Visualization
+  - Comma Separated Values (CSV) Files
+  - Serial Communication 
+  - Application Programming Interface (API)
+  - Data Visualization
 
 ## List of libraries used ```NEED TO DO THIS```
 PyCharm: CSV, Time, Datetime, Requests, Matplotlib, Numpy, Pyfirmata
@@ -240,16 +241,16 @@ for i in range(172801):  # Loop for 17800 seconds (=48 hours)
 
 ```.py
 import requests
-from API import header
+from API import ip, header
 ```
-To do this, the requests library has been imported for this file. We also import the dictionary header which had been previously defined in the file ```API.py``` to be able to access the POST sensor data endpoint of the server. We post the data collected within the same if statement as previously defined:
+To do this, the requests library has been imported for this file. We also import ip and header which had been previously defined in the file ```API.py``` to be able to access the POST sensor data endpoint of the server. We post the data collected within the same if statement as previously defined:
 
 ```.py
         # Storing Data in Sensors on Server
         a = list(msg.split(',')) # Split the msg (data from Arduino) into a list
         sensor_id = 29  # First of our sensors on the server
         r = 0  # Index of the list of readings
-       
+
         # Create new posts for each sensor on the server
         while sensor_id <= 34:  # Loop through all of our sensors
             record = {f'sensor_id':sensor_id, 'value':a[r]}  # Create a record for each sensor
@@ -258,7 +259,6 @@ To do this, the requests library has been imported for this file. We also import
             sensor_id += 1  # Next sensor
             r += 1  # Next reading
 ```
-
 # Criteria D: Functionality
 
 A 7 min video demonstrating the proposed solution with narration
