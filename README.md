@@ -691,7 +691,35 @@ By changing the degree of polyfit in the previous code, plot quatric model.
 **Fig.26** R-squared value of quatric model of RemoteTemperature and Humidity
 
 
-**(Success Criteria 4)** error bar
+**(Success Criteria 4)** We created error bar graph which includes, mean, standard deviation, maximum value, minimum value, and median to provide comparative analysis of each temperature and humidity. The red points indicate the median, vertical line represents standard deviation, and black line shows the mean values. Also, the area filled with blue represents the range of data between maximum value and minimum value.
+To make it easier to lead mean, standard deviation, maximum value, minimum value, and median, we made `basic_info` function in the `graph_lib.py` file.
+
+from file ```graph_lib.py```
+```.py
+def basic_info (x:list, y:list, z:list):
+    total=[]
+    mean = []
+    std = []
+    min_val = []
+    max_val = []
+    avg = []
+    median = []
+
+    for i in range(len(x)):
+        total.append([x[i],y[i],z[i]])
+
+    for item in total:
+        mean.append(np.mean(item)) #0
+        std.append(np.std(item)) #1
+        min_val.append(np.min(item)) #2
+        max_val.append(np.max(item)) #3
+        median.append(np.median(item)) #4
+
+    return mean, std, min_val, max_val, median
+
+```
+
+Importing `basic_info` function to the `graph.py` to find out the values mentioned above.
 
 from file ```graph.py```
 ```.py
