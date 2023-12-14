@@ -648,7 +648,7 @@ We did the same thing with the remote data.
 ![remote_humidity_errorbar.png](project%2Fimages%2Fremote_humidity_errorbar.png)
 **Fig.30** remote humidity error bar graph
 
-**(Success Criteria 5)** prediction
+**(Success Criteria 6)** By using the mathematical modelling that we led in the previous section, we predicted the future subsequent 12 hours temperature and humidity to provide useful information for our client.
 
 from file ```graph.py```
 ```.py
