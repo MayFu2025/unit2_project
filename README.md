@@ -318,8 +318,10 @@ The above code is nested within the same if statement that runs when `t` is a mu
 
 ![](project/images/serverexample.png)
 **Fig. 8** Screenshot of the readings on the server for server_id 31: our t3 sensor. The value for the key 'value' in each of the individual dictionaries represent the readings sent to the server. **(Success Criteria 5)**
+## GRAPH NO DOCUMENTATION KOKO ONEGAISHIMASU **(Success Criteria 1, 3, 4, 6)**
 
-**(Success Criteria 5)** Next as per requirements, there is a need to create graphs. To do this we first read the local temperature and humidity values from final_readings.csv. This can be done with the following program
+
+**(Success Criteria 1,3,4,6)** First, to create graphs, we read the local temperature and humidity values from the csv file (final_readings.csv).
 
 From file ```.graph py```:
 ```.py
@@ -348,7 +350,7 @@ with open('final_readings.csv', mode='r') as f:
         t+=5
 ```
 
-**(Success Criteria 1, 3, 4)** As per requirements there is also a need to get temperature and humidity values from the remote sensors at the same time as our local measurement. However, the server was not working when we were collecting our local data. Referring the weather of Karuizawa at the time of local data collection, we found another collection of data from the remote sensors during a period of similar weather. The screenshots of the weather of Karuizawa at the time of local data collection and the weather of Karuizawa at the time of remote data collection are shown below.
+Also, to get temperature and humidity values from the server at the same time with the local measurement. However, the server didn't working when we were collecting the local data. Refering the weather of Karuizawa at the time when we were collecting the local data, we used the other date's server data which has similar weather.
 ![weather 12:1.png](project%2Fimages%2Fweather%2012%3A1.png)
 **Fig. 9** Screenshot of Karuizawa weather on December 1st (local data was running).
 ![weather 12:2.png](project%2Fimages%2Fweather%2012%3A2.png)
@@ -362,7 +364,7 @@ with open('final_readings.csv', mode='r') as f:
 ![weather 12:8.png](project%2Fimages%2Fweather%2012%3A8.png)
 **Fig. 14** Screenshot of Karuizawa weather on December 8th (use as December 3rd weather).
 
-In order to get the temperature and humidity from the sever, we define the start date and end date, and obtain the specific day's temperature and humidity data using a for loop. To align the time axis with the local data in terms of date, we added a 6-day delay on the datetime value taken from server. This is made into a function so that it can be called for each sensor. The code below shows the function for getting the temperature and humidity data from the server. Fig. 4. shows the flow diagram for how this is done.
+In order to get the temperature and humidity from the sever, we defined the strat date and end date and get the specific day's temperature and humidity data by using for loop. To merge with the local data in terms of date, made 6 days delay on the datetime value we took from the server.
 
 from file ```remote.py```
 ```.py
@@ -393,7 +395,7 @@ for t in range(len(r_temp1[0])):
         f.writelines(line)
 ```
 
-In order to use the data collected by the server stored in the `remote_readings.csv` file to create graphs, we obtain this data on a new file, `graph.py`.
+In order to use the data collected by the server which is stored in the `remote_readings.csv` file to create graphs, we obtained the data on that data on `graph.py`.
 from file ```graph.py```
 ```.py
 
@@ -423,7 +425,7 @@ with open('remote_readings.csv', mode='r') as f:
 
 
 **(Success Criteria 1)** To visualize the overview of temperature and humidity data from both local and server, we created the graph representing those data individually.
-The code below shows the drawing local temperature data from sensor 1. We use the same process for the other two temperature data and also three humidity data. This can program is also expressed in the flow diagram fig. 5.
+The code below shows the drawing local temperature data from sensor 1. We did the same process in other two temperatre data and also three humidity data.
 
 from file ```graph.py```
 ```.py
@@ -437,11 +439,11 @@ plt.xlabel("time", fontsize=20)
 plt.ylabel("temperature (C)", fontsize=20)
 plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=10))
 ```
-![]()
+![local_overview.png](project%2Fimages%2Flocal_overview.png)
 **Fig.15** Local Temperature and Humidity overview graph
 
 
-**(Success Criteria 1)** We did the same thing on the remote data and plot the graph.
+We did the same thing on the remote data and plot the graph.
 from file ```graph.py```
 ```.py
 locator = MaxNLocator(nbins=7)
@@ -457,7 +459,8 @@ plt.ylabel("temperature (C)", fontsize=20)
 plt.gca().xaxis.set_major_locator(locator)
 plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M'))
 ```
-![]()
+
+![remote_6box_overview.png](project%2Fimages%2Fremote_6box_overview.png)
 **Fig.16** Remote Temperature and Humidity overview graph
 
 In addition, to make it easier to compare the local and remote graph, we took both average and plot the graph representing local and remote avrage of temperature and humidity.
@@ -485,9 +488,10 @@ plt.tight_layout()
 plt.legend(fontsize=30, loc="upper right")
 ```
 
+![average.png](project%2Fimages%2Faverage.png)
 **Fig.17** Local and Remote Temperature and Humidity average graph
 
-Since the local temperature graph of measured by the sensor3 was significantly different from the other two sensors, we standardized the local data to compare the rate of change in temperature amongst all three sensors. To standardize the data, we used the `StandardScaler` module from the `sklearn.preprocessing` library. To make it easier to standardize, we created a function called `standardalization` on the `graph_lib.py` which returns the standardized values.
+Since the local temperature graph of measured by the sensor3 was significantly different from the other two sensors. Therefore, we standardized that local data to compare the rate of change in temperature. To standarized the data by using `StandardScaler` module from `sklearn.preprocessing` library. To make it easier to standarlize, we created a function called `standardalization` on the `graph_lib.py` which returns the standarlized values.
 
 from file ```graph_lib.py```
 ```.py
@@ -500,7 +504,7 @@ def standardalization (data:list):
     return time, sc_data
 ```
 
-By using that standardization function, we plot the standardized graph.
+By using that standardalization function, we plot the standarlized graph.
 from file ```graph.py```
 ```.py
 fig = plt.figure(figsize=(30,20))
@@ -513,35 +517,347 @@ plt.ylabel("temperature (C)", fontsize=20)
 plt.xticks(rotation=30)
 plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=10))
 ```
-![]()
-**Fig.18** Local standardized Temperature and Humidity graph
+
+![standardized.png](project%2Fimages%2Fstandardized.png)
+**Fig.18** Local standarlized Temperature and Humidity graph
 
 
-**(Success Criteria 3)** To capture the trend of the temperature and humidity for the prediction, we use mathematical modelling. 
-
-
-from file ```graph.py```
-```.py
-import 
-```
-from file ```graph.py```
-```.py
-import 
-```
-from file ```graph.py```
-```.py
-import 
-```
-from file ```graph.py```
-```.py
-import 
-```
-
+**(Success Criteria 3)** To capture the trend of the temperature and humidity for the prediction, we used the mathematical modelling to grasp the data. To find the best fit model, we tried quadratic and quatric model by using `polyfit` and `polyval` module from `numply` library. We used r-squared value to compare the accuracy of modelling.
 
 from file ```graph.py```
 ```.py
-import 
+fig = plt.figure (figsize=(40,20))
+plt.subplots_adjust(hspace=0.5)
+plt.subplot(2,1,1)
+
+for i in range(1, 4):
+    temp_list_name = f"temp{i}"  # Create the variable name dynamically
+    temp_list = globals()[temp_list_name]  # Access the variable using globals()
+
+    coeffs = np.polyfit(time, temp_list, 2)
+
+    temp_model = []
+    for t in range(len(time)):
+        temp_model_data=coeffs[0]*t**2+coeffs[1]*t+coeffs[2]
+        temp_model.append(temp_model_data)
+
+    # Plot the original temperature data
+    plt.plot(time, temp_list, label=f"temperature{i}", c=c[i - 1])
+    plt.plot(time, temp_model, label=f"temperature_model{i} T(t) ={coeffs[0]:.2f}^2+{coeffs[1]:.2f}t+{coeffs[2]:.2f}", c=c[i - 1], linestyle='--')
+
+    #r square value
+    r2=metrics.r2_score(temp_list, temp_model)
+    print(f"temp{i} r2 value: {r2}")
+
+ticks = time[::50]
+labels = [dt.strftime(date, '%m-%d %H:%M') for date in date_list[::50]]
+plt.xticks(ticks, labels, fontsize=15, rotation=45, ha='right')
+plt.yticks(fontsize=15)
+plt.xlabel("time", fontsize=20)
+plt.ylabel("temperature (C)", fontsize=20)
+plt.title("temperature quadratic model", fontsize=40)
+plt.legend(fontsize=15, loc="upper right")
+
+
+plt.subplot(2,1,2)
+
+
+for i in range(1, 4):
+    humid_list_name = f"humid{i}"  # Create the variable name dynamically
+    humid_list = globals()[humid_list_name]  # Access the variable using globals()
+
+    coeffs = np.polyfit(time,  humid_list, 2)
+
+    humid_model = []
+    for t in range(len(time)):
+        humid_model_data = coeffs[0] * t ** 2 + coeffs[1] * t + coeffs[2]
+        humid_model.append(humid_model_data)
+
+    # Plot the original temperature data
+    plt.plot(time, humid_list, label=f"temperature{i}", c=c[i - 1])
+    plt.plot(time, humid_model, label=f"temperature_model{i} T(t) ={coeffs[0]:.2f}^2+{coeffs[1]:.2f}t+{coeffs[2]:.2f}", c=c[i - 1], linestyle='--')
+
+    # r square value
+    r2 = metrics.r2_score(humid_list, humid_model)
+    print(f"humid{i} r2 value: {r2}")
+
+ticks = time[::50]
+labels = [dt.strftime(date, '%m-%d %H:%M') for date in date_list[::50]]
+plt.xticks(ticks, labels, fontsize=15, rotation=45, ha='right')
+plt.yticks(fontsize=15)
+plt.xlabel("time", fontsize=20)
+plt.ylabel("humidity (%)", fontsize=20)
+plt.title("humidity quadratic model", fontsize=40)
+plt.legend(fontsize=15, loc="upper right")
+
+plt.show()
+endregion
+
+region #prediction quadratic
+t=time[-1]
+future_time=time[:]
+print(t)
+for i in range(144):
+    t+=5
+    future_time.append(t)
+
+fig = plt.figure (figsize=(40,20))
+plt.subplots_adjust(hspace=0.5)
+plt.subplot(2,1,1)
+
+for i in range(1, 4):
+    temp_list_name = f"temp{i}"  # Create the variable name dynamically
+    temp_list = globals()[temp_list_name]  # Access the variable using globals()
+
+    coeffs = np.polyfit(time, temp_list, 2)
+
+    f_temp_model = []
+    for t in range(len(future_time)):
+        f_temp_model_data = coeffs[0] * t ** 2 + coeffs[1] * t + coeffs[2]
+        f_temp_model.append(f_temp_model_data)
+
+    # Plot the function
+    plt.plot(time,temp_list,label=f"temperature{i}", c=c[i - 1])
+    plt.plot(future_time[len(time):], f_temp_model[len(time):], label=f"temperature quadratic prediction{i} T(t) ={coeffs[0]:.2f}^2+{coeffs[1]:.2f}t+{coeffs[2]:.2f}", c=c[i - 1], linestyle='--')
+
+current_date = date_list[-1]
+future_dates = [current_date + timedelta(minutes=i*5) for i in range(1, 145)]
+future_dates = date_list+future_dates
+labels = [date.strftime('%m-%d %H:%M') for date in future_dates[::50]]
+
+ticks = future_time[::50]
+
+# labels = [dt.strftime(date, '%m-%d %H:%M') for date in date_list[::50]]
+plt.xticks(ticks, labels, fontsize=15, rotation=45, ha='right')
+plt.yticks(fontsize=15)
+plt.xlabel("time", fontsize=20)
+plt.ylabel("temperature (C)", fontsize=20)
+plt.title("temperature quadratic prediction", fontsize=40)
+plt.legend(fontsize=15, loc="upper right")
+
+
+plt.subplot(2,1,2)
+for i in range(1, 4):
+    humid_list_name = f"humid{i}"  # Create the variable name dynamically
+    humid_list = globals()[humid_list_name]  # Access the variable using globals()
+
+    coeffs = np.polyfit(time,  humid_list, 2)
+
+    f_humid_model = []
+    for t in range(len(future_time)):
+        f_humid_model_data = coeffs[0]*t**2+coeffs[1]*t+coeffs[2]
+        f_humid_model.append(f_humid_model_data)
+
+    # Plot the original temperature data
+    plt.plot(time, humid_list, label=f"humidity{i}", c=c[i - 1])
+    plt.plot(future_time[len(time):], f_humid_model[len(time):], label=f"humidity quadratic prediction{i} T(t) ={coeffs[0]:.2f}t^2+{coeffs[1]:.2f}t+{coeffs[2]:.2f}", c=c[i - 1], linestyle='--')
+
+plt.xticks(ticks, labels, fontsize=15, rotation=45, ha='right')
+plt.yticks(fontsize=15)
+plt.xlabel("time", fontsize=20)
+plt.ylabel("humidity (%)", fontsize=20)
+plt.title("humidity quadratic prediction", fontsize=40)
+plt.legend(fontsize=15, loc="upper right")
+
+plt.show()
 ```
+
+![local_quad_model.png](project%2Fimages%2Flocal_quad_model.png)
+**Fig.19** Quadratic model of Local Temperature and Humidity
+
+![local_quad_r2.png](project%2Fimages%2Flocal_quad_r2.png)
+**Fig.20** R-squared value of quadratic model of Local Temperature and Humidity
+
+We did the same modelling with the local data.
+
+![remote_quad_model.png](project%2Fimages%2Fremote_quad_model.png)
+**Fig.21** Quadratic model of Remote Temperature and Humidity
+
+![remote_quad_r2.png](project%2Fimages%2Fremote_quad_r2.png)
+**Fig.22** R-squared value of quadratic model of Remote Temperature and Humidity
+
+By changing the degree of polyfit in the previous code, plot quatric model.
+
+![local_quatric_model.png](project%2Fimages%2Flocal_quatric_model.png)
+**Fig.23** Quatric model of Local Temperature and Humidity
+
+![local_quatric_r2.png](project%2Fimages%2Flocal_quatric_r2.png)
+**Fig.24** R-squared value of quatric model of Local Temperature and Humidity
+
+![remote_quatric_model.png](project%2Fimages%2Fremote_quatric_model.png)
+**Fig.25** Quatric model of Remote Temperature and Humidity
+
+![remote_quatric_r2.png](project%2Fimages%2Fremote_quatric_r2.png)
+**Fig.26** R-squared value of quatric model of RemoteTemperature and Humidity
+
+
+**(Success Criteria 4)** We created error bar graph which includes, mean, standard deviation, maximum value, minimum value, and median to provide comparative analysis of each temperature and humidity. The red points indicate the median, vertical line represents standard deviation, and black line shows the mean values. Also, the area filled with blue represents the range of data between maximum value and minimum value.
+To make it easier to lead mean, standard deviation, maximum value, minimum value, and median, we made `basic_info` function in the `graph_lib.py` file.
+
+from file ```graph_lib.py```
+```.py
+def basic_info (x:list, y:list, z:list):
+    total=[]
+    mean = []
+    std = []
+    min_val = []
+    max_val = []
+    avg = []
+    median = []
+
+    for i in range(len(x)):
+        total.append([x[i],y[i],z[i]])
+
+    for item in total:
+        mean.append(np.mean(item)) #0
+        std.append(np.std(item)) #1
+        min_val.append(np.min(item)) #2
+        max_val.append(np.max(item)) #3
+        median.append(np.median(item)) #4
+
+    return mean, std, min_val, max_val, median
+
+```
+
+Importing `basic_info` function to the `graph.py` to find out the values mentioned above.
+
+from file ```graph.py```
+```.py
+mean = basic_info(temp1, temp2, temp3)[0]
+std = basic_info(temp1, temp2, temp3)[1]
+min = basic_info(temp1, temp2, temp3)[2]
+max = basic_info(temp1, temp2, temp3)[3]
+median = basic_info(temp1, temp2, temp3)[4]
+
+fig = plt.figure(figsize=(40,10))
+plt.plot(date_list, median,'o', markersize=8)
+plt.errorbar(date_list, mean, std, errorevery=(0,10),color="#023047")
+plt.fill_between(date_list, max, min, alpha=0.5, linewidth=0, color="#8ecae6")
+
+plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=5))
+plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M'))
+plt.xticks(fontsize=30, rotation=30, ha='right')
+plt.yticks(fontsize=30)
+
+plt.xlabel("time", fontsize=30)
+plt.ylabel("average temperature (C)", fontsize=30)
+plt.title("local temperature error bar (n=576)", fontsize=50)
+plt.tight_layout()
+plt.show()
+```
+
+![local_temp_errorbar.png](project%2Fimages%2Flocal_temp_errorbar.png)
+**Fig.27** local temperature error bar graph
+
+![local_humid_errorbar.png](project%2Fimages%2Flocal_humid_errorbar.png)
+**Fig.28** local humidity error bar graph
+
+We did the same thing with the remote data.
+
+![remote_temp_errorbar.png](project%2Fimages%2Fremote_temp_errorbar.png)
+**Fig.29** remote temperature error bar graph
+
+![remote_humidity_errorbar.png](project%2Fimages%2Fremote_humidity_errorbar.png)
+**Fig.30** remote humidity error bar graph
+
+**(Success Criteria 5)** prediction
+
+from file ```graph.py```
+```.py
+t=time[-1]
+future_time=time[:]
+print(t)
+for i in range(144):
+    t+=5
+    future_time.append(t)
+
+fig = plt.figure (figsize=(40,20))
+plt.subplots_adjust(hspace=0.5)
+plt.subplot(2,1,1)
+
+temp_coeffs = []
+fitted_temp_arrays = []
+
+for i in range(1, 4):
+    temp_list_name = f"temp{i}"  # Create the variable name dynamically
+    temp_list = globals()[temp_list_name]  # Access the variable using globals()
+    coeffs = np.polyfit(time, temp_list, 2)
+    temp_coeffs.append(coeffs)
+
+    # Using np.polyval for quadratic predictions
+    fitted_temp = np.polyval(coeffs, time)
+    fitted_temp_arrays.append(fitted_temp)
+
+    f_fitted_temp = np.polyval(coeffs, future_time)
+
+    plt.plot(time, temp_list, label=f"temperature{i}", c=c[i - 1]) # Plot the original temperature data
+    plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=5))
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M'))
+
+    plt.plot(future_time[len(time):], f_fitted_temp[len(time):],
+             label=f"temperature quadratic prediction{i} T(t) ={coeffs[0]:.2f}^2+{coeffs[1]:.2f}t+{coeffs[2]:.2f}",
+             c=c[i - 1], linestyle='--')
+
+current_date = date_list[-1]
+future_dates = [current_date + timedelta(minutes=i*5) for i in range(1, 145)]
+future_dates = date_list+future_dates
+labels = [date.strftime('%m-%d %H:%M') for date in future_dates[::50]]
+
+ticks = future_time[::50]
+
+plt.xticks(ticks, labels, fontsize=15, rotation=45, ha='right')
+plt.yticks(fontsize=15)
+plt.xlabel("time", fontsize=20)
+plt.ylabel("temperature (C)", fontsize=20)
+plt.title("local temperature quadratic prediction", fontsize=40)
+plt.legend(fontsize=20, loc='upper right', ncol=3)
+
+plt.subplot(2,1,2)
+humid_coeffs = []
+fitted_humid_arrays = []
+
+for i in range(1, 4):
+    humid_list_name = f"humid{i}"  # Create the variable name dynamically
+    humid_list = globals()[humid_list_name]  # Access the variable using globals()
+
+    coeffs = np.polyfit(time,  humid_list, 2)
+    humid_coeffs.append(coeffs)
+    fitted_humid = np.polyval(coeffs, time)
+    fitted_humid_arrays.append(fitted_humid)
+
+    f_fitted_humid = np.polyval(coeffs, future_time)
+
+    # Plot the original temperature data
+    plt.plot(time, humid_list, label=f"temperature{i}", c=c[i - 1])
+    plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=5))
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M'))
+
+    plt.plot(future_time[len(time):], f_fitted_humid[len(time):],
+             label=f"temperature quadratic prediction{i} T(t) ={coeffs[0]:.2f}^2+{coeffs[1]:.2f}t+{coeffs[2]:.2f}",
+             c=c[i - 1], linestyle='--')
+
+current_date = date_list[-1]
+future_dates = [current_date + timedelta(minutes=i*5) for i in range(1, 145)]
+future_dates = date_list+future_dates
+labels = [date.strftime('%m-%d %H:%M') for date in future_dates[::50]]
+
+ticks = future_time[::50]
+
+plt.xticks(ticks, labels, fontsize=15, rotation=45, ha='right')
+plt.yticks(fontsize=15)
+plt.title("local humidity quadratic prediction", fontsize=40)
+plt.xlabel("time", fontsize=20)
+plt.ylabel("humidity (%)", fontsize=20)
+plt.legend(fontsize=15, loc='upper right', ncol=3)
+plt.tight_layout()
+plt.show()
+```
+
+![quadratic prediction.png](project%2Fimages%2Fquadratic%20prediction.png)
+**Fig.31** Prediction with quadratic model of Local Temperature and Humidity
+
+![quatric prediction.png](project%2Fimages%2Fquatric%20prediction.png)
+**Fig.32** Prediction with quatric model of Local Temperature and Humidity
 
 
 from file ```graph.py```
