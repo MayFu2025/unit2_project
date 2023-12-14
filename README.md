@@ -520,19 +520,301 @@ plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=10))
 
 **(Success Criteria 3)** To capture the trend of the temperature and humidity for the prediction, we led the mathematical modelling
 
+from file ```graph.py```
+```.py
+fig = plt.figure (figsize=(40,20))
+plt.subplots_adjust(hspace=0.5)
+plt.subplot(2,1,1)
+
+for i in range(1, 4):
+    temp_list_name = f"temp{i}"  # Create the variable name dynamically
+    temp_list = globals()[temp_list_name]  # Access the variable using globals()
+
+    coeffs = np.polyfit(time, temp_list, 2)
+
+    temp_model = []
+    for t in range(len(time)):
+        temp_model_data=coeffs[0]*t**2+coeffs[1]*t+coeffs[2]
+        temp_model.append(temp_model_data)
+
+    # Plot the original temperature data
+    plt.plot(time, temp_list, label=f"temperature{i}", c=c[i - 1])
+    plt.plot(time, temp_model, label=f"temperature_model{i} T(t) ={coeffs[0]:.2f}^2+{coeffs[1]:.2f}t+{coeffs[2]:.2f}", c=c[i - 1], linestyle='--')
+
+    #r square value
+    r2=metrics.r2_score(temp_list, temp_model)
+    print(f"temp{i} r2 value: {r2}")
+
+ticks = time[::50]
+labels = [dt.strftime(date, '%m-%d %H:%M') for date in date_list[::50]]
+plt.xticks(ticks, labels, fontsize=15, rotation=45, ha='right')
+plt.yticks(fontsize=15)
+plt.xlabel("time", fontsize=20)
+plt.ylabel("temperature (C)", fontsize=20)
+plt.title("temperature quadratic model", fontsize=40)
+plt.legend(fontsize=15, loc="upper right")
+
+
+plt.subplot(2,1,2)
+
+
+for i in range(1, 4):
+    humid_list_name = f"humid{i}"  # Create the variable name dynamically
+    humid_list = globals()[humid_list_name]  # Access the variable using globals()
+
+    coeffs = np.polyfit(time,  humid_list, 2)
+
+    humid_model = []
+    for t in range(len(time)):
+        humid_model_data = coeffs[0] * t ** 2 + coeffs[1] * t + coeffs[2]
+        humid_model.append(humid_model_data)
+
+    # Plot the original temperature data
+    plt.plot(time, humid_list, label=f"temperature{i}", c=c[i - 1])
+    plt.plot(time, humid_model, label=f"temperature_model{i} T(t) ={coeffs[0]:.2f}^2+{coeffs[1]:.2f}t+{coeffs[2]:.2f}", c=c[i - 1], linestyle='--')
+
+    # r square value
+    r2 = metrics.r2_score(humid_list, humid_model)
+    print(f"humid{i} r2 value: {r2}")
+
+ticks = time[::50]
+labels = [dt.strftime(date, '%m-%d %H:%M') for date in date_list[::50]]
+plt.xticks(ticks, labels, fontsize=15, rotation=45, ha='right')
+plt.yticks(fontsize=15)
+plt.xlabel("time", fontsize=20)
+plt.ylabel("humidity (%)", fontsize=20)
+plt.title("humidity quadratic model", fontsize=40)
+plt.legend(fontsize=15, loc="upper right")
+
+plt.show()
+endregion
+
+region #prediction quadratic
+t=time[-1]
+future_time=time[:]
+print(t)
+for i in range(144):
+    t+=5
+    future_time.append(t)
+
+fig = plt.figure (figsize=(40,20))
+plt.subplots_adjust(hspace=0.5)
+plt.subplot(2,1,1)
+
+for i in range(1, 4):
+    temp_list_name = f"temp{i}"  # Create the variable name dynamically
+    temp_list = globals()[temp_list_name]  # Access the variable using globals()
+
+    coeffs = np.polyfit(time, temp_list, 2)
+
+    f_temp_model = []
+    for t in range(len(future_time)):
+        f_temp_model_data = coeffs[0] * t ** 2 + coeffs[1] * t + coeffs[2]
+        f_temp_model.append(f_temp_model_data)
+
+    # Plot the function
+    plt.plot(time,temp_list,label=f"temperature{i}", c=c[i - 1])
+    plt.plot(future_time[len(time):], f_temp_model[len(time):], label=f"temperature quadratic prediction{i} T(t) ={coeffs[0]:.2f}^2+{coeffs[1]:.2f}t+{coeffs[2]:.2f}", c=c[i - 1], linestyle='--')
+
+current_date = date_list[-1]
+future_dates = [current_date + timedelta(minutes=i*5) for i in range(1, 145)]
+future_dates = date_list+future_dates
+labels = [date.strftime('%m-%d %H:%M') for date in future_dates[::50]]
+
+ticks = future_time[::50]
+
+# labels = [dt.strftime(date, '%m-%d %H:%M') for date in date_list[::50]]
+plt.xticks(ticks, labels, fontsize=15, rotation=45, ha='right')
+plt.yticks(fontsize=15)
+plt.xlabel("time", fontsize=20)
+plt.ylabel("temperature (C)", fontsize=20)
+plt.title("temperature quadratic prediction", fontsize=40)
+plt.legend(fontsize=15, loc="upper right")
+
+
+plt.subplot(2,1,2)
+for i in range(1, 4):
+    humid_list_name = f"humid{i}"  # Create the variable name dynamically
+    humid_list = globals()[humid_list_name]  # Access the variable using globals()
+
+    coeffs = np.polyfit(time,  humid_list, 2)
+
+    f_humid_model = []
+    for t in range(len(future_time)):
+        f_humid_model_data = coeffs[0]*t**2+coeffs[1]*t+coeffs[2]
+        f_humid_model.append(f_humid_model_data)
+
+    # Plot the original temperature data
+    plt.plot(time, humid_list, label=f"humidity{i}", c=c[i - 1])
+    plt.plot(future_time[len(time):], f_humid_model[len(time):], label=f"humidity quadratic prediction{i} T(t) ={coeffs[0]:.2f}t^2+{coeffs[1]:.2f}t+{coeffs[2]:.2f}", c=c[i - 1], linestyle='--')
+
+plt.xticks(ticks, labels, fontsize=15, rotation=45, ha='right')
+plt.yticks(fontsize=15)
+plt.xlabel("time", fontsize=20)
+plt.ylabel("humidity (%)", fontsize=20)
+plt.title("humidity quadratic prediction", fontsize=40)
+plt.legend(fontsize=15, loc="upper right")
+
+plt.show()
+```
+
+![local_quad_model.png](project%2Fimages%2Flocal_quad_model.png)
+**Fig.19** Quadratic model of Local Temperature and Humidity
+
+![local_quad_r2.png](project%2Fimages%2Flocal_quad_r2.png)
+**Fig.20** R-squared value of quadratic model of Local Temperature and Humidity
+
+We did the same modelling with the local data.
+
+![remote_quad_model.png](project%2Fimages%2Fremote_quad_model.png)
+**Fig.21** Quadratic model of Remote Temperature and Humidity
+
+![remote_quad_r2.png](project%2Fimages%2Fremote_quad_r2.png)
+**Fig.22** R-squared value of quadratic model of Remote Temperature and Humidity
+
+By changing the degree of polyfit in the previous code, plot quatric model.
+
+![local_quatric_model.png](project%2Fimages%2Flocal_quatric_model.png)
+**Fig.23** Quatric model of Local Temperature and Humidity
+
+![local_quatric_r2.png](project%2Fimages%2Flocal_quatric_r2.png)
+**Fig.24** R-squared value of quatric model of Local Temperature and Humidity
+
+![remote_quatric_model.png](project%2Fimages%2Fremote_quatric_model.png)
+**Fig.25** Quatric model of Remote Temperature and Humidity
+
+![remote_quatric_r2.png](project%2Fimages%2Fremote_quatric_r2.png)
+**Fig.26** R-squared value of quatric model of RemoteTemperature and Humidity
+
+
+**(Success Criteria 4)** error bar
 
 from file ```graph.py```
 ```.py
-import 
+mean = basic_info(temp1, temp2, temp3)[0]
+std = basic_info(temp1, temp2, temp3)[1]
+min = basic_info(temp1, temp2, temp3)[2]
+max = basic_info(temp1, temp2, temp3)[3]
+median = basic_info(temp1, temp2, temp3)[4]
+
+fig = plt.figure(figsize=(40,10))
+plt.plot(date_list, median,'o', markersize=8)
+plt.errorbar(date_list, mean, std, errorevery=(0,10),color="#023047")
+plt.fill_between(date_list, max, min, alpha=0.5, linewidth=0, color="#8ecae6")
+
+plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=5))
+plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M'))
+plt.xticks(fontsize=30, rotation=30, ha='right')
+plt.yticks(fontsize=30)
+
+plt.xlabel("time", fontsize=30)
+plt.ylabel("average temperature (C)", fontsize=30)
+plt.title("local temperature error bar (n=576)", fontsize=50)
+plt.tight_layout()
+plt.show()
 ```
+**Fig.27** local temperature error bar graph
+**Fig.28** local humidity error bar graph
+**Fig.29** remote temperature error bar graph
+**Fig.30** remote humidity error bar graph
+
+**(Success Criteria 5)** prediction
+
 from file ```graph.py```
 ```.py
-import 
+t=time[-1]
+future_time=time[:]
+print(t)
+for i in range(144):
+    t+=5
+    future_time.append(t)
+
+fig = plt.figure (figsize=(40,20))
+plt.subplots_adjust(hspace=0.5)
+plt.subplot(2,1,1)
+
+temp_coeffs = []
+fitted_temp_arrays = []
+
+for i in range(1, 4):
+    temp_list_name = f"temp{i}"  # Create the variable name dynamically
+    temp_list = globals()[temp_list_name]  # Access the variable using globals()
+    coeffs = np.polyfit(time, temp_list, 2)
+    temp_coeffs.append(coeffs)
+
+    # Using np.polyval for quadratic predictions
+    fitted_temp = np.polyval(coeffs, time)
+    fitted_temp_arrays.append(fitted_temp)
+
+    f_fitted_temp = np.polyval(coeffs, future_time)
+
+    plt.plot(time, temp_list, label=f"temperature{i}", c=c[i - 1]) # Plot the original temperature data
+    plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=5))
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M'))
+
+    plt.plot(future_time[len(time):], f_fitted_temp[len(time):],
+             label=f"temperature quadratic prediction{i} T(t) ={coeffs[0]:.2f}^2+{coeffs[1]:.2f}t+{coeffs[2]:.2f}",
+             c=c[i - 1], linestyle='--')
+
+current_date = date_list[-1]
+future_dates = [current_date + timedelta(minutes=i*5) for i in range(1, 145)]
+future_dates = date_list+future_dates
+labels = [date.strftime('%m-%d %H:%M') for date in future_dates[::50]]
+
+ticks = future_time[::50]
+
+plt.xticks(ticks, labels, fontsize=15, rotation=45, ha='right')
+plt.yticks(fontsize=15)
+plt.xlabel("time", fontsize=20)
+plt.ylabel("temperature (C)", fontsize=20)
+plt.title("local temperature quadratic prediction", fontsize=40)
+plt.legend(fontsize=20, loc='upper right', ncol=3)
+
+plt.subplot(2,1,2)
+humid_coeffs = []
+fitted_humid_arrays = []
+
+for i in range(1, 4):
+    humid_list_name = f"humid{i}"  # Create the variable name dynamically
+    humid_list = globals()[humid_list_name]  # Access the variable using globals()
+
+    coeffs = np.polyfit(time,  humid_list, 2)
+    humid_coeffs.append(coeffs)
+    fitted_humid = np.polyval(coeffs, time)
+    fitted_humid_arrays.append(fitted_humid)
+
+    f_fitted_humid = np.polyval(coeffs, future_time)
+
+    # Plot the original temperature data
+    plt.plot(time, humid_list, label=f"temperature{i}", c=c[i - 1])
+    plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=5))
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M'))
+
+    plt.plot(future_time[len(time):], f_fitted_humid[len(time):],
+             label=f"temperature quadratic prediction{i} T(t) ={coeffs[0]:.2f}^2+{coeffs[1]:.2f}t+{coeffs[2]:.2f}",
+             c=c[i - 1], linestyle='--')
+
+current_date = date_list[-1]
+future_dates = [current_date + timedelta(minutes=i*5) for i in range(1, 145)]
+future_dates = date_list+future_dates
+labels = [date.strftime('%m-%d %H:%M') for date in future_dates[::50]]
+
+ticks = future_time[::50]
+
+plt.xticks(ticks, labels, fontsize=15, rotation=45, ha='right')
+plt.yticks(fontsize=15)
+plt.title("local humidity quadratic prediction", fontsize=40)
+plt.xlabel("time", fontsize=20)
+plt.ylabel("humidity (%)", fontsize=20)
+plt.legend(fontsize=15, loc='upper right', ncol=3)
+plt.tight_layout()
+plt.show()
 ```
-from file ```graph.py```
-```.py
-import 
-```
+
+**Fig.31** Prediction with quadratic model of Local Temperature and Humidity
+**Fig.32** Prediction with quatric model of Local Temperature and Humidity
+
+
 from file ```graph.py```
 ```.py
 import 

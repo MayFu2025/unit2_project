@@ -131,52 +131,52 @@ c = ["red", "blue", "green"]
 #endregion
 
 #region # humid graph 6box
-# fig = plt.figure(figsize=(30,20))
-# plt.subplots_adjust(hspace=0.5)
-#
-# plt.subplot(2,3,1) # temp1
-# plt.ylim(0,60)
-# temp1_graph=draw_graph(t=date_list, v=temp1, color='red', title="temp1")
-# plt.xlabel("time", fontsize=20)
-# plt.ylabel("temperature (C)", fontsize=20)
-# plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=10))
-#
-# plt.subplot(2,3,2) # temp2
-# plt.ylim(0,60)
-# temp2_graph=draw_graph(t=date_list, v=temp2, color='blue', title="temp2")
-# plt.xlabel("time", fontsize=20)
-# plt.ylabel("temperature (C)", fontsize=20)
-# plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=10))
-#
-# plt.subplot(2,3,3) # temp3
-# plt.ylim(0,60)
-# temp3_graph=draw_graph(t=date_list, v=temp3, color='green', title="temp3")
-# plt.xlabel("time", fontsize=20)
-# plt.ylabel("temperature (C)", fontsize=20)
-# plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=10))
-#
-# plt.subplot(2,3,4) # humid1
-# plt.ylim(0,100)
-# humid1_graph=draw_graph(t=date_list, v=humid1, color='red', title="humid1")
-# plt.xlabel("time", fontsize=20)
-# plt.ylabel("humidity (%)", fontsize=20)
-# plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=10))
-#
-# plt.subplot(2,3,5) #humid2
-# plt.ylim(0,100)
-# humid2_graph=draw_graph(t=date_list, v=humid2, color='blue', title="humid2")
-# plt.xlabel("time", fontsize=20)
-# plt.ylabel("humidity (%)", fontsize=20)
-# plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=10))
-#
-# plt.subplot(2,3,6) #humid3
-# plt.ylim(0,100)
-# humid3_graph=draw_graph(t=date_list, v=humid3, color='green', title="humid3")
-# plt.xlabel("time", fontsize=20)
-# plt.ylabel("humidity (%)", fontsize=20)
-# plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=10))
-#
-# plt.show()
+fig = plt.figure(figsize=(30,20))
+plt.subplots_adjust(hspace=0.5)
+
+plt.subplot(2,3,1) # temp1
+plt.ylim(0,60)
+temp1_graph=draw_graph(t=date_list, v=temp1, color='red', title="local temp1")
+plt.xlabel("time", fontsize=20)
+plt.ylabel("temperature (C)", fontsize=20)
+plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=10))
+
+plt.subplot(2,3,2) # temp2
+plt.ylim(0,60)
+temp2_graph=draw_graph(t=date_list, v=temp2, color='blue', title="local temp2")
+plt.xlabel("time", fontsize=20)
+plt.ylabel("temperature (C)", fontsize=20)
+plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=10))
+
+plt.subplot(2,3,3) # temp3
+plt.ylim(0,60)
+temp3_graph=draw_graph(t=date_list, v=temp3, color='green', title="local temp3")
+plt.xlabel("time", fontsize=20)
+plt.ylabel("temperature (C)", fontsize=20)
+plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=10))
+
+plt.subplot(2,3,4) # humid1
+plt.ylim(0,100)
+humid1_graph=draw_graph(t=date_list, v=humid1, color='red', title="local humid1")
+plt.xlabel("time", fontsize=20)
+plt.ylabel("humidity (%)", fontsize=20)
+plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=10))
+
+plt.subplot(2,3,5) #humid2
+plt.ylim(0,100)
+humid2_graph=draw_graph(t=date_list, v=humid2, color='blue', title="local humid2")
+plt.xlabel("time", fontsize=20)
+plt.ylabel("humidity (%)", fontsize=20)
+plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=10))
+
+plt.subplot(2,3,6) #humid3
+plt.ylim(0,100)
+humid3_graph=draw_graph(t=date_list, v=humid3, color='green', title="local humid3")
+plt.xlabel("time", fontsize=20)
+plt.ylabel("humidity (%)", fontsize=20)
+plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=10))
+
+plt.show()
 #endregion
 
 #region # temp, humid 1 box
@@ -386,51 +386,51 @@ c = ["red", "blue", "green"]
 #endregion
 
 #region # temperature error bar
-mean = basic_info(temp1, temp2, temp3)[0]
-std = basic_info(temp1, temp2, temp3)[1]
-min = basic_info(temp1, temp2, temp3)[2]
-max = basic_info(temp1, temp2, temp3)[3]
-median = basic_info(temp1, temp2, temp3)[4]
-
-fig = plt.figure(figsize=(40,10))
-plt.plot(date_list, median,'o', markersize=8)
-plt.errorbar(date_list, mean, std, errorevery=(0,10),color="#023047")
-plt.fill_between(date_list, max, min, alpha=0.5, linewidth=0, color="#8ecae6")
-
-plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=5))
-plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M'))
-plt.xticks(fontsize=30, rotation=30, ha='right')
-plt.yticks(fontsize=30)
-
-plt.xlabel("time", fontsize=30)
-plt.ylabel("average temperature (C)", fontsize=30)
-plt.title("local temperature error bar (n=576)", fontsize=50)
-plt.tight_layout()
-plt.show()
+# mean = basic_info(temp1, temp2, temp3)[0]
+# std = basic_info(temp1, temp2, temp3)[1]
+# min = basic_info(temp1, temp2, temp3)[2]
+# max = basic_info(temp1, temp2, temp3)[3]
+# median = basic_info(temp1, temp2, temp3)[4]
+#
+# fig = plt.figure(figsize=(40,10))
+# plt.plot(date_list, median,'o', markersize=8)
+# plt.errorbar(date_list, mean, std, errorevery=(0,10),color="#023047")
+# plt.fill_between(date_list, max, min, alpha=0.5, linewidth=0, color="#8ecae6")
+#
+# plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=5))
+# plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M'))
+# plt.xticks(fontsize=30, rotation=30, ha='right')
+# plt.yticks(fontsize=30)
+#
+# plt.xlabel("time", fontsize=30)
+# plt.ylabel("average temperature (C)", fontsize=30)
+# plt.title("local temperature error bar (n=576)", fontsize=50)
+# plt.tight_layout()
+# plt.show()
 #endregion
 
-#region # temperature error bar
-mean = basic_info(r_temp1, r_temp2, r_temp3)[0]
-std = basic_info(r_temp1, r_temp2, r_temp3)[1]
-min = basic_info(r_temp1, r_temp2, r_temp3)[2]
-max = basic_info(r_temp1, r_temp2, r_temp3)[3]
-median = basic_info(r_temp1, r_temp2, r_temp3)[4]
-
-fig = plt.figure(figsize=(40,10))
-plt.plot(r_time, median,'o', markersize=8)
-plt.errorbar(r_time, mean, std, errorevery=(0,10),color="#023047")
-plt.fill_between(r_time, max, min, alpha=0.5, linewidth=0, color="#8ecae6")
-
-plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=5))
-plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M'))
-plt.xticks(fontsize=30, rotation=30, ha='right')
-plt.yticks(fontsize=30)
-
-plt.xlabel("time", fontsize=30)
-plt.ylabel("average temperature (C)", fontsize=30)
-plt.title("remote temperature error bar (n=632)", fontsize=50)
-plt.tight_layout()
-plt.show()
+#region # remote temperature error bar
+# mean = basic_info(r_temp1, r_temp2, r_temp3)[0]
+# std = basic_info(r_temp1, r_temp2, r_temp3)[1]
+# min = basic_info(r_temp1, r_temp2, r_temp3)[2]
+# max = basic_info(r_temp1, r_temp2, r_temp3)[3]
+# median = basic_info(r_temp1, r_temp2, r_temp3)[4]
+#
+# fig = plt.figure(figsize=(40,10))
+# plt.plot(r_time, median,'o', markersize=8)
+# plt.errorbar(r_time, mean, std, errorevery=(0,10),color="#023047")
+# plt.fill_between(r_time, max, min, alpha=0.5, linewidth=0, color="#8ecae6")
+#
+# plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=5))
+# plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M'))
+# plt.xticks(fontsize=30, rotation=30, ha='right')
+# plt.yticks(fontsize=30)
+#
+# plt.xlabel("time", fontsize=30)
+# plt.ylabel("average temperature (C)", fontsize=30)
+# plt.title("remote temperature error bar (n=632)", fontsize=50)
+# plt.tight_layout()
+# plt.show()
 #endregion
 
 #region # humidity error bar
@@ -455,6 +455,32 @@ plt.show()
 # plt.xlabel("time", fontsize=30)
 # plt.ylabel("average humidity (%)", fontsize=30)
 # plt.title("local humidity error bar (n=576)", fontsize=50)
+# plt.tight_layout()
+# plt.show()
+#endregion
+
+#region # remote humidity error bar
+# basic_info_list=[]
+# for i in range(5):
+#     info = basic_info(r_humid1_fake, r_humid2, r_humid3)[i]
+#     basic_info_list.append(info)
+#
+# mean, std, min, max, median = basic_info_list
+#
+# fig = plt.figure(figsize=(40,10))
+# plt.plot(r_time, mean, c='black')
+# plt.plot(r_time, median,'o', markersize=8)
+# plt.errorbar(r_time, mean, std, errorevery=(0,10),color="#023047")
+# plt.fill_between(r_time, max, min, alpha=0.5, linewidth=0, color="#8ecae6")
+#
+# plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=5))
+# plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M'))
+# plt.xticks(fontsize=30, rotation=30, ha='right')
+# plt.yticks(fontsize=30)
+#
+# plt.xlabel("time", fontsize=30)
+# plt.ylabel("average humidity (%)", fontsize=30)
+# plt.title("remote humidity error bar (n=576)", fontsize=50)
 # plt.tight_layout()
 # plt.show()
 #endregion
@@ -586,8 +612,8 @@ plt.show()
 # plt.ylabel("temperature (C)", fontsize=20)
 # plt.title("temperature quadratic prediction", fontsize=40)
 # plt.legend(fontsize=15, loc="upper right")
-
-
+#
+#
 # plt.subplot(2,1,2)
 # for i in range(1, 4):
 #     humid_list_name = f"humid{i}"  # Create the variable name dynamically
@@ -857,15 +883,12 @@ plt.show()
 #
 # ticks = future_time[::50]
 #
-# # labels = [dt.strftime(date, '%m-%d %H:%M') for date in date_list[::50]]
 # plt.xticks(ticks, labels, fontsize=15, rotation=45, ha='right')
 # plt.yticks(fontsize=15)
 # plt.xlabel("time", fontsize=20)
 # plt.ylabel("temperature (C)", fontsize=20)
-# plt.title("temperature quadratic prediction", fontsize=40)
+# plt.title("local temperature quadratic prediction", fontsize=40)
 # plt.legend(fontsize=20, loc='upper right', ncol=3)
-# # plt.legend(fontsize=20, loc='upper center', bbox_to_anchor=(.5, -.15), ncol=3)
-#
 #
 # plt.subplot(2,1,2)
 # humid_coeffs = []
@@ -900,7 +923,7 @@ plt.show()
 #
 # plt.xticks(ticks, labels, fontsize=15, rotation=45, ha='right')
 # plt.yticks(fontsize=15)
-# plt.title("humidity quadratic prediction", fontsize=40)
+# plt.title("local humidity quadratic prediction", fontsize=40)
 # plt.xlabel("time", fontsize=20)
 # plt.ylabel("humidity (%)", fontsize=20)
 # plt.legend(fontsize=15, loc='upper right', ncol=3)
@@ -1337,15 +1360,12 @@ plt.show()
 #
 # ticks = future_time[::50]
 #
-# # labels = [dt.strftime(date, '%m-%d %H:%M') for date in date_list[::50]]
 # plt.xticks(ticks, labels, fontsize=15, rotation=45, ha='right')
 # plt.yticks(fontsize=15)
 # plt.xlabel("time", fontsize=20)
 # plt.ylabel("temperature (C)", fontsize=20)
-# plt.title("temperature quatric prediction", fontsize=40)
+# plt.title("local temperature quatric prediction", fontsize=40)
 # plt.legend(fontsize=15, loc='upper right', ncol=3)
-# # plt.legend(fontsize=20, loc='upper center', bbox_to_anchor=(.5, -.15), ncol=3)
-#
 #
 # plt.subplot(2,1,2)
 # humid_coeffs = []
@@ -1380,7 +1400,7 @@ plt.show()
 #
 # plt.xticks(ticks, labels, fontsize=15, rotation=45, ha='right')
 # plt.yticks(fontsize=15)
-# plt.title("humidity quatric prediction", fontsize=40)
+# plt.title("local humidity quatric prediction", fontsize=40)
 # plt.xlabel("time", fontsize=20)
 # plt.ylabel("humidity (%)", fontsize=20)
 # plt.legend(fontsize=15, loc='upper right', ncol=3)
