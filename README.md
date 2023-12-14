@@ -314,10 +314,8 @@ The above code is nested within the same if statement that runs when `t` is a mu
 
 ![](project/images/serverexample.png)
 **Fig. 8** Screenshot of the readings on the server for server_id 31: our t3 sensor. The value for the key 'value' in each of the individual dictionaries represent the readings sent to the server. **(Success Criteria 5)**
-## GRAPH NO DOCUMENTATION KOKO ONEGAISHIMASU **(Success Criteria 1, 3, 4, 6)**
 
-
-**(Success Criteria 1,3,4,6)** First, to create graphs, we read the local temperature and humidity values from the csv file (final_readings.csv).
+**(Success Criteria 5)** Next as per requirements, there is a need to create graphs. To do this we first read the local temperature and humidity values from final_readings.csv. This can be done with the following program
 
 From file ```.graph py```:
 ```.py
@@ -346,7 +344,7 @@ with open('final_readings.csv', mode='r') as f:
         t+=5
 ```
 
-Also, to get temperature and humidity values from the server at the same time with the local measurement. However, the server didn't working when we were collecting the local data. Refering the weather of Karuizawa at the time when we were collecting the local data, we used the other date's server data which has similar weather.
+**(Success Criteria 1, 3, 4)** As per requirements there is also a need to get temperature and humidity values from the remote sensors at the same time as our local measurement. However, the server was not working when we were collecting our local data. Referring the weather of Karuizawa at the time of local data collection, we found another collection of data from the remote sensors during a period of similar weather. The screenshots of the weather of Karuizawa at the time of local data collection and the weather of Karuizawa at the time of remote data collection are shown below.
 ![weather 12:1.png](project%2Fimages%2Fweather%2012%3A1.png)
 **Fig. 9** Screenshot of Karuizawa weather on December 1st (local data was running).
 ![weather 12:2.png](project%2Fimages%2Fweather%2012%3A2.png)
@@ -360,7 +358,7 @@ Also, to get temperature and humidity values from the server at the same time wi
 ![weather 12:8.png](project%2Fimages%2Fweather%2012%3A8.png)
 **Fig. 14** Screenshot of Karuizawa weather on December 8th (use as December 3rd weather).
 
-In order to get the temperature and humidity from the sever, we defined the strat date and end date and get the specific day's temperature and humidity data by using for loop. To merge with the local data in terms of date, made 6 days delay on the datetime value we took from the server.
+In order to get the temperature and humidity from the sever, we define the start date and end date, and obtain the specific day's temperature and humidity data using a for loop. To align the time axis with the local data in terms of date, we added a 6-day delay on the datetime value taken from server. This is made into a function so that it can be called for each sensor. The code below shows the function for getting the temperature and humidity data from the server. Fig. 4. shows the flow diagram for how this is done.
 
 from file ```remote.py```
 ```.py
@@ -391,7 +389,7 @@ for t in range(len(r_temp1[0])):
         f.writelines(line)
 ```
 
-In order to use the data collected by the server which is stored in the `remote_readings.csv` file to create graphs, we obtained the data on that data on `graph.py`.
+In order to use the data collected by the server stored in the `remote_readings.csv` file to create graphs, we obtain this data on a new file, `graph.py`.
 from file ```graph.py```
 ```.py
 
@@ -421,7 +419,7 @@ with open('remote_readings.csv', mode='r') as f:
 
 
 **(Success Criteria 1)** To visualize the overview of temperature and humidity data from both local and server, we created the graph representing those data individually.
-The code below shows the drawing local temperature data from sensor 1. We did the same process in other two temperatre data and also three humidity data.
+The code below shows the drawing local temperature data from sensor 1. We use the same process for the other two temperature data and also three humidity data. This can program is also expressed in the flow diagram fig. 5.
 
 from file ```graph.py```
 ```.py
@@ -435,11 +433,11 @@ plt.xlabel("time", fontsize=20)
 plt.ylabel("temperature (C)", fontsize=20)
 plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=10))
 ```
-
+![]()
 **Fig.15** Local Temperature and Humidity overview graph
 
 
-We did the same thing on the remote data and plot the graph.
+**(Success Criteria 1)** We did the same thing on the remote data and plot the graph.
 from file ```graph.py```
 ```.py
 locator = MaxNLocator(nbins=7)
@@ -455,6 +453,7 @@ plt.ylabel("temperature (C)", fontsize=20)
 plt.gca().xaxis.set_major_locator(locator)
 plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M'))
 ```
+![]()
 **Fig.16** Remote Temperature and Humidity overview graph
 
 In addition, to make it easier to compare the local and remote graph, we took both average and plot the graph representing local and remote avrage of temperature and humidity.
@@ -484,7 +483,7 @@ plt.legend(fontsize=30, loc="upper right")
 
 **Fig.17** Local and Remote Temperature and Humidity average graph
 
-Since the local temperature graph of measured by the sensor3 was significantly different from the other two sensors. Therefore, we standardized that local data to compare the rate of change in temperature. To standarized the data by using `StandardScaler` module from `sklearn.preprocessing` library. To make it easier to standarlize, we created a function called `standardalization` on the `graph_lib.py` which returns the standarlized values.
+Since the local temperature graph of measured by the sensor3 was significantly different from the other two sensors, we standardized the local data to compare the rate of change in temperature amongst all three sensors. To standardize the data, we used the `StandardScaler` module from the `sklearn.preprocessing` library. To make it easier to standardize, we created a function called `standardalization` on the `graph_lib.py` which returns the standardized values.
 
 from file ```graph_lib.py```
 ```.py
@@ -497,7 +496,7 @@ def standardalization (data:list):
     return time, sc_data
 ```
 
-By using that standardalization function, we plot the standarlized graph.
+By using that standardization function, we plot the standardized graph.
 from file ```graph.py```
 ```.py
 fig = plt.figure(figsize=(30,20))
@@ -510,11 +509,11 @@ plt.ylabel("temperature (C)", fontsize=20)
 plt.xticks(rotation=30)
 plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=10))
 ```
+![]()
+**Fig.18** Local standardized Temperature and Humidity graph
 
-**Fig.18** Local standarlized Temperature and Humidity graph
 
-
-**(Success Criteria 3)** To capture the trend of the temperature and humidity for the prediction, we led the mathematical modelling
+**(Success Criteria 3)** To capture the trend of the temperature and humidity for the prediction, we use mathematical modelling. 
 
 
 from file ```graph.py```
