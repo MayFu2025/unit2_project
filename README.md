@@ -120,7 +120,7 @@ _Cultural factors that impact our interpretation can be what temperatures and hu
   - Data Visualization
 
 ## List of libraries used
-PyCharm: CSV, Time, Datetime, Requests, Matplotlib (pyplot module), Numpy
+PyCharm: csv, time, datetime, requests, matplotlib, numpy, sklearn, scipy, graph_lib
 
 Arduino IDE: Adafruit DHT Sensor Library
 
