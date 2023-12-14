@@ -545,7 +545,7 @@ for i in range(1, 4):
     plt.plot(time, temp_list, label=f"temperature{i}", c=c[i - 1])
     plt.plot(time, temp_model, label=f"temperature_model{i} T(t) ={coeffs[0]:.2f}^2+{coeffs[1]:.2f}t+{coeffs[2]:.2f}", c=c[i - 1], linestyle='--')
 
-    #r square value
+    #r squared value
     r2=metrics.r2_score(temp_list, temp_model)
     print(f"temp{i} r2 value: {r2}")
 
@@ -557,110 +557,9 @@ plt.xlabel("time", fontsize=20)
 plt.ylabel("temperature (C)", fontsize=20)
 plt.title("temperature quadratic model", fontsize=40)
 plt.legend(fontsize=15, loc="upper right")
-
-
-plt.subplot(2,1,2)
-
-
-for i in range(1, 4):
-    humid_list_name = f"humid{i}"  # Create the variable name dynamically
-    humid_list = globals()[humid_list_name]  # Access the variable using globals()
-
-    coeffs = np.polyfit(time,  humid_list, 2)
-
-    humid_model = []
-    for t in range(len(time)):
-        humid_model_data = coeffs[0] * t ** 2 + coeffs[1] * t + coeffs[2]
-        humid_model.append(humid_model_data)
-
-    # Plot the original temperature data
-    plt.plot(time, humid_list, label=f"temperature{i}", c=c[i - 1])
-    plt.plot(time, humid_model, label=f"temperature_model{i} T(t) ={coeffs[0]:.2f}^2+{coeffs[1]:.2f}t+{coeffs[2]:.2f}", c=c[i - 1], linestyle='--')
-
-    # r square value
-    r2 = metrics.r2_score(humid_list, humid_model)
-    print(f"humid{i} r2 value: {r2}")
-
-ticks = time[::50]
-labels = [dt.strftime(date, '%m-%d %H:%M') for date in date_list[::50]]
-plt.xticks(ticks, labels, fontsize=15, rotation=45, ha='right')
-plt.yticks(fontsize=15)
-plt.xlabel("time", fontsize=20)
-plt.ylabel("humidity (%)", fontsize=20)
-plt.title("humidity quadratic model", fontsize=40)
-plt.legend(fontsize=15, loc="upper right")
-
-plt.show()
-endregion
-
-region #prediction quadratic
-t=time[-1]
-future_time=time[:]
-print(t)
-for i in range(144):
-    t+=5
-    future_time.append(t)
-
-fig = plt.figure (figsize=(40,20))
-plt.subplots_adjust(hspace=0.5)
-plt.subplot(2,1,1)
-
-for i in range(1, 4):
-    temp_list_name = f"temp{i}"  # Create the variable name dynamically
-    temp_list = globals()[temp_list_name]  # Access the variable using globals()
-
-    coeffs = np.polyfit(time, temp_list, 2)
-
-    f_temp_model = []
-    for t in range(len(future_time)):
-        f_temp_model_data = coeffs[0] * t ** 2 + coeffs[1] * t + coeffs[2]
-        f_temp_model.append(f_temp_model_data)
-
-    # Plot the function
-    plt.plot(time,temp_list,label=f"temperature{i}", c=c[i - 1])
-    plt.plot(future_time[len(time):], f_temp_model[len(time):], label=f"temperature quadratic prediction{i} T(t) ={coeffs[0]:.2f}^2+{coeffs[1]:.2f}t+{coeffs[2]:.2f}", c=c[i - 1], linestyle='--')
-
-current_date = date_list[-1]
-future_dates = [current_date + timedelta(minutes=i*5) for i in range(1, 145)]
-future_dates = date_list+future_dates
-labels = [date.strftime('%m-%d %H:%M') for date in future_dates[::50]]
-
-ticks = future_time[::50]
-
-# labels = [dt.strftime(date, '%m-%d %H:%M') for date in date_list[::50]]
-plt.xticks(ticks, labels, fontsize=15, rotation=45, ha='right')
-plt.yticks(fontsize=15)
-plt.xlabel("time", fontsize=20)
-plt.ylabel("temperature (C)", fontsize=20)
-plt.title("temperature quadratic prediction", fontsize=40)
-plt.legend(fontsize=15, loc="upper right")
-
-
-plt.subplot(2,1,2)
-for i in range(1, 4):
-    humid_list_name = f"humid{i}"  # Create the variable name dynamically
-    humid_list = globals()[humid_list_name]  # Access the variable using globals()
-
-    coeffs = np.polyfit(time,  humid_list, 2)
-
-    f_humid_model = []
-    for t in range(len(future_time)):
-        f_humid_model_data = coeffs[0]*t**2+coeffs[1]*t+coeffs[2]
-        f_humid_model.append(f_humid_model_data)
-
-    # Plot the original temperature data
-    plt.plot(time, humid_list, label=f"humidity{i}", c=c[i - 1])
-    plt.plot(future_time[len(time):], f_humid_model[len(time):], label=f"humidity quadratic prediction{i} T(t) ={coeffs[0]:.2f}t^2+{coeffs[1]:.2f}t+{coeffs[2]:.2f}", c=c[i - 1], linestyle='--')
-
-plt.xticks(ticks, labels, fontsize=15, rotation=45, ha='right')
-plt.yticks(fontsize=15)
-plt.xlabel("time", fontsize=20)
-plt.ylabel("humidity (%)", fontsize=20)
-plt.title("humidity quadratic prediction", fontsize=40)
-plt.legend(fontsize=15, loc="upper right")
-
 plt.show()
 ```
+We did the same procedure for the humid, too.
 
 ![local_quad_model.png](project%2Fimages%2Flocal_quad_model.png)
 **Fig.19** Quadratic model of Local Temperature and Humidity
