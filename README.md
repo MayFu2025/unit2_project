@@ -439,7 +439,7 @@ plt.xlabel("time", fontsize=20)
 plt.ylabel("temperature (C)", fontsize=20)
 plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=10))
 ```
-
+![local_overview.png](project%2Fimages%2Flocal_overview.png)
 **Fig.15** Local Temperature and Humidity overview graph
 
 
@@ -459,6 +459,8 @@ plt.ylabel("temperature (C)", fontsize=20)
 plt.gca().xaxis.set_major_locator(locator)
 plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M'))
 ```
+
+![remote_6box_overview.png](project%2Fimages%2Fremote_6box_overview.png)
 **Fig.16** Remote Temperature and Humidity overview graph
 
 In addition, to make it easier to compare the local and remote graph, we took both average and plot the graph representing local and remote avrage of temperature and humidity.
@@ -486,6 +488,7 @@ plt.tight_layout()
 plt.legend(fontsize=30, loc="upper right")
 ```
 
+![average.png](project%2Fimages%2Faverage.png)
 **Fig.17** Local and Remote Temperature and Humidity average graph
 
 Since the local temperature graph of measured by the sensor3 was significantly different from the other two sensors. Therefore, we standardized that local data to compare the rate of change in temperature. To standarized the data by using `StandardScaler` module from `sklearn.preprocessing` library. To make it easier to standarlize, we created a function called `standardalization` on the `graph_lib.py` which returns the standarlized values.
@@ -515,10 +518,11 @@ plt.xticks(rotation=30)
 plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=10))
 ```
 
+![standardized.png](project%2Fimages%2Fstandardized.png)
 **Fig.18** Local standarlized Temperature and Humidity graph
 
 
-**(Success Criteria 3)** To capture the trend of the temperature and humidity for the prediction, we led the mathematical modelling
+**(Success Criteria 3)** To capture the trend of the temperature and humidity for the prediction, we used the mathematical modelling to grasp the data. To find the best fit model, we tried quadratic and quatric model by using `polyfit` and `polyval` module from `numply` library. We used r-squared value to compare the accuracy of modelling.
 
 from file ```graph.py```
 ```.py
@@ -713,9 +717,19 @@ plt.title("local temperature error bar (n=576)", fontsize=50)
 plt.tight_layout()
 plt.show()
 ```
+
+![local_temp_errorbar.png](project%2Fimages%2Flocal_temp_errorbar.png)
 **Fig.27** local temperature error bar graph
+
+![local_humid_errorbar.png](project%2Fimages%2Flocal_humid_errorbar.png)
 **Fig.28** local humidity error bar graph
+
+We did the same thing with the remote data.
+
+![remote_temp_errorbar.png](project%2Fimages%2Fremote_temp_errorbar.png)
 **Fig.29** remote temperature error bar graph
+
+![remote_humidity_errorbar.png](project%2Fimages%2Fremote_humidity_errorbar.png)
 **Fig.30** remote humidity error bar graph
 
 **(Success Criteria 5)** prediction
@@ -811,20 +825,11 @@ plt.tight_layout()
 plt.show()
 ```
 
+![quadratic prediction.png](project%2Fimages%2Fquadratic%20prediction.png)
 **Fig.31** Prediction with quadratic model of Local Temperature and Humidity
+
+![quatric prediction.png](project%2Fimages%2Fquatric%20prediction.png)
 **Fig.32** Prediction with quatric model of Local Temperature and Humidity
-
-
-from file ```graph.py```
-```.py
-import 
-```
-
-
-from file ```graph.py```
-```.py
-import 
-```
 
 
 from file ```graph.py```
