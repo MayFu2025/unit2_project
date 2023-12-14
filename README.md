@@ -77,7 +77,11 @@ _Cultural factors that impact our interpretation can be what temperatures and hu
 
 ![](project/images/flowdiagram3.png)
                                                                                                   
-**Fig.6** shows the flow diagram for plotting the 
+**Fig.6** shows the flow diagram for the function `get_sensor_w_date` and how it obtains temperature and humidity data from the remote servers.
+
+![](project/images/flowdiagram4.png)
+                                                                                                  
+**Fig.7** shows the flow diagram for the function `get_sensor_w_date` and how it obtains temperature and humidity data from the remote servers.
 
 ## Test Plan
 | Test Type        | Test Content                                                                                                         | Input                                                                                                                                                                                                                                                                                                                                                                 | Expected Output                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
