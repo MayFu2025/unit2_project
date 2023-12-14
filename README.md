@@ -825,12 +825,12 @@ We did the same procedure on the humidity data to make the prediction for the fu
 
 
 [^9]: Arduino. "Digital Pins." Arduino, Arduino, 5 December 2023, https://www.arduino.cc/reference/en/language/functions/digital-io/digitalwrite/.
-[^11]: Koronus. "print multiple variables amount in one line." Arduino Forum, Arduino, 6 May 2021, https://forum.arduino.cc/t/print-multiple-variables-amount-in-one-line/604071/9
+[^10]: Koronus. "print multiple variables amount in one line." Arduino Forum, Arduino, 6 May 2021, https://forum.arduino.cc/t/print-multiple-variables-amount-in-one-line/604071/9
 # Criteria D: Functionality
 
 ## Video of proposed solution
 The video can be found under the name "Project 2- Weather Station.mov" in this Google Drive Folder: 
 https://drive.google.com/drive/folders/1tMNTtgjcs2QFEaba9YF4Wc9Ikm9p6jiU?usp=drive_link
 ## Scientific Poster of Investigation:
-![Com Sci Project unit 2.png](project%2Fimages%2FCom%20Sci%20Project%20unit%202.png)
+![poster.png](project/images/poster.png)
 **Fig. 9** a scientific poster of investigation, created using Canva. Created by Manaha Ueda and May Fujita. **(Success Criteria 7)**
