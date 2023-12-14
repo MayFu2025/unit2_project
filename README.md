@@ -309,8 +309,6 @@ The above code is nested within the same if statement that runs when `t` is a mu
 
 ![](project/images/serverexample.png)
 **Fig. 9** Screenshot of the readings on the server for server_id 31: our t3 sensor. The value for the key 'value' in each of the individual dictionaries represent the readings sent to the server. **(Success Criteria 5)**
-## GRAPH NO DOCUMENTATION KOKO ONEGAISHIMASU **(Success Criteria 1, 3, 4, 6)**
-
 
 **(Success Criteria 1,3,4,6)** First, to create graphs, we read the local temperature and humidity values from the csv file (final_readings.csv).
 
