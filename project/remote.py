@@ -156,7 +156,7 @@ def fake_humid (x:list, y:list):
     return mean
 
 
-# r_temp1=get_sensor_w_date(id=0)
+r_temp1=get_sensor_w_date(id=0)
 # r_temp2=get_sensor_w_date(id=1)
 # r_temp3=get_sensor_w_date(id=2)
 #
@@ -170,3 +170,5 @@ def fake_humid (x:list, y:list):
 #     line = f'{r_time[t]},{r_temp1[1][t]},{r_temp2[1][t]},{r_temp3[1][t]},{r_humid1[1][t]},{r_humid2[1][t]},{r_humid3[1][t]},{r_humid1_fake[t]}\n'
 #     with open('remote_readings.csv', mode='a') as f:
 #         f.writelines(line)
+
+print(len(r_temp1[0]))
