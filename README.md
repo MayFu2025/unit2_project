@@ -13,7 +13,7 @@ Room 20C is asking for a way to record the temperature and humidity of the room,
 ## Proposed Solution
 Considering the client requirements an adequate solution includes a low cost sensing device for humidity and temperature and a custom data script that process and analyzes the samples acquired. For a low cost sensing device an adequate alternative is the DHT11 sensor[^1] which is offered online for less than 5 USD and provides adequate precision and range for the client requirements (Temperature Range: 0°C to 50°C, Humidity Range: 20% to 90%). Similar devices such as the DHT22, AHT20 or the AM2301B [^2] have higher specifications, however the DHT11 uses a simple serial communication (SPI) rather than more elaborated protocols such as the I2C used by the alternatives. For the range, precision and accuracy required in this application the DHT11 provides the best compromise. Connecting the DHT11 sensor to a computer requires a device that provides a Serial Port communication. A cheap and often used alternative for prototyping is the Arduino UNO microcontroller [^3]. "Arduino is an open-source electronics platform based on easy-to-use hardware and software"[^4]. In addition to the low cost of the Arduino (< 6USD), this device is programmable and expandable[^1]. Other alternatives include different versions of the original Arduino but their size and price make them a less adequate solution.
 
-Considering the budgetary constrains of the client and the hardware requirements, the software tool that I proposed for this solution is Python. Python's open-source nature and platform independence contribute to the long-term viability of the system. The use of Python simplifies potential future enhancements or modifications, allowing for seamless scalability without the need for extensive redevelopment [^5][^6]. In comparison to the alternative C or C++, which share similar features, Python is a High level programming language (HLL) with high abstraction [^7]. For example, memory management is automatic in Python whereas it is responsibility of the C/C++ developer to allocate and free up memory [^7], this could result in faster applications but also memory problems. In addition a HLL language will allow me and future developers extend the solution or solve issues proptly.  
+Considering the budgetary constrains of the client and the hardware requirements, the software tool that I proposed for this solution is Python. Python's open-source nature and platform independence contribute to the long-term viability of the system. The use of Python simplifies potential future enhancements or modifications, allowing for seamless scalability without the need for extensive redevelopment [^5][^6]. In comparison to the alternative C or C++, which share similar features, Python is a High level programming language (HLL) with high abstraction [^7]. For example, memory management is automatic in Python whereas it is responsibility of the C/C++ developer to allocate and free up memory [^7], this could result in faster applications but also memory problems. In addition, a HLL language will allow me and future developers extend the solution or solve issues promptly.  
 
 **Design statement**
 Using an arduino and DHT 11 sensors, we will construct a system that can measure the temperature and humidity of 3 different locations inside room 20C, where our client wishes to check (as can be seen in fig.3). To do this, we will use Python in the IDE Pycharm, as well as a variation of C++ in the Arduino IDE [^8]. We will also create visualizations of the data that was collected using the pyplot module from the matplotlib library in Python, on Pycharm.
@@ -26,8 +26,6 @@ Using an arduino and DHT 11 sensors, we will construct a system that can measure
 [^6]:Python Geeks. “Advantages of Python: Disadvantages of Python.” Python Geeks, 26 June 2021, https://pythongeeks.org/advantages-disadvantages-of-python/. 
 [^7]: Real Python. “Python vs C++: Selecting the Right Tool for the Job.” Real Python, Real Python, 19 June 2021, https://realpython.com/python-vs-cpp/#memory-management. 
 [^8]: Emeritus. "What are the Key Pros and Cons of the Arduino Programming Language?" Emeritus, Emeritus, 25 January 2023, https://emeritus.org/blog/coding-arduino-programming-language.
-[^9]: Arduino. "Digital Pins." Arduino, Arduino, 5 December 2023, https://www.arduino.cc/reference/en/language/functions/digital-io/digitalwrite/.
-[^11]: Koronus. "print multiple variables amount in one line." Arduino Forum, Arduino, 6 May 2021, https://forum.arduino.cc/t/print-multiple-variables-amount-in-one-line/604071/9
 
 ## Success Criteria
 1. The solution provides a visual representation of the Humidity and Temperature values inside a dormitory (Local) and outside the house (Remote) for a period of minimum 48 hours. 
@@ -79,7 +77,7 @@ _Cultural factors that impact our interpretation can be what temperatures and hu
 
 ![](project/images/flowdiagram3.png)
                                                                                                   
-**Fig.6**
+**Fig.6** shows the flow diagram for plotting the 
 
 ## Test Plan
 | Test Type        | Test Content                                                                                                         | Input                                                                                                                                                                                                                                                                                                                                                                 | Expected Output                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
@@ -102,15 +100,15 @@ _Cultural factors that impact our interpretation can be what temperatures and hu
 | 5  | Test serial connection between arduino and computer                 | Have confirmed that the arduino and computer can form a serial connection                              | 15min         | Nov 29                 | C         |
 | 6  | Test Each DHT11 Sensor and their connection to Arduino              | Confirm that all sensors can return a valid temperature and humidity reading                           | 15min         | Nov 29                 | C         |
 | 7  | Code Data Collection Method on PyCharm                              | Create a program that retrieves data from the Arduino every 5 minutes                                  | 30min         | Nov 29                 | C         |
-| 8  | Test if readings can be saved to a new csv file                     | Have confirmed that we can directly take readings and save it in a new csv file                        |               |                        |           |
+| 8  | Test if readings can be saved to a new csv file                     | Have confirmed that we can directly take readings and save it in a new csv file                        | 20min         | Nov 30                 | C         |
 | 9  | Test if readings can be sent to remote server                       | Have confirmed that we can create new sensors on the server, and save data within this sensor          | 30min         | Nov 30                 | C         |
 | 10 | Code Data Storage Method on PyCharm                                 | Create a program that stores retrieved data locally on a csv file, and remotely on sensors in a server | 1hr           | Nov 30                 | C         |
-| 11 | Test and Finalize Hardware and Software                             | Fix any bugs or add additional functions as neccesary before starting final data collection            | 2hr           | Nov 30                 | C         |
+| 11 | Test and Finalize Hardware and Software                             | Fix any bugs or add additional functions as necessary before starting final data collection            | 2hr           | Nov 30                 | C         |
 | 12 | Collect Temperature and Humidity Data for 48 Hours                  | Collect data per 5 minutes over the course of 48 hours from 3 different sensors                        | 48hr          | Nov 30 ~ Dec 3         | C         |
 | 13 | Create Flow Diagrams and Reference Figures                          | Create 3 flow diagrams and supplementary diagrams that help explain our method                         | 1hr           | Nov 31 ~ Dec 12        | B         |
 | 14 | Construct Graphs Using Pyplot                                       | Have graphs for raw data and average using pyplot                                                      | 3hr           | Dec 4 ~ Dec 12         | C/D       |
-| 15 | Conduct usability testing to check if graphs represent data clearly | Have finalized graphs that are easy to understand and comprehendable by anyone                         | 30min         | Dec 13                 | D         |
-| 15 | Design Scientific Poster                                            | Finish a poster containing created graphs and an adaquete conclusion summarizing the investigation     | 2hr           | Dec 14                 | D         |
+| 15 | Conduct usability testing to check if graphs represent data clearly | Have finalized graphs that are easy to understand and comprehensible by anyone                         | 30min         | Dec 13                 | D         |
+| 15 | Design Scientific Poster                                            | Finish a poster containing created graphs and an adequate conclusion summarizing the investigation     | 2hr           | Dec 14                 | D         |
 | 16 | Film Video Introducing Product                                      | Finish a video that demonstrates proposed solution to clients                                          | 1hr           | Dec 14                 | D         |
 
 # Criteria C: Development
@@ -322,6 +320,9 @@ from file ```graph.py```
 import 
 ```
 
+
+[^9]: Arduino. "Digital Pins." Arduino, Arduino, 5 December 2023, https://www.arduino.cc/reference/en/language/functions/digital-io/digitalwrite/.
+[^11]: Koronus. "print multiple variables amount in one line." Arduino Forum, Arduino, 6 May 2021, https://forum.arduino.cc/t/print-multiple-variables-amount-in-one-line/604071/9
 # Criteria D: Functionality
 
 ## Video of proposed solution
