@@ -812,58 +812,16 @@ plt.ylabel("temperature (C)", fontsize=20)
 plt.title("local temperature quadratic prediction", fontsize=40)
 plt.legend(fontsize=20, loc='upper right', ncol=3)
 
-plt.subplot(2,1,2)
-humid_coeffs = []
-fitted_humid_arrays = []
-
-for i in range(1, 4):
-    humid_list_name = f"humid{i}"  # Create the variable name dynamically
-    humid_list = globals()[humid_list_name]  # Access the variable using globals()
-
-    coeffs = np.polyfit(time,  humid_list, 2)
-    humid_coeffs.append(coeffs)
-    fitted_humid = np.polyval(coeffs, time)
-    fitted_humid_arrays.append(fitted_humid)
-
-    f_fitted_humid = np.polyval(coeffs, future_time)
-
-    # Plot the original temperature data
-    plt.plot(time, humid_list, label=f"temperature{i}", c=c[i - 1])
-    plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=5))
-    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M'))
-
-    plt.plot(future_time[len(time):], f_fitted_humid[len(time):],
-             label=f"temperature quadratic prediction{i} T(t) ={coeffs[0]:.2f}^2+{coeffs[1]:.2f}t+{coeffs[2]:.2f}",
-             c=c[i - 1], linestyle='--')
-
-current_date = date_list[-1]
-future_dates = [current_date + timedelta(minutes=i*5) for i in range(1, 145)]
-future_dates = date_list+future_dates
-labels = [date.strftime('%m-%d %H:%M') for date in future_dates[::50]]
-
-ticks = future_time[::50]
-
-plt.xticks(ticks, labels, fontsize=15, rotation=45, ha='right')
-plt.yticks(fontsize=15)
-plt.title("local humidity quadratic prediction", fontsize=40)
-plt.xlabel("time", fontsize=20)
-plt.ylabel("humidity (%)", fontsize=20)
-plt.legend(fontsize=15, loc='upper right', ncol=3)
-plt.tight_layout()
 plt.show()
 ```
+
+We did the same procedure on the humidity data to make the prediction for the future humidity data.
 
 ![quadratic prediction.png](project%2Fimages%2Fquadratic%20prediction.png)
 **Fig.31** Prediction with quadratic model of Local Temperature and Humidity
 
 ![quatric prediction.png](project%2Fimages%2Fquatric%20prediction.png)
 **Fig.32** Prediction with quatric model of Local Temperature and Humidity
-
-
-from file ```graph.py```
-```.py
-import 
-```
 
 
 [^9]: Arduino. "Digital Pins." Arduino, Arduino, 5 December 2023, https://www.arduino.cc/reference/en/language/functions/digital-io/digitalwrite/.
@@ -874,5 +832,5 @@ import
 The video can be found under the name "Project 2- Weather Station.mov" in this Google Drive Folder: 
 https://drive.google.com/drive/folders/1tMNTtgjcs2QFEaba9YF4Wc9Ikm9p6jiU?usp=drive_link
 ## Scientific Poster of Investigation:
-![](project/images/poster.png)
+![Com Sci Project unit 2.png](project%2Fimages%2FCom%20Sci%20Project%20unit%202.png)
 **Fig. 9** a scientific poster of investigation, created using Canva. Created by Manaha Ueda and May Fujita. **(Success Criteria 7)**
